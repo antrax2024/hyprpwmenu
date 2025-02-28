@@ -50,13 +50,6 @@ def configCheckAndLoad():
         homeDir = Path().home()
         save_config(
             config_data={
-                "window": {
-                    "title": "Power Menu",
-                    "title-bar-hidden": True,
-                    "always-on-top": True,
-                    "skip-task-bar": True,
-                    "height": 120,
-                },
                 "icons": {
                     "size": 80,
                     "color": "blue400",

@@ -48,12 +48,13 @@ def sendNotification(title: str, message: str) -> None:
 
 def main(page: ft.Page) -> None:
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
-    page.window.title_bar_hidden = config["window"]["title-bar-hidden"]
-    page.title = config["window"]["title"]
-    page.window.always_on_top = config["window"]["always-on-top"]
-    page.window.skip_task_bar = config["window"]["skip-task-bar"]
-    page.window.height = config["window"]["height"]
-    page.window.center()
+    page.title = "Power Menu"
+
+    def on_keyboard(e: ft.KeyboardEvent):
+        print(e.key())
+        page.update()
+
+    page.on_keyboard = on_keyboard
 
     def shutdownButtonClicked(e) -> None:
         print("Shutdown Button Clicked")
