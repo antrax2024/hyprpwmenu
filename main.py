@@ -1,19 +1,5 @@
 import flet as ft
-import os
-from pathlib import Path
-
-
-CONFIG_DIR: str = Path.home().joinpath(".config", "powermenu")
-CONFIG_FILE: str = "config.json"
-
-
-def configCheckAndLoad() -> None:
-
-    if Path.exists(self=Path(CONFIG_DIR)):
-        print("Config directory found.")
-    else:
-        print("Config directory not found. Creating one...")
-        os.makedirs(name=CONFIG_DIR)
+from config import configCheckAndLoad
 
 
 def main(page: ft.Page) -> None:
@@ -31,5 +17,5 @@ def main(page: ft.Page) -> None:
 
 
 if __name__ == "__main__":
-    configCheckAndLoad()
+    config = configCheckAndLoad()
     ft.app(target=main)
