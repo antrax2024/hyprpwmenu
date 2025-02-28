@@ -47,14 +47,13 @@ def load_config(default: dict = None) -> dict:
 
 def configCheckAndLoad():
     if not CONFIG_PATH.exists():
+        homeDir = Path().home()
         save_config(
             config_data={
-                "shutdown-command": "shutdown now",
-                "reboot-command": "reboot",
+                "shutdown-command": f"{homeDir}/dotfiles/bin/shutdown.sh shutdown",
+                "reboot-command": f"{homeDir}/dotfiles/bin/shutdown.sh reboot",
+                "logout-command": "hyprctl dispatch exit",
                 "suspend-command": "systemctl suspend",
-                "hibernate-command": "systemctl hibernate",
-                "lock-command": "i3lock",
-                "logout-command": "i3-msg exit",
             }
         )
 
