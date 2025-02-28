@@ -48,10 +48,10 @@ def sendNotification(title: str, message: str) -> None:
 
 def main(page: ft.Page) -> None:
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
+    page.window.title_bar_hidden = True
     page.title = "Power Menu"
 
-    def on_keyboard(e: ft.KeyboardEvent):
-        # print(e.key)
+    def on_keyboard(e: ft.KeyboardEvent) -> None:
         page.update()
         if e.key == "Escape":
             page.window.destroy()
