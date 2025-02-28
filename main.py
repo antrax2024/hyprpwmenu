@@ -4,11 +4,11 @@ from dbus_notification import DBusNotification
 import subprocess
 
 
-def executar_comando(
-    comando: list[str],
+def executeCommand(
+    command: list[str],
     timeout: int = 30,
-    capturar_saida: bool = True,
-    verificar_erro: bool = True,
+    capture_output: bool = True,
+    error_verify: bool = True,
 ) -> subprocess.CompletedProcess:
     """
     Executa comandos Linux com segurança e controle total
@@ -24,19 +24,19 @@ def executar_comando(
     """
     try:
         return subprocess.run(
-            args=comando,
-            check=verificar_erro,
+            args=command,
+            check=error_verify,
             timeout=timeout,
-            stdout=subprocess.PIPE if capturar_saida else None,
-            stderr=subprocess.PIPE if capturar_saida else None,
+            stdout=subprocess.PIPE if capture_output else None,
+            stderr=subprocess.PIPE if capture_output else None,
             text=True,
         )
     except subprocess.CalledProcessError as e:
         raise RuntimeError(
-            f"Erro no comando {comando[0]} (código {e.returncode})"
+            f"Erro no comando {command[0]} (código {e.returncode})"
         ) from e
     except subprocess.TimeoutExpired:
-        raise TimeoutError(f"Timeout excedido para {comando[0]}")
+        raise TimeoutError(f"Timeout excedido para {command[0]}")
 
 
 def sendNotification(title: str, message: str) -> None:
@@ -58,16 +58,19 @@ def main(page: ft.Page) -> None:
     def shutdownButtonClicked(e) -> None:
         print("Shutdown Button Clicked")
         sendNotification(title="Shutdown", message="System will shutdown...")
+        executeCommand(command=config["shutdown-command"])
         e.page.window.destroy()
 
     def rebootButtonClicked(e) -> None:
         print("Reboot Button Clicked")
         sendNotification(title="Reboot", message="System will reboot...")
+        executeCommand(command=config["reboot-command"])
         e.page.window.destroy()
 
     def logoutButtonClicked(e) -> None:
         print("Logout Button Clicked")
         sendNotification(title="Logout", message="User will be logged out...")
+        executeCommand(command=config["logout-command"])
         e.page.window.destroy()
 
     shutdownButton = ft.IconButton(
