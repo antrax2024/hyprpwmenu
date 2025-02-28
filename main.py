@@ -3,30 +3,47 @@ from config import configCheckAndLoad
 
 
 def main(page: ft.Page) -> None:
-    page.title = "Power Menu"
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
-    page.window.title_bar_hidden = True
-    page.window.always_on_top = True
-    page.window.skip_task_bar = True
+    page.window.title_bar_hidden = config["window"]["title-bar-hidden"]
+    page.title = config["window"]["title"]
+    page.window.always_on_top = config["window"]["always-on-top"]
+    page.window.skip_task_bar = config["window"]["skip-task-bar"]
+    page.window.height = config["window"]["height"]
+    page.window.center()
+
+    def shutdownButtonClicked(e) -> None:
+        print("Shutdown Button Clicked")
+        e.page.window.destroy()
+
+    def rebootButtonClicked(e) -> None:
+        print("Reboot Button Clicked")
+        e.page.window.destroy()
+
+    def logoutButtonClicked(e) -> None:
+        print("Logout Button Clicked")
+        e.page.window.destroy()
 
     shutdownButton = ft.IconButton(
         icon=ft.Icons.POWER_SETTINGS_NEW,
-        icon_color="blue400",
-        icon_size=80,
+        icon_color=config["icons"]["color"],
+        icon_size=config["icons"]["size"],
         tooltip="Shutdown the System",
         autofocus=True,
+        on_click=shutdownButtonClicked,
     )
     rebootButton = ft.IconButton(
         icon=ft.Icons.REFRESH,
-        icon_color="blue400",
-        icon_size=80,
+        icon_color=config["icons"]["color"],
+        icon_size=config["icons"]["size"],
         tooltip="Reboot the System",
+        on_click=rebootButtonClicked,
     )
     logoutButton = ft.IconButton(
         icon=ft.Icons.EXIT_TO_APP,
-        icon_color="blue400",
-        icon_size=80,
+        icon_color=config["icons"]["color"],
+        icon_size=config["icons"]["size"],
         tooltip="Logout the User",
+        on_click=logoutButtonClicked,
     )
 
     page.add(
@@ -43,7 +60,4 @@ def main(page: ft.Page) -> None:
 
 if __name__ == "__main__":
     config = configCheckAndLoad()
-    print(f"shutdown-command: {config['shutdown-command']}")
-    print(f"reboot-command: {config['reboot-command']}")
-    print(f"logout-command: {config['logout-command']}")
     ft.app(target=main)

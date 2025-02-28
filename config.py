@@ -49,6 +49,17 @@ def configCheckAndLoad():
         homeDir = Path().home()
         save_config(
             config_data={
+                "window": {
+                    "title": "Power Menu",
+                    "title-bar-hidden": True,
+                    "always-on-top": True,
+                    "skip-task-bar": True,
+                    "height": 120,
+                },
+                "icons": {
+                    "size": 80,
+                    "color": "blue400",
+                },
                 "shutdown-command": f"{homeDir}/dotfiles/bin/shutdown.sh shutdown",
                 "reboot-command": f"{homeDir}/dotfiles/bin/shutdown.sh reboot",
                 "logout-command": "hyprctl dispatch exit",
