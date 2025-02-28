@@ -1,5 +1,13 @@
 import flet as ft
 from config import configCheckAndLoad
+from dbus_notification import DBusNotification
+
+
+def sendNotification(title: str, message: str) -> None:
+    DBusNotification(appname="pwrmenu").send(
+        title=title,
+        message=message,
+    )
 
 
 def main(page: ft.Page) -> None:
@@ -13,14 +21,17 @@ def main(page: ft.Page) -> None:
 
     def shutdownButtonClicked(e) -> None:
         print("Shutdown Button Clicked")
+        sendNotification(title="Shutdown", message="System will shutdown...")
         e.page.window.destroy()
 
     def rebootButtonClicked(e) -> None:
         print("Reboot Button Clicked")
+        sendNotification(title="Reboot", message="System will reboot...")
         e.page.window.destroy()
 
     def logoutButtonClicked(e) -> None:
         print("Logout Button Clicked")
+        sendNotification(title="Logout", message="User will be logged out...")
         e.page.window.destroy()
 
     shutdownButton = ft.IconButton(

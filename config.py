@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 
+
 CONFIG_PATH: Path = Path.home().joinpath(".config", "powermenu", "config.json")
 
 
