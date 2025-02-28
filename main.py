@@ -5,6 +5,9 @@ from config import configCheckAndLoad
 def main(page: ft.Page) -> None:
     page.title = "Power Menu"
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
+    page.window.title_bar_hidden = True
+    page.window.always_on_top = True
+    page.window.skip_task_bar = True
 
     shutdownButton = ft.IconButton(
         icon=ft.Icons.POWER_SETTINGS_NEW,
