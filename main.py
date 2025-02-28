@@ -1,6 +1,42 @@
 import flet as ft
 from config import configCheckAndLoad
 from dbus_notification import DBusNotification
+import subprocess
+
+
+def executar_comando(
+    comando: list[str],
+    timeout: int = 30,
+    capturar_saida: bool = True,
+    verificar_erro: bool = True,
+) -> subprocess.CompletedProcess:
+    """
+    Executa comandos Linux com segurança e controle total
+
+    Parâmetros:
+        comando (list): Lista de argumentos (ex: ["ls", "-l"])
+        timeout (int): Tempo máximo de execução em segundos
+        capturar_saida (bool): Captura stdout/stderr
+        verificar_erro (bool): Lança exceção em códigos de erro ≠ 0
+
+    Retorna:
+        CompletedProcess: Objeto com resultados da execução
+    """
+    try:
+        return subprocess.run(
+            args=comando,
+            check=verificar_erro,
+            timeout=timeout,
+            stdout=subprocess.PIPE if capturar_saida else None,
+            stderr=subprocess.PIPE if capturar_saida else None,
+            text=True,
+        )
+    except subprocess.CalledProcessError as e:
+        raise RuntimeError(
+            f"Erro no comando {comando[0]} (código {e.returncode})"
+        ) from e
+    except subprocess.TimeoutExpired:
+        raise TimeoutError(f"Timeout excedido para {comando[0]}")
 
 
 def sendNotification(title: str, message: str) -> None:
