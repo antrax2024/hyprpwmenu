@@ -51,10 +51,12 @@ def main(page: ft.Page) -> None:
     page.title = "Power Menu"
 
     def on_keyboard(e: ft.KeyboardEvent):
-        print(e.key())
+        # print(e.key)
         page.update()
+        if e.key == "Escape":
+            page.window.destroy()
 
-    page.on_keyboard = on_keyboard
+    page.on_keyboard_event = on_keyboard
 
     def shutdownButtonClicked(e) -> None:
         print("Shutdown Button Clicked")
