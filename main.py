@@ -59,28 +59,22 @@ def main(page: ft.Page) -> None:
     page.on_keyboard_event = on_keyboard
 
     def shutdownButtonClicked(e) -> None:
-        page.window.visible = False
-        page.window.update()
         print("Shutdown Button Clicked")
         sendNotification(title="Shutdown", message="System will shutdown...")
-        executeCommand(command=config["shutdown-command"])
         e.page.window.destroy()
+        executeCommand(command=config["shutdown-command"])
 
     def rebootButtonClicked(e) -> None:
-        page.window.visible = False
-        page.window.update()
         print("Reboot Button Clicked")
         sendNotification(title="Reboot", message="System will reboot...")
-        executeCommand(command=config["reboot-command"])
         e.page.window.destroy()
+        executeCommand(command=config["reboot-command"])
 
     def logoutButtonClicked(e) -> None:
-        page.window.visible = False
-        page.window.update()
         print("Logout Button Clicked")
         sendNotification(title="Logout", message="User will be logged out...")
-        executeCommand(command=config["logout-command"])
         e.page.window.destroy()
+        executeCommand(command=config["logout-command"])
 
     shutdownButton = ft.IconButton(
         icon=ft.Icons.POWER_SETTINGS_NEW,
