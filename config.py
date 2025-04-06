@@ -54,8 +54,8 @@ def configCheckAndLoad():
                     "size": 80,
                     "color": "blue400",
                 },
-                "shutdown-command": [f"{homeDir}/dotfiles/bin/shutdown.sh", "shutdown"],
-                "reboot-command": [f"{homeDir}/dotfiles/bin/shutdown.sh", "reboot"],
+                "shutdown-command": ["sudo shutdown -h now"],
+                "reboot-command": ["reboot"],
                 "logout-command": ["hyprctl", "dispatch", "exit"],
                 "suspend-command": ["systemctl", "suspend"],
             }
