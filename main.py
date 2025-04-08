@@ -1,7 +1,17 @@
 import flet as ft
-from config import configCheckAndLoad
 from dbus_notification import DBusNotification
 import subprocess
+
+
+config = {
+    "icons": {
+        "size": 80,
+        "color": "blue400",
+    },
+    "shutdown-command": ["sudo shutdown -h now"],
+    "reboot-command": ["reboot"],
+    "logout-command": ["hyprctl", "dispatch", "exit"],
+}
 
 
 def executeCommand(
@@ -10,18 +20,6 @@ def executeCommand(
     capture_output: bool = True,
     error_verify: bool = True,
 ) -> subprocess.CompletedProcess:
-    """
-    Executa comandos Linux com segurança e controle total
-
-    Parâmetros:
-        comando (list): Lista de argumentos (ex: ["ls", "-l"])
-        timeout (int): Tempo máximo de execução em segundos
-        capturar_saida (bool): Captura stdout/stderr
-        verificar_erro (bool): Lança exceção em códigos de erro ≠ 0
-
-    Retorna:
-        CompletedProcess: Objeto com resultados da execução
-    """
     try:
         return subprocess.run(
             args=command,
@@ -60,21 +58,18 @@ def main(page: ft.Page) -> None:
 
     def shutdownButtonClicked(e) -> None:
         print("Shutdown Button Clicked")
-        sendNotification(title="Shutdown", message="System will shutdown...")
+        executeCommand(command="sudo shutdown -h now")
         e.page.window.destroy()
-        executeCommand(command=config["shutdown-command"])
 
     def rebootButtonClicked(e) -> None:
         print("Reboot Button Clicked")
-        sendNotification(title="Reboot", message="System will reboot...")
+        executeCommand(command="sudo reboot")
         e.page.window.destroy()
-        executeCommand(command=config["reboot-command"])
 
     def logoutButtonClicked(e) -> None:
         print("Logout Button Clicked")
-        sendNotification(title="Logout", message="User will be logged out...")
+        executeCommand(command="hyprctl dispatch exit")
         e.page.window.destroy()
-        executeCommand(command=config["logout-command"])
 
     shutdownButton = ft.IconButton(
         icon=ft.Icons.POWER_SETTINGS_NEW,
@@ -112,5 +107,4 @@ def main(page: ft.Page) -> None:
 
 
 if __name__ == "__main__":
-    config = configCheckAndLoad()
     ft.app(target=main)
