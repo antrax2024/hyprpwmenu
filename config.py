@@ -45,7 +45,7 @@ def load_config(default: dict = None) -> dict:
         return default or {}
 
 
-def configCheckAndLoad():
+def configCheckAndLoad() -> dict:
     if not CONFIG_PATH.exists():
         homeDir = Path().home()
         save_config(
@@ -57,8 +57,7 @@ def configCheckAndLoad():
                 "shutdown-command": ["sudo shutdown -h now"],
                 "reboot-command": ["reboot"],
                 "logout-command": ["hyprctl", "dispatch", "exit"],
-                "suspend-command": ["systemctl", "suspend"],
             }
         )
 
-    return load_config(default={"version": 1.0})
+    return load_config(default={"version": "0.2.4"})
