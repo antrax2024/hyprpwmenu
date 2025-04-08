@@ -14,34 +14,19 @@ config = {
 }
 
 
-def executeCommand(
-    command: list[str],
-    timeout: int = 30,
-    capture_output: bool = True,
-    error_verify: bool = True,
-) -> subprocess.CompletedProcess:
+# executar comando shell
+def executeShellCommand(command: str) -> subprocess.CompletedProcess:
     try:
         return subprocess.run(
             args=command,
-            check=error_verify,
-            timeout=timeout,
-            stdout=subprocess.PIPE if capture_output else None,
-            stderr=subprocess.PIPE if capture_output else None,
+            check=True,
+            shell=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
             text=True,
         )
     except subprocess.CalledProcessError as e:
-        raise RuntimeError(
-            f"Erro no comando {command[0]} (código {e.returncode})"
-        ) from e
-    except subprocess.TimeoutExpired:
-        raise TimeoutError(f"Timeout excedido para {command[0]}")
-
-
-def sendNotification(title: str, message: str) -> None:
-    DBusNotification(appname="pwrmenu").send(
-        title=title,
-        message=message,
-    )
+        raise RuntimeError(f"Erro no comando {command} (código {e.returncode})") from e
 
 
 def main(page: ft.Page) -> None:
@@ -58,17 +43,17 @@ def main(page: ft.Page) -> None:
 
     def shutdownButtonClicked(e) -> None:
         print("Shutdown Button Clicked")
-        executeCommand(command="sudo shutdown -h now")
+        executeShellCommand(command="sudo shutdown -h now")
         e.page.window.destroy()
 
     def rebootButtonClicked(e) -> None:
         print("Reboot Button Clicked")
-        executeCommand(command="sudo reboot")
+        executeShellCommand(command="sudo reboot")
         e.page.window.destroy()
 
     def logoutButtonClicked(e) -> None:
         print("Logout Button Clicked")
-        executeCommand(command="hyprctl dispatch exit")
+        executeShellCommand(command="hyprctl dispatch exit")
         e.page.window.destroy()
 
     shutdownButton = ft.IconButton(
