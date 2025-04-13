@@ -1,14 +1,7 @@
 # -*- coding: utf-8 -*-
-
-"""
-PyQt6 application providing shutdown, reboot, and logout options.
-
-This application displays three buttons (Shutdown, Reboot, Logout) which, when clicked,
-execute predefined system commands. It also closes when the Escape key is pressed.
-"""
-
 import sys
 import subprocess
+import qtawesome as qta
 from PyQt6.QtWidgets import (
     QApplication,
     QWidget,
@@ -23,6 +16,7 @@ from PyQt6.QtCore import (
     QSize,
     QProcess,
 )
+import qdarktheme
 
 
 def executeShellCommand(commandList: list[str]) -> None:
@@ -109,33 +103,22 @@ class PowerMenuWindow(QWidget):
         buttonLayout = QHBoxLayout()
         buttonLayout.addStretch(stretch=1)  # Add space to the left
 
-        shutdownIcon = QIcon.fromTheme("system-shutdown")
-
-        rebootIcon = QIcon.fromTheme("system-reboot")
-
-        logoutIcon = QIcon.fromTheme("system-log-out")
+        # --- Icons ---
+        shutdownIcon = qta.icon("ph.power-bold")
+        rebootIcon = qta.icon("ei.repeat")
+        logoutIcon = qta.icon("mdi6.logout-variant")
 
         # --- Buttons ---
         self.shutdownButton = QPushButton(self)
         self.shutdownButton.setIcon(shutdownIcon)
         self.shutdownButton.setToolTip("Shutdown the System")
         self.shutdownButton.setFlat(True)  # Make button background transparent
-        self.shutdownButton.setSizePolicy(
-            QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed
-        )  # Prevent stretching
         self.shutdownButton.clicked.connect(self.shutdownButtonClicked)
-        self.shutdownButton.setDefault(
-            True
-        )  # Suggests it's the default action (e.g., Enter key)
         self.shutdownButton.setAutoDefault(True)
-
         self.rebootButton = QPushButton(self)
         self.rebootButton.setIcon(rebootIcon)
         self.rebootButton.setToolTip("Reboot the System")
         self.rebootButton.setFlat(True)
-        self.rebootButton.setSizePolicy(
-            QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed
-        )
         self.rebootButton.clicked.connect(self.rebootButtonClicked)
         self.rebootButton.setAutoDefault(False)
 
@@ -143,9 +126,6 @@ class PowerMenuWindow(QWidget):
         self.logoutButton.setIcon(logoutIcon)
         self.logoutButton.setToolTip("Logout the User")
         self.logoutButton.setFlat(True)
-        self.logoutButton.setSizePolicy(
-            QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed
-        )
         self.logoutButton.clicked.connect(self.logoutButtonClicked)
         self.logoutButton.setAutoDefault(False)
 
@@ -168,7 +148,6 @@ class PowerMenuWindow(QWidget):
         self.centerWindow()
 
     # --- Button Click Handlers ---
-
     def shutdownButtonClicked(self):
         """
         Handles the click event for the Shutdown button.
@@ -197,23 +176,17 @@ class PowerMenuWindow(QWidget):
         self.close()  # Close the PyQt window
 
     # --- Event Handlers ---
-
     def keyPressEvent(self, event: QKeyEvent):
-        """
-        Handles key press events for the window.
-
-        Args:
-            event: The QKeyEvent object containing event details.
-        """
         if event.key() == Qt.Key.Key_Escape:
             print("Escape key pressed, closing window.")
             self.close()
+            # Close application
+            sys.exit(0)  # Exit the application completely
         else:
             # Allow processing of other keys if necessary (e.g., Tab for focus)
             super().keyPressEvent(event)
 
     # --- Utility Methods ---
-
     def centerWindow(self):
         """Centers the window on the screen."""
         frameGeometry = self.frameGeometry()
@@ -223,10 +196,12 @@ class PowerMenuWindow(QWidget):
 
 
 # --- Main Execution Block ---
-
 if __name__ == "__main__":
     # Create the QApplication instance
     app = QApplication(sys.argv)
+
+    # config theme dark
+    qdarktheme.setup_theme("dark")
 
     # Create and show the main window
     window = PowerMenuWindow()
