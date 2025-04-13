@@ -201,7 +201,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
 
     # config theme dark
-    qdarktheme.setup_theme("dark")
+    qdarktheme.setup_theme(theme="dark")
 
     # Create and show the main window
     window = PowerMenuWindow()
