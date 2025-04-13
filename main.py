@@ -22,28 +22,7 @@ from PyQt6.QtCore import (
     Qt,
     QSize,
     QProcess,
-)  # Added QProcess for potentially better async handling if needed later
-
-# Configuration dictionary holding icon settings and shell commands
-# Note: Direct icon color like Flet's icon_color is not straightforward in PyQt.
-# Icons will typically use the system theme's color.
-# Shell commands are stored as lists for subprocess.run
-config = {
-    "icons": {
-        "size": 80,
-        # "color": "blue400", # PyQt uses theme colors or stylesheets, direct icon color is complex
-    },
-    # Ensure these commands work on your system and you have necessary permissions
-    "shutdownCommand": ["sudo", "shutdown", "-h", "now"],
-    "rebootCommand": ["sudo", "reboot"],
-    "logoutCommand": [
-        "hyprctl",
-        "dispatch",
-        "exit",
-    ],  # Example for Hyprland, adjust if needed
-}
-
-# --- Helper Function ---
+)
 
 
 def executeShellCommand(commandList: list[str]) -> None:
@@ -120,53 +99,25 @@ class PowerMenuWindow(QWidget):
         self.setWindowTitle("Power Menu")
         # Make the window frameless (removes title bar and borders)
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint | Qt.WindowType.Popup)
-        # Optional: Make background transparent if desired (requires specific flags and attributes)
-        # self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
-        # self.setStyleSheet("background-color: transparent;")
 
         # --- Layouts ---
         # Main vertical layout to center the button row
         mainLayout = QVBoxLayout(self)
-        mainLayout.addStretch(1)  # Add space above
+        mainLayout.addStretch(stretch=1)  # Add space above
 
         # Horizontal layout for the buttons
         buttonLayout = QHBoxLayout()
-        buttonLayout.addStretch(1)  # Add space to the left
-
-        # --- Icon Setup ---
-        iconSize = QSize(config["icons"]["size"], config["icons"]["size"])
-
-        # Use QIcon.fromTheme for better desktop integration. Provide fallbacks if needed.
-        # Common theme icon names: system-shutdown, system-reboot, system-log-out
-        # Fallback icons (e.g., using QStyle standard icons) can be added as a second argument
-        # Example fallback: QIcon.fromTheme("system-shutdown", QIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_DialogCloseButton)))
+        buttonLayout.addStretch(stretch=1)  # Add space to the left
 
         shutdownIcon = QIcon.fromTheme("system-shutdown")
-        if shutdownIcon.isNull():  # Check if theme icon was found
-            print(
-                "Warning: Theme icon 'system-shutdown' not found. Using fallback or no icon."
-            )
-            # Optionally set a fallback icon here, e.g., from QStyle or a file
-            # shutdownIcon = QIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_DialogCloseButton))
 
         rebootIcon = QIcon.fromTheme("system-reboot")
-        if rebootIcon.isNull():
-            print(
-                "Warning: Theme icon 'system-reboot' not found. Using fallback or no icon."
-            )
-            # rebootIcon = QIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_BrowserReload))
 
         logoutIcon = QIcon.fromTheme("system-log-out")
-        if logoutIcon.isNull():
-            print(
-                "Warning: Theme icon 'system-log-out' not found. Using fallback or no icon."
-            )
-            # logoutIcon = QIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_DialogCancelButton))
 
         # --- Buttons ---
         self.shutdownButton = QPushButton(self)
         self.shutdownButton.setIcon(shutdownIcon)
-        self.shutdownButton.setIconSize(iconSize)
         self.shutdownButton.setToolTip("Shutdown the System")
         self.shutdownButton.setFlat(True)  # Make button background transparent
         self.shutdownButton.setSizePolicy(
@@ -180,7 +131,6 @@ class PowerMenuWindow(QWidget):
 
         self.rebootButton = QPushButton(self)
         self.rebootButton.setIcon(rebootIcon)
-        self.rebootButton.setIconSize(iconSize)
         self.rebootButton.setToolTip("Reboot the System")
         self.rebootButton.setFlat(True)
         self.rebootButton.setSizePolicy(
@@ -191,7 +141,6 @@ class PowerMenuWindow(QWidget):
 
         self.logoutButton = QPushButton(self)
         self.logoutButton.setIcon(logoutIcon)
-        self.logoutButton.setIconSize(iconSize)
         self.logoutButton.setToolTip("Logout the User")
         self.logoutButton.setFlat(True)
         self.logoutButton.setSizePolicy(
@@ -226,7 +175,7 @@ class PowerMenuWindow(QWidget):
         Executes the shutdown command and closes the application window.
         """
         print("Shutdown Button Clicked")
-        executeShellCommand(config["shutdownCommand"])
+        executeShellCommand("sudo shutdown -h now")
         self.close()  # Close the PyQt window
 
     def rebootButtonClicked(self):
@@ -235,7 +184,7 @@ class PowerMenuWindow(QWidget):
         Executes the reboot command and closes the application window.
         """
         print("Reboot Button Clicked")
-        executeShellCommand(config["rebootCommand"])
+        executeShellCommand("sudo reboot")
         self.close()  # Close the PyQt window
 
     def logoutButtonClicked(self):
@@ -244,7 +193,7 @@ class PowerMenuWindow(QWidget):
         Executes the logout command and closes the application window.
         """
         print("Logout Button Clicked")
-        executeShellCommand(config["logoutCommand"])
+        executeShellCommand("hyprctl dispatch exit")
         self.close()  # Close the PyQt window
 
     # --- Event Handlers ---
