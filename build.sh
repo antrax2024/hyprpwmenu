@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-uv run pyinstaller main.py
+uv run pyinstaller main.py --name pwrmenu
 
 DST="$HOME/pwrmenu"
 ICONS_DIR="$HOME/.local/share/icons/hicolor/64x64/apps"
@@ -9,17 +9,17 @@ APP_NAME="pwrmenu"
 
 # verifica se DST existe
 if [ -d "$DST" ]; then
-    rm -rfv "$DST"
+  rm -rfv "$DST"
 fi
 
 # verifica se $ICONS_DIR existe
 if [ ! -d "$ICONS_DIR" ]; then
-    mkdir -pv "$ICONS_DIR"
+  mkdir -pv "$ICONS_DIR"
 fi
 
 # verifica se $APP_DIR existe
 if [ ! -d "$APP_DIR" ]; then
-    mkdir -pv "$APP_DIR"
+  mkdir -pv "$APP_DIR"
 fi
 
 # install the app
@@ -32,8 +32,5 @@ cp ./$APP_NAME.desktop "$APP_DIR/$APP_NAME.desktop"
 
 # delete ./build/linux
 if [ -d "./build/linux" ]; then
-    rm -rfv "./build/linux"
+  rm -rfv "./build/linux"
 fi
-
-rm -rf dist
-rm -rf build
