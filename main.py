@@ -9,9 +9,10 @@ class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Control Panel")
-        # Ajuste o tamanho se necessário para acomodar o novo layout dos botões
-        # self.setFixedSize(300, 100)
-        self.setStyleSheet("background-color: black; color: white;")
+        # Ajuste o tamanho da janela para acomodar apenas os ícones
+        # self.setFixedSize(150, 60) # Exemplo de tamanho menor
+        # A cor do texto não é mais necessária no estilo global
+        self.setStyleSheet("background-color: black;")
 
         # Layout horizontal
         layout = QHBoxLayout()
@@ -22,37 +23,34 @@ class MainWindow(QWidget):
         logoffIcon = qta.icon("ri.logout-box-r-fill", color="white")
 
         # Tamanho do ícone (ajuste conforme necessário)
-        iconSize = QSize(32, 32)  # Example size
+        iconSize = QSize(120, 120)  # Exemplo de tamanho
 
         # Botão Shutdown
         shutdownButton = QToolButton()
         shutdownButton.setIcon(shutdownIcon)
         shutdownButton.setIconSize(iconSize)
-        shutdownButton.setText("Shutdown")
-        # Define o estilo para ter texto abaixo do ícone
-        shutdownButton.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
-        # Remove a borda padrão para um visual mais limpo, se desejado
-        shutdownButton.setStyleSheet("QToolButton { border: none; color: white; }")
+        # Adiciona tooltip
+        shutdownButton.setToolTip("Shutdown")
+        # Mantém o estilo sem borda
+        shutdownButton.setStyleSheet("QToolButton { border: none; }")
         layout.addWidget(shutdownButton)
 
         # Botão Reboot
         rebootButton = QToolButton()
         rebootButton.setIcon(rebootIcon)
         rebootButton.setIconSize(iconSize)
-        rebootButton.setText("Reboot")
-        # Define o estilo para ter texto abaixo do ícone
-        rebootButton.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
-        rebootButton.setStyleSheet("QToolButton { border: none; color: white; }")
+        # Adiciona tooltip
+        rebootButton.setToolTip("Reboot")
+        rebootButton.setStyleSheet("QToolButton { border: none; }")
         layout.addWidget(rebootButton)
 
         # Botão Logoff
         logoffButton = QToolButton()
         logoffButton.setIcon(logoffIcon)
         logoffButton.setIconSize(iconSize)
-        logoffButton.setText("Logoff")
-        # Define o estilo para ter texto abaixo do ícone
-        logoffButton.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
-        logoffButton.setStyleSheet("QToolButton { border: none; color: white; }")
+        # Adiciona tooltip
+        logoffButton.setToolTip("Logoff")
+        logoffButton.setStyleSheet("QToolButton { border: none; }")
         layout.addWidget(logoffButton)
 
         # Configura o layout na janela principal
