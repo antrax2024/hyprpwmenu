@@ -7,7 +7,7 @@ import sys
 import qtawesome as qta
 from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QToolButton
 from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtGui import QKeyEvent  # Import QKeyEvent for type hinting
+from PyQt6.QtGui import QKeyEvent, QIcon  # Import QKeyEvent and QIcon for type hinting
 
 
 class MainWindow(QWidget):
@@ -24,7 +24,7 @@ class MainWindow(QWidget):
 
         # List to hold the buttons for easy navigation
         self.buttons = []
-        # Index of the currently focused button
+        # Index of the currently focused button (still useful for arrow key logic)
         self.currentFocusIndex = 0
 
         # Setup UI elements
@@ -34,7 +34,6 @@ class MainWindow(QWidget):
         self.applyStyles()
 
         # Set initial focus to the first button
-        # This line was already here, but the focus state wasn't visually distinct
         if self.buttons:
             self.buttons[self.currentFocusIndex].setFocus()
 
@@ -84,21 +83,36 @@ class MainWindow(QWidget):
         # self.setFixedSize(self.size())
 
     def shutdownButtonClick(self):
+        """
+        Action performed when the shutdown button is clicked or activated.
+        """
         print("Shutdown button clicked")
+        # Add actual shutdown logic here
+        # Ex: os.system("shutdown /s /t 1") for Windows
 
     def rebootButtonClick(self):
+        """
+        Action performed when the reboot button is clicked or activated.
+        """
         print("Reboot button clicked")
+        # Add actual reboot logic here
+        # Ex: os.system("shutdown /r /t 1") for Windows
 
     def logoffButtonClick(self):
+        """
+        Action performed when the logoff button is clicked or activated.
+        """
         print("Logoff button clicked")
+        # Add actual logoff logic here
+        # Ex: os.system("shutdown /l") for Windows
 
-    def createButton(self, tooltip: str, icon, iconSize: QSize) -> QToolButton:
+    def createButton(self, tooltip: str, icon: QIcon, iconSize: QSize) -> QToolButton:
         """
         Creates a QToolButton with specified properties.
 
         Args:
             tooltip (str): The text to show when hovering over the button.
-            icon: The icon for the button (created using qtawesome).
+            icon (QIcon): The icon for the button (created using qtawesome).
             iconSize (QSize): The desired size of the icon.
 
         Returns:
@@ -145,9 +159,10 @@ class MainWindow(QWidget):
         """
         )
 
+    # --- MÉTODO CORRIGIDO ---
     def keyPressEvent(self, event: QKeyEvent):
         """
-        Handles key press events for navigation between buttons.
+        Handles key press events for navigation between buttons and triggering actions.
 
         Args:
             event (QKeyEvent): The key event object.
@@ -161,8 +176,7 @@ class MainWindow(QWidget):
 
         # Handle Escape key to exit the application
         if key == Qt.Key.Key_Escape:
-            self.close()
-            QApplication.quit()
+            self.close()  # Close the window
 
         elif key == Qt.Key.Key_Right:
             # Move focus to the next button, wrap around
@@ -174,8 +188,18 @@ class MainWindow(QWidget):
                 self.currentFocusIndex - 1 + numButtons
             ) % numButtons
             self.buttons[self.currentFocusIndex].setFocus()
+        # --- CONDIÇÃO CORRIGIDA ---
+        # Check for Enter key (Return on main keyboard, Enter on numpad)
+        elif key == Qt.Key.Key_Return or key == Qt.Key.Key_Enter:
+            # Get the widget that currently has focus within this window
+            focusedWidget = self.focusWidget()
+            # Check if the focused widget is one of our QToolButtons
+            if isinstance(focusedWidget, QToolButton) and focusedWidget in self.buttons:
+                # Trigger the click action of the actually focused button
+                focusedWidget.click()  # Simulate a button click on the focused widget
+            # --- FIM DA CONDIÇÃO CORRIGIDA ---
         else:
-            # Handle other keys normally
+            # Handle other keys normally by passing the event to the parent
             super().keyPressEvent(event)
 
 
