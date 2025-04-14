@@ -21,6 +21,9 @@ class AppConfig(BaseConfig):
     shutdownIcon: str
     rebootIcon: str
     logoffIcon: str
+    shutdownCommand: str
+    rebootCommand: str
+    logoffCommand: str
 
 
 if __name__ == "__main__":

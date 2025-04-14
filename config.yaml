@@ -6,3 +6,6 @@ iconSizeW: 120
 iconSizeH: 120
 iconColor: "#7E57C2"
 iconColorActive: "black"
+shutdownCommand: "poweroff"
+rebootCommand: "reboot"
+logoffCommand: "hyprctl dispatch exit"
