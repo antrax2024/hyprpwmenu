@@ -1,7 +1,2 @@
-colorButton:
-  foreground: "#7E57C2"
-  background: "#212121"
-  hover: "#2E2E2E"
-  focus: "#2E2E2E"
-  border: "#7E57C2"
-  borderHover: "#7E57C2"
+# pwr-menu config file
+colorButton: "#7E57C2"
