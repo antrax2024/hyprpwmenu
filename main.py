@@ -51,10 +51,20 @@ class MainWindow(QWidget):
         layout.setSpacing(0)
 
         # Icons
-        shutdownIcon = qta.icon("fa6s.power-off", color="#7E57C2", color_active="black")
-        rebootIcon = qta.icon("fa6s.repeat", color="#7E57C2", color_active="black")
+        shutdownIcon = qta.icon(
+            self.config.shutdownIcon,
+            color=self.config.iconColor,
+            color_active=self.config.iconColorActive,
+        )
+        rebootIcon = qta.icon(
+            self.config.rebootIcon,
+            color=self.config.iconColor,
+            color_active=self.config.iconColorActive,
+        )
         logoffIcon = qta.icon(
-            "ri.logout-box-r-fill", color="#7E57C2", color_active="black"
+            self.config.logoffIcon,
+            color=self.config.iconColor,
+            color_active=self.config.iconColorActive,
         )
 
         # Icon size
