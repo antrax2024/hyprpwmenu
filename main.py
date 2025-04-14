@@ -68,7 +68,7 @@ class MainWindow(QWidget):
         )
 
         # Icon size
-        iconSize = QSize(120, 120)
+        iconSize = QSize(self.config.iconSizeW, self.config.iconSizeH)
 
         # Create buttons and add them to layout and list
 
@@ -100,21 +100,21 @@ class MainWindow(QWidget):
         Action performed when the shutdown button is clicked or activated.
         """
         print("Shutdown button clicked")
-        os.system("poweroff")
+        os.system(command=self.config.shutdownCommand)
 
     def rebootButtonClick(self) -> None:
         """
         Action performed when the reboot button is clicked or activated.
         """
         print("Reboot button clicked")
-        os.system("reboot")
+        os.system(command=self.config.rebootCommand)
 
     def logoffButtonClick(self) -> None:
         """
         Action performed when the logoff button is clicked or activated.
         """
         print("Logoff button clicked")
-        os.system("hyprctl dispatch exit")
+        os.system(command=self.config.logoffCommand)
 
     def createButton(self, tooltip: str, icon: QIcon, iconSize: QSize) -> QToolButton:
         """
