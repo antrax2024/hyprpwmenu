@@ -15,7 +15,7 @@ class MainWindow(QWidget):
     Main application window displaying control buttons.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initializes the main window, layout, buttons, and styles.
         """
@@ -48,10 +48,10 @@ class MainWindow(QWidget):
         layout.setSpacing(0)
 
         # Icons
-        shutdownIcon = qta.icon("fa6s.power-off", color="white", color_active="black")
-        rebootIcon = qta.icon("fa6s.repeat", color="white", color_active="black")
+        shutdownIcon = qta.icon("fa6s.power-off", color="#7E57C2", color_active="black")
+        rebootIcon = qta.icon("fa6s.repeat", color="#7E57C2", color_active="black")
         logoffIcon = qta.icon(
-            "ri.logout-box-r-fill", color="white", color_active="black"
+            "ri.logout-box-r-fill", color="#7E57C2", color_active="black"
         )
 
         # Icon size
@@ -82,21 +82,21 @@ class MainWindow(QWidget):
         # Optional: Make window non-resizable
         # self.setFixedSize(self.size())
 
-    def shutdownButtonClick(self):
+    def shutdownButtonClick(self) -> None:
         """
         Action performed when the shutdown button is clicked or activated.
         """
         print("Shutdown button clicked")
         os.system("sudo shutdown -h now")
 
-    def rebootButtonClick(self):
+    def rebootButtonClick(self) -> None:
         """
         Action performed when the reboot button is clicked or activated.
         """
         print("Reboot button clicked")
         os.system("sudo reboot")
 
-    def logoffButtonClick(self):
+    def logoffButtonClick(self) -> None:
         """
         Action performed when the logoff button is clicked or activated.
         """
@@ -123,7 +123,7 @@ class MainWindow(QWidget):
         button.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
         return button
 
-    def applyStyles(self):
+    def applyStyles(self) -> None:
         """
         Applies CSS-like stylesheets for appearance and hover/focus effects.
         """
