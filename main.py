@@ -141,8 +141,8 @@ class MainWindow(QWidget):
             }
             /* Style for when the button has keyboard focus */
             QToolButton:focus {
-                border: 2px solid white; /* White border when focused */
-                background-color: #333333; /* Slightly lighter background when focused */
+                border: 2px solid #7E57C2; /* White border when focused */
+                background-color: transparent; /* Slightly lighter background when focused */
             }
             /* Optional: Style for when the mouse is hovering */
             QToolButton:hover {
