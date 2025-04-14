@@ -143,7 +143,7 @@ class MainWindow(QWidget):
         self.setStyleSheet(
             """
             QWidget {
-                background-color: black; /* Window background */
+                background-color: %s; /* Window background */
             }
             QToolButton {
                 background-color: transparent; /* Default transparent background */
@@ -167,7 +167,7 @@ class MainWindow(QWidget):
                 border: 1px solid black;
             }
         """
-            % self.config.iconColor
+            % (self.config.MainWindow.backgrounColor, self.config.iconColor)
         )
 
     # --- MÉTODO CORRIGIDO ---

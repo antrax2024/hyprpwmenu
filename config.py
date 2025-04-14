@@ -12,6 +12,10 @@ else:
     fileSource = FileSource(file=os.path.join(CONFIG_DIR, "./config.yaml"))
 
 
+class MainWindow(BaseConfig):
+    backgrounColor: str
+
+
 class AppConfig(BaseConfig):
     CONFIG_SOURCES = fileSource
     iconColor: str
@@ -24,6 +28,7 @@ class AppConfig(BaseConfig):
     shutdownCommand: str
     rebootCommand: str
     logoffCommand: str
+    MainWindow: MainWindow
 
 
 if __name__ == "__main__":
