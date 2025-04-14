@@ -17,4 +17,4 @@ rebootCommand: "reboot"
 logoffCommand: "hyprctl dispatch exit"
 # Main window
 MainWindow:
-  backgrounColor: "#242a2e"
+  backgrounColor: "#111122"
