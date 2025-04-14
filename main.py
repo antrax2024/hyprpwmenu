@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 """
 Simple Power Menu application
 """
@@ -8,7 +7,7 @@ import sys
 import qtawesome as qta
 from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QToolButton
 from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtGui import QKeyEvent, QIcon  # Import QKeyEvent and QIcon for type hinting
+from PyQt6.QtGui import QKeyEvent, QIcon
 
 
 class MainWindow(QWidget):
@@ -21,7 +20,7 @@ class MainWindow(QWidget):
         Initializes the main window, layout, buttons, and styles.
         """
         super().__init__()
-        self.setWindowTitle("Control Panel")
+        self.setWindowTitle("Power Menu")
 
         # List to hold the buttons for easy navigation
         self.buttons = []
