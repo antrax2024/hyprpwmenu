@@ -62,12 +62,15 @@ class MainWindow(QWidget):
 
         # shutdownButton
         shutdownButton = self.createButton("Shutdown", shutdownIcon, iconSize)
+        shutdownButton.clicked.connect(self.shutdownButtonClick)
         self.buttons.append(shutdownButton)
         # rebootButton
         rebootButton = self.createButton("Reboot", rebootIcon, iconSize)
+        rebootButton.clicked.connect(self.rebootButtonClick)
         self.buttons.append(rebootButton)
         # logoffButton
         logoffButton = self.createButton("Logoff", logoffIcon, iconSize)
+        logoffButton.clicked.connect(self.logoffButtonClick)
         self.buttons.append(logoffButton)
 
         for button in self.buttons:
@@ -82,6 +85,12 @@ class MainWindow(QWidget):
 
     def shutdownButtonClick(self):
         print("Shutdown button clicked")
+
+    def rebootButtonClick(self):
+        print("Reboot button clicked")
+
+    def logoffButtonClick(self):
+        print("Logoff button clicked")
 
     def createButton(self, tooltip: str, icon, iconSize: QSize) -> QToolButton:
         """
