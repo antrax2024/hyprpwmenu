@@ -1,10 +1,10 @@
 [project]
-name            = "pwrmenu"
-version         = "0.1.2"
-description     = "Modern PowerMenu"
-readme          = "README.md"
+name = "pwrmenu"
+version = "0.0.0"
+description = "Modern PowerMenu"
+readme = "README.md"
 requires-python = ">=3.13"
-dependencies    = [
+dependencies = [
     "black>=25.1.0",
     "confz>=2.1.0",
     "pyinstaller>=6.12.0",
