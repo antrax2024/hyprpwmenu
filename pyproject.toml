@@ -5,7 +5,8 @@ description     = "Modern PowerMenu"
 readme          = "README.md"
 requires-python = ">=3.13"
 dependencies    = [
+    "confz>=2.1.0",
     "pyinstaller>=6.12.0",
     "pyqt6>=6.9.0",
- "qtawesome>=1.4.0",
+    "qtawesome>=1.4.0",
 ]

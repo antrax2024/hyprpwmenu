@@ -8,6 +8,7 @@ import qtawesome as qta
 from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QToolButton
 from PyQt6.QtCore import QSize, Qt
 from PyQt6.QtGui import QKeyEvent, QIcon
+from config import AppConfig
 
 
 class MainWindow(QWidget):
