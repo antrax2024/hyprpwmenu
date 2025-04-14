@@ -5,15 +5,22 @@ from confz import BaseConfig, FileSource
 DEBUG = True
 
 if DEBUG:
+    fileSource = FileSource(file="config.yaml")
+else:
     HOME_DIR = os.path.expanduser("~")
     CONFIG_DIR = os.path.join(HOME_DIR, ".config", "power-menu")
-else:
-    CONFIG_DIR = "."
+    fileSource = FileSource(file=os.path.join(CONFIG_DIR, "./config.yaml"))
 
 
 class AppConfig(BaseConfig):
-    CONFIG_SOURCES = FileSource(file="./config.yaml")
-    colorButton: str
+    CONFIG_SOURCES = fileSource
+    iconColor: str
+    iconColorActive: str
+    iconSizeW: int
+    iconSizeH: int
+    shutdownIcon: str
+    rebootIcon: str
+    logoffIcon: str
 
 
 if __name__ == "__main__":

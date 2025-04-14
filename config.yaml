@@ -1,2 +1,8 @@
 # pwr-menu config file
-colorButton: "#7E57C2"
+shutdownIcon: "fa6s.power-off"
+rebootIcon: "fa6s.repeat"
+logoffIcon: "ri.logout-box-r-fill"
+iconSizeW: 120
+iconSizeH: 120
+iconColor: "#7E57C2"
+iconColorActive: "black"

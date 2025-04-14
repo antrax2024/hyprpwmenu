@@ -16,6 +16,8 @@ class MainWindow(QWidget):
     Main application window displaying control buttons.
     """
 
+    config = AppConfig()
+
     def __init__(self) -> None:
         """
         Initializes the main window, layout, buttons, and styles.
