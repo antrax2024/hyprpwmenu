@@ -7,6 +7,14 @@ ICONS_DIR="$HOME/.local/share/icons/hicolor/64x64/apps"
 APP_DIR="$HOME/.local/share/applications"
 APP_NAME="pwrmenu"
 
+# verifica de ./dist e ./build existe
+if [ -d "./dist" ]; then
+  rm -rfv "./dist"
+fi
+if [ -d "./build" ]; then
+  rm -rfv "./build"
+fi
+
 # verifica se DST existe
 if [ -d "$DST" ]; then
   rm -rfv "$DST"
