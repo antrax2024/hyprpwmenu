@@ -2,7 +2,7 @@ import sys
 import qtawesome as qta
 from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QPushButton
 from PyQt6.QtGui import QIcon
-from PyQt6.QtCore import QSize
+from PyQt6.QtCore import QSize, Qt
 
 
 class MainWindow(QWidget):
@@ -21,8 +21,6 @@ class MainWindow(QWidget):
         shutdownButton = QPushButton(
             qta.icon("fa6s.power-off", color="white"), "Shutdown"
         )
-        # shutdownButton.setIconSize(QSize(120, 120))
-        # shutdownButton.setToolTip("Shutdown")
         layout.addWidget(shutdownButton)
 
         # Botão Reboot
