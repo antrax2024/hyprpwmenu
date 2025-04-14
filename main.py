@@ -87,14 +87,14 @@ class MainWindow(QWidget):
         Action performed when the shutdown button is clicked or activated.
         """
         print("Shutdown button clicked")
-        os.system("sudo shutdown -h now")
+        os.system("poweroff")
 
     def rebootButtonClick(self) -> None:
         """
         Action performed when the reboot button is clicked or activated.
         """
         print("Reboot button clicked")
-        os.system("sudo reboot")
+        os.system("reboot")
 
     def logoffButtonClick(self) -> None:
         """
