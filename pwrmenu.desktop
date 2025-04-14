@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Power Menu (pwrmenu)
-Exec=/home/antrax/pwrmenu/pwrmenu
+Exec=/home/antrax/pwrmenu/main
 Type=Application
 Icon=pwrmenu
 Categories=Development;
