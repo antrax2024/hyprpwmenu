@@ -8,12 +8,12 @@ APP_DIR="$HOME/.local/share/applications"
 APP_NAME="pwrmenu"
 
 # verifica de ./dist e ./build existe
-if [ -d "./dist" ]; then
-  rm -rfv "./dist"
-fi
-if [ -d "./build" ]; then
-  rm -rfv "./build"
-fi
+# if [ -d "./dist" ]; then
+#   rm -rfv "./dist"
+# fi
+# if [ -d "./build" ]; then
+#   rm -rfv "./build"
+# fi
 
 # verifica se DST existe
 if [ -d "$DST" ]; then
@@ -37,8 +37,3 @@ cp "./$APP_NAME.png" "$ICONS_DIR/$APP_NAME.png"
 
 # install desktop file
 cp ./$APP_NAME.desktop "$APP_DIR/$APP_NAME.desktop"
-
-# delete ./build/linux
-if [ -d "./build/linux" ]; then
-  rm -rfv "./build/linux"
-fi
