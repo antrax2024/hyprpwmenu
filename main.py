@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys
 import subprocess
+from PyQt6 import QtCore
 import qtawesome as qta
 from PyQt6.QtWidgets import (
     QApplication,
@@ -8,15 +9,11 @@ from PyQt6.QtWidgets import (
     QPushButton,
     QHBoxLayout,
     QVBoxLayout,
-    QSizePolicy,
 )
-from PyQt6.QtGui import QIcon, QKeyEvent
+from PyQt6.QtGui import QKeyEvent
 from PyQt6.QtCore import (
     Qt,
-    QSize,
-    QProcess,
 )
-import qdarktheme
 
 
 def executeShellCommand(commandList: list[str]) -> None:
@@ -113,6 +110,7 @@ class PowerMenuWindow(QWidget):
         self.shutdownButton.setIcon(shutdownIcon)
         self.shutdownButton.setToolTip("Shutdown the System")
         self.shutdownButton.setFlat(True)  # Make button background transparent
+        self.shutdownButton.setIconSize(QtCore.QSize(120, 120))
         self.shutdownButton.clicked.connect(self.shutdownButtonClicked)
         self.shutdownButton.setAutoDefault(True)
         self.rebootButton = QPushButton(self)
@@ -199,9 +197,6 @@ class PowerMenuWindow(QWidget):
 if __name__ == "__main__":
     # Create the QApplication instance
     app = QApplication(sys.argv)
-
-    # config theme dark
-    qdarktheme.setup_theme(theme="dark")
 
     # Create and show the main window
     window = PowerMenuWindow()
