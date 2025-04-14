@@ -59,9 +59,16 @@ class MainWindow(QWidget):
         iconSize = QSize(120, 120)
 
         # Create buttons and add them to layout and list
-        self.buttons.append(self.createButton("Shutdown", shutdownIcon, iconSize))
-        self.buttons.append(self.createButton("Reboot", rebootIcon, iconSize))
-        self.buttons.append(self.createButton("Logoff", logoffIcon, iconSize))
+
+        # shutdownButton
+        shutdownButton = self.createButton("Shutdown", shutdownIcon, iconSize)
+        self.buttons.append(shutdownButton)
+        # rebootButton
+        rebootButton = self.createButton("Reboot", rebootIcon, iconSize)
+        self.buttons.append(rebootButton)
+        # logoffButton
+        logoffButton = self.createButton("Logoff", logoffIcon, iconSize)
+        self.buttons.append(logoffButton)
 
         for button in self.buttons:
             layout.addWidget(button)
@@ -72,6 +79,9 @@ class MainWindow(QWidget):
         self.adjustSize()
         # Optional: Make window non-resizable
         # self.setFixedSize(self.size())
+
+    def shutdownButtonClick(self):
+        print("Shutdown button clicked")
 
     def createButton(self, tooltip: str, icon, iconSize: QSize) -> QToolButton:
         """
@@ -143,8 +153,7 @@ class MainWindow(QWidget):
         # Handle Escape key to exit the application
         if key == Qt.Key.Key_Escape:
             self.close()
-            # Consider using QApplication.quit() for a cleaner exit sometimes
-            # sys.exit(0) # This can be abrupt
+            QApplication.quit()
 
         elif key == Qt.Key.Key_Right:
             # Move focus to the next button, wrap around
@@ -156,12 +165,6 @@ class MainWindow(QWidget):
                 self.currentFocusIndex - 1 + numButtons
             ) % numButtons
             self.buttons[self.currentFocusIndex].setFocus()
-        # Allow Enter/Return key to activate the focused button if needed
-        # elif key == Qt.Key.Key_Return or key == Qt.Key.Key_Enter:
-        #     if self.focusWidget() in self.buttons:
-        #         # Add action here, e.g., self.buttons[self.currentFocusIndex].click()
-        #         print(f"{self.buttons[self.currentFocusIndex].toolTip()} activated")
-        #     super().keyPressEvent(event)
         else:
             # Handle other keys normally
             super().keyPressEvent(event)
