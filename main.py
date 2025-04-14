@@ -3,6 +3,7 @@
 """
 Simple Power Menu application
 """
+import os
 import sys
 import qtawesome as qta
 from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QToolButton
@@ -87,24 +88,21 @@ class MainWindow(QWidget):
         Action performed when the shutdown button is clicked or activated.
         """
         print("Shutdown button clicked")
-        # Add actual shutdown logic here
-        # Ex: os.system("shutdown /s /t 1") for Windows
+        os.system("sudo shutdown -h now")
 
     def rebootButtonClick(self):
         """
         Action performed when the reboot button is clicked or activated.
         """
         print("Reboot button clicked")
-        # Add actual reboot logic here
-        # Ex: os.system("shutdown /r /t 1") for Windows
+        os.system("sudo reboot")
 
     def logoffButtonClick(self):
         """
         Action performed when the logoff button is clicked or activated.
         """
         print("Logoff button clicked")
-        # Add actual logoff logic here
-        # Ex: os.system("shutdown /l") for Windows
+        os.system("hyprctl dispatch exit")
 
     def createButton(self, tooltip: str, icon: QIcon, iconSize: QSize) -> QToolButton:
         """
