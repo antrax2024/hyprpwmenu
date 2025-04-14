@@ -2,13 +2,13 @@ import os
 from confz import BaseConfig, FileSource
 
 
-DEBUG = True
+DEBUG = False
 
 if DEBUG:
     fileSource = FileSource(file="config.yaml")
 else:
     HOME_DIR = os.path.expanduser("~")
-    CONFIG_DIR = os.path.join(HOME_DIR, ".config", "power-menu")
+    CONFIG_DIR = os.path.join(HOME_DIR, ".config", "pwrmenu")
     fileSource = FileSource(file=os.path.join(CONFIG_DIR, "./config.yaml"))
 
 

@@ -6,13 +6,11 @@ DST="$HOME/pwrmenu"
 ICONS_DIR="$HOME/.local/share/icons/hicolor/64x64/apps"
 APP_DIR="$HOME/.local/share/applications"
 APP_NAME="pwrmenu"
+CONFIG_DIR="$HOME/.config/pwrmenu"
 
-verifica de ./dist e ./build existe
-if [ -d "./dist" ]; then
-  rm -rfv "./dist"
-fi
-if [ -d "./build" ]; then
-  rm -rfv "./build"
+# verifica se CONFIG_DIR existe
+if [ -d "$CONFIG_DIR" ]; then
+  mkdir -pv "$CONFIG_DIR"
 fi
 
 # verifica se DST existe
@@ -37,3 +35,7 @@ cp "./$APP_NAME.png" "$ICONS_DIR/$APP_NAME.png"
 
 # install desktop file
 cp ./$APP_NAME.desktop "$APP_DIR/$APP_NAME.desktop"
+
+# install config file
+mkdir -pv "$CONFIG_DIR"
+cp ./config.yaml "$CONFIG_DIR/config.yaml"
