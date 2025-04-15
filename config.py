@@ -1,6 +1,5 @@
 from ast import arg
 import os
-from PyInstaller.utils.run_tests import args
 from confz import BaseConfig, FileSource
 import argparse
 import sys
