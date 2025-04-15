@@ -39,8 +39,10 @@ _ ____      ___ __ _ __ ___   ___ _ __  _   _
 
 
 def getGitVersionInfo() -> str:
+    # script dir
+    script_dir = os.path.dirname(os.path.realpath(__file__))
     # read version.txt
-    with open("version.txt", "r") as f:
+    with open(os.path.join(script_dir, "version.txt"), "r") as f:
         return f.read().strip()
 
 

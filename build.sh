@@ -41,4 +41,4 @@ mkdir -pv "$CONFIG_DIR"
 cp ./config.yaml "$CONFIG_DIR/config.yaml"
 
 # install version.txt
-cp ./version.txt "$DST/version.txt"
+cp ./version.txt "$DST/_internal/version.txt"
