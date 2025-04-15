@@ -10,5 +10,6 @@ dependencies = [
     "pyinstaller>=6.12.0",
     "pyinstaller-hooks-contrib>=2025.2",
     "pyqt6>=6.9.0",
+    "pytest>=8.3.5",
     "qtawesome>=1.4.0",
 ]

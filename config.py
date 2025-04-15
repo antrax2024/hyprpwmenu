@@ -1,15 +1,12 @@
 from ast import arg
 import os
+from PyInstaller.utils.run_tests import args
 from confz import BaseConfig, FileSource
 import argparse
 import sys
 
 
 VERSION = "0.1.2"
-CONFIG_FILE: str = os.path.join(
-    os.path.expanduser("~"), ".config", "pwrmenu", "config.yaml"
-)
-fileSource = FileSource(file=CONFIG_FILE)
 
 
 class MainWindow(BaseConfig):
@@ -17,7 +14,7 @@ class MainWindow(BaseConfig):
 
 
 class AppConfig(BaseConfig):
-    CONFIG_SOURCES = fileSource
+    CONFIG_SOURCES = FileSource(file=args.config)
     iconColor: str
     iconColorActive: str
     iconSizeW: int
@@ -53,7 +50,9 @@ def passArgs() -> None:
         "-c",
         "--config",
         type=str,
-        # default=CONFIG_FILE,
+        default=os.path.join(
+            os.path.expanduser(path="~"), ".config", "pwrmenu", "config.yaml"
+        ),
         required=False,
         help="Path to the config file (config.yaml)",
     )
@@ -61,12 +60,14 @@ def passArgs() -> None:
     # Processamento dos argumentos
     args: argparse.Namespace = parser.parse_args()
 
-    if args.config != CONFIG_FILE:
-        CONFIG_FILE = args.config
+    print(args.config)
 
-    print(f"Config file: {CONFIG_FILE}")
+    # if args.config != CONFIG_FILE:
+    #    CONFIG_FILE = args.config
+
+    # print(f"Config file: {CONFIG_FILE}")
 
 
 if __name__ == "__main__":
     printAsciiArt()
-    passArgs()
+    # passArgs()
