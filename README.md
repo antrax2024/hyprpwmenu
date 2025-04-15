@@ -2,8 +2,6 @@
 
 A simple, modern power menu application built with PyQt6.
 
-*(Add a screenshot/GIF here)*
-
 ## Features
 
 *   Provides Shutdown, Reboot, and Logoff actions.
