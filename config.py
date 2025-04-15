@@ -13,7 +13,7 @@ class MainWindow(BaseConfig):
 
 
 class AppConfig(BaseConfig):
-    CONFIG_SOURCES = FileSource(file=args.config)
+    CONFIG_SOURCES = FileSource(file="config.yaml")
     iconColor: str
     iconColorActive: str
     iconSizeW: int
@@ -25,6 +25,10 @@ class AppConfig(BaseConfig):
     rebootCommand: str
     logoffCommand: str
     MainWindow: MainWindow
+
+    def setConfigSources(self, configPath: str) -> None:
+        self.CONFIG_SOURCES = FileSource(file=configPath)
+        self.reload()
 
 
 def printAsciiArt() -> None:
@@ -61,6 +65,8 @@ def passArgs() -> None:
 
     print(args.config)
 
+    appConfig = AppConfig()
+
     # if args.config != CONFIG_FILE:
     #    CONFIG_FILE = args.config
 
@@ -69,4 +75,4 @@ def passArgs() -> None:
 
 if __name__ == "__main__":
     printAsciiArt()
-    # passArgs()
+    passArgs()

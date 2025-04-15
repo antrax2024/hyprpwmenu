@@ -1,7 +1,14 @@
 [project]
-name            = "pwrmenu"
-version         = "0.0.0"
-description     = "Modern PowerMenu"
-readme          = "README.md"
-requires-python = ">=3.12"
-dependencies    = ["confz>=2.1.0", "pyqt6>=6.9.0", "qtawesome>=1.4.0"]
+name = "pwrmenu"
+version = "0.0.0"
+description = "Modern PowerMenu"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "black>=25.1.0",
+    "confz>=2.1.0",
+    "pyinstaller>=6.12.0",
+    "pyinstaller-hooks-contrib>=2025.2",
+    "pyqt6>=6.9.0",
+    "qtawesome>=1.4.0",
+]
