@@ -8,7 +8,7 @@ import qtawesome as qta
 from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QToolButton
 from PyQt6.QtCore import QSize, Qt
 from PyQt6.QtGui import QKeyEvent, QIcon
-from config import AppConfig
+from config import *
 
 
 class MainWindow(QWidget):
@@ -214,8 +214,48 @@ class MainWindow(QWidget):
             super().keyPressEvent(event)
 
 
+def passArgs() -> None:
+    printAsciiArt()
+    # Configuração do parser
+    parser = argparse.ArgumentParser(
+        description=f"pwrmenu - A Modern Power Menu for Hyprland. Version: {getGitVersionInfo()}.",
+    )
+
+    # Argumentos
+    parser.add_argument(
+        "-c",
+        "--config",
+        type=str,
+        default=os.path.join(
+            os.path.expanduser(path="~"), ".config", "pwrmenu", "config.yaml"
+        ),
+        required=False,
+        help="Path to the config file (config.yaml)",
+    )
+
+    parser.add_argument(
+        "-v",
+        "--version",
+        action="version",
+        version=f"pwrmenu - Version: {getGitVersionInfo()}",
+        help="Show the version and exit",
+    )
+
+    # Processamento dos argumentos
+    args: argparse.Namespace = parser.parse_args()
+
+    AppConfig.CONFIG_SOURCES = FileSource(file=args.config)
+    print("Using config file: ", args.config)
+
+    if not os.path.exists(args.config):
+        print("Config file not found. Creating a new one.")
+        sys.exit(1)
+    else:
+        app = QApplication(sys.argv)
+        window = MainWindow()
+        window.show()
+        sys.exit(app.exec())
+
+
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    window.show()
-    sys.exit(app.exec())
+    passArgs()

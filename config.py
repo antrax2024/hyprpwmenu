@@ -4,9 +4,6 @@ import argparse
 import subprocess
 
 
-VERSION = "0.1.2"
-
-
 class MainWindow(BaseConfig):
     backgrounColor: str
 
@@ -35,40 +32,6 @@ _ ____      ___ __ _ __ ___   ___ _ __  _   _
 |_|    
     """
     print(asciiArt)
-
-
-def passArgs() -> None:
-    printAsciiArt()
-    # Configuração do parser
-    parser = argparse.ArgumentParser(
-        description=f"pwrmenu - A Modern Power Menu for Hyprland. Version: {VERSION}.",
-    )
-
-    # Argumentos
-    parser.add_argument(
-        "-c",
-        "--config",
-        type=str,
-        default=os.path.join(
-            os.path.expanduser(path="~"), ".config", "pwrmenu", "config.yaml"
-        ),
-        required=False,
-        help="Path to the config file (config.yaml)",
-    )
-
-    parser.add_argument(
-        "-v",
-        "--version",
-        action="version",
-        version=f"pwrmenu - Version: {getGitVersionInfo()}",
-        help="Show the version and exit",
-    )
-
-    # Processamento dos argumentos
-    args: argparse.Namespace = parser.parse_args()
-
-    AppConfig.CONFIG_SOURCES = FileSource(file=args.config)
-    print("Using config file: ", args.config)
 
 
 def getGitVersionInfo():
@@ -143,11 +106,10 @@ def getGitVersionInfo():
 
 
 if __name__ == "__main__":
-    passArgs()
-    # print(
-    #     "Attempting to generate version string from current directory's git repository..."
-    # )
-    # version = getGitVersionInfo()
-    # print("-" * 30)
-    # print(f"Generated Version (GitPython): {version}")
-    # print("-" * 30)
+    print(
+        "Attempting to generate version string from current directory's git repository..."
+    )
+    version = getGitVersionInfo()
+    print("-" * 30)
+    print(f"Generated Version (GitPython): {version}")
+    print("-" * 30)
