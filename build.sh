@@ -39,3 +39,6 @@ cp ./$APP_NAME.desktop "$APP_DIR/$APP_NAME.desktop"
 # install config file
 mkdir -pv "$CONFIG_DIR"
 cp ./config.yaml "$CONFIG_DIR/config.yaml"
+
+# install version.txt
+cp ./version.txt "$DST/version.txt"

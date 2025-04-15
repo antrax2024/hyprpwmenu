@@ -226,9 +226,7 @@ def passArgs() -> None:
         "-c",
         "--config",
         type=str,
-        default=os.path.join(
-            os.path.expanduser(path="~"), ".config", "pwrmenu", "config.yaml"
-        ),
+        default=AppConfig.CONFIG_SOURCES.file,
         required=False,
         help="Path to the config file (config.yaml)",
     )
