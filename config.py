@@ -39,12 +39,13 @@ _ ____      ___ __ _ __ ___   ___ _ __  _   _
 
 
 def passArgs() -> None:
+    printAsciiArt()
     # Configuração do parser
     parser = argparse.ArgumentParser(
         description=f"pwrmenu - A Modern Power Menu for Hyprland. Version: {VERSION}.",
     )
 
-    # Argumentos opcionais
+    # Argumentos
     parser.add_argument(
         "-c",
         "--config",
@@ -56,6 +57,14 @@ def passArgs() -> None:
         help="Path to the config file (config.yaml)",
     )
 
+    parser.add_argument(
+        "-v",
+        "--version",
+        action="version",
+        version=f"pwrmenu - Version: {VERSION}",
+        help="Show the version and exit",
+    )
+
     # Processamento dos argumentos
     args: argparse.Namespace = parser.parse_args()
 
@@ -64,5 +73,4 @@ def passArgs() -> None:
 
 
 if __name__ == "__main__":
-    printAsciiArt()
     passArgs()
