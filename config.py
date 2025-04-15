@@ -60,7 +60,7 @@ def passArgs() -> None:
         "-v",
         "--version",
         action="version",
-        version=f"pwrmenu - Version: {VERSION}",
+        version=f"pwrmenu - Version: {getGitVersionInfo()}",
         help="Show the version and exit",
     )
 
@@ -80,7 +80,7 @@ def getGitVersionInfo():
 
     Returns:
         str: A string formatted as "commit_count.short_hash",
-             or None if not in a git repository or if git commands fail.
+        or None if not in a git repository or if git commands fail.
     """
     try:
         # Verify it's a git repository first to avoid unnecessary errors later
@@ -143,11 +143,11 @@ def getGitVersionInfo():
 
 
 if __name__ == "__main__":
-    # passArgs()
-    print(
-        "Attempting to generate version string from current directory's git repository..."
-    )
-    version = getGitVersionInfo()
-    print("-" * 30)
-    print(f"Generated Version (GitPython): {version}")
-    print("-" * 30)
+    passArgs()
+    # print(
+    #     "Attempting to generate version string from current directory's git repository..."
+    # )
+    # version = getGitVersionInfo()
+    # print("-" * 30)
+    # print(f"Generated Version (GitPython): {version}")
+    # print("-" * 30)
