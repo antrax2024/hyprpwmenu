@@ -1,9 +1,7 @@
-from ast import arg
 import os
 from confz import BaseConfig, FileSource
 import argparse
-import sys
-import git
+import subprocess
 
 
 VERSION = "0.1.2"
@@ -73,94 +71,75 @@ def passArgs() -> None:
     print("Using config file: ", args.config)
 
 
-def getGitVersionGitPython(repoPath=".", includeDirty=True):
+def getGitVersionInfo():
     """
-    Generates a version string from git describe using GitPython.
-    Formats it similarly to common AUR pkgver() functions (e.g., TAG.rCOMMITS.gHASH).
-    Handles cases with no tags by using the commit hash.
+    Retrieves git commit count and short hash, mimicking the shell script:
+    printf "%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 
-    Args:
-        repoPath (str): Path to the repository. Defaults to current directory.
-        includeDirty (bool): If True, appends '.dirty' if the repo has uncommitted changes.
+    Ensures commands are run within a git repository.
 
     Returns:
-        str: The formatted version string or a fallback error string.
+        str: A string formatted as "commit_count.short_hash",
+             or None if not in a git repository or if git commands fail.
     """
     try:
-        # Initialize Repo object
-        repo = git.Repo(path=repoPath, search_parent_directories=True)
+        # Verify it's a git repository first to avoid unnecessary errors later
+        # Using check=True will raise CalledProcessError if the command fails (e.g., not a git repo)
+        subprocess.run(
+            ["git", "rev-parse", "--is-inside-work-tree"],
+            check=True,  # Raise exception on non-zero exit code
+            capture_output=True,  # Capture stdout and stderr
+            text=True,  # Decode output as text using default encoding
+            encoding="utf-8",  # Specify UTF-8 encoding
+        )
 
-        # Check if the repository is dirty (has uncommitted changes)
-        isDirty = repo.is_dirty()
+        # Get commit count using check_output
+        commitCountBytes = subprocess.check_output(
+            ["git", "rev-list", "--count", "HEAD"],
+            stderr=subprocess.PIPE,  # Redirect stderr to avoid printing it
+            encoding="utf-8",  # Specify UTF-8 encoding
+        )
+        commitCount = (
+            commitCountBytes.strip()
+        )  # Remove leading/trailing whitespace (like newline)
 
-        # Attempt to get version using 'git describe --long --tags'
-        try:
-            # --long ensures output like TAG-COMMITS-gHASH even on exact tag match (COMMITS=0)
-            # --tags ensures we describe against annotated tags
-            versionStringRaw = repo.git.describe("--long", "--tags")
-            versionStringRaw = versionStringRaw.strip()  # Clean whitespace
+        # Get short commit hash using check_output
+        shortHashBytes = subprocess.check_output(
+            ["git", "rev-parse", "--short", "HEAD"],
+            stderr=subprocess.PIPE,  # Redirect stderr
+            encoding="utf-8",  # Specify UTF-8 encoding
+        )
+        shortHash = shortHashBytes.strip()  # Remove leading/trailing whitespace
 
-            # Parse the output (e.g., v1.2.3-10-gabcdef0)
-            parts = versionStringRaw.split("-")
+        # Format the output string as "count.hash"
+        versionInfo = f"{commitCount}.{shortHash}"
+        return versionInfo
 
-            if len(parts) == 3 and parts[2].startswith("g"):
-                tag = parts[0]
-                commitCount = parts[1]
-                commitHash = parts[2]  # e.g., gabcdef0
-
-                # Remove leading 'v' from tag if present (common in AUR)
-                if tag.startswith("v"):
-                    tag = tag[1:]
-
-                # Format like AUR: TAG.rCOMMIT_COUNT.gHASH
-                formattedVersion = f"{tag}.r{commitCount}.{commitHash}"
-            else:
-                # Fallback if format is unexpected (shouldn't happen often with --long)
-                formattedVersion = versionStringRaw.replace(
-                    "-", "."
-                )  # Basic fallback formatting
-
-        except git.GitCommandError as describeError:
-            # This error often happens if there are no tags in the repository
-            print(
-                f"Info: 'git describe --tags' failed (likely no tags found): {describeError}"
-            )
-            # Fallback: Use the latest commit hash directly
-            commitHash = repo.head.object.hexsha
-            shortHash = repo.git.rev_parse(
-                commitHash, short=7
-            )  # Get short hash like describe
-            # Format like AUR for commits with no base tag: 0.0.r0.gHASH
-            formattedVersion = f"0.0.r0.g{shortHash}"
-            print(
-                f"Info: Falling back to version based on commit hash: {formattedVersion}"
-            )
-
-        # Append dirty marker if applicable
-        if includeDirty and isDirty:
-            formattedVersion += ".dirty"
-
-        return formattedVersion
-
-    except git.InvalidGitRepositoryError:
-        print(f"Error: Path '{repoPath}' is not a valid git repository.")
-        return "0.0.0.nogit"
+    except FileNotFoundError:
+        # Handle error if git is not installed or not in PATH
+        print(
+            "Error: 'git' command not found. Make sure Git is installed and in your PATH."
+        )
+        return None
+    except subprocess.CalledProcessError as e:
+        # Handle errors if git commands fail
+        # Common reason: not running inside a git repository
+        # Check stderr to provide a more specific error message
+        error_message = (
+            e.stderr.decode("utf-8").strip()
+            if hasattr(e, "stderr") and e.stderr
+            else str(e)
+        )
+        if "not a git repository" in error_message.lower():
+            print(f"Error: Not inside a git repository.")  # Simplified message
+        else:
+            # General error message for other git command failures
+            print(f"Error executing git command: {e}. Stderr: {error_message}")
+        return None
     except Exception as e:
+        # Catch any other unexpected errors during execution
         print(f"An unexpected error occurred: {e}")
-        return "0.0.0.error"
-
-
-if __name__ == "__main__":
-    # Ensure you run this script from within a directory that is part of a Git repository
-    # Or provide the path to the repository: getGitVersionGitPython(repoPath='/path/to/your/repo')
-
-    print(
-        "Attempting to generate version string from current directory's git repository..."
-    )
-    version = getGitVersionGitPython()
-    print("-" * 30)
-    print(f"Generated Version (GitPython): {version}")
-    print("-" * 30)
+        return None
 
 
 if __name__ == "__main__":
@@ -168,7 +147,7 @@ if __name__ == "__main__":
     print(
         "Attempting to generate version string from current directory's git repository..."
     )
-    version = getGitVersionGitPython()
+    version = getGitVersionInfo()
     print("-" * 30)
     print(f"Generated Version (GitPython): {version}")
     print("-" * 30)
