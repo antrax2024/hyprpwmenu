@@ -5,4 +5,4 @@ MAJOR_VERSION="$(git rev-parse --short HEAD)"
 
 echo "$MINOR_VERSION.$MAJOR_VERSION"
 
-echo "$MINOR_VERSION.$MAJOR_VERSION" >>version.txt
+echo "$MINOR_VERSION.$MAJOR_VERSION" >version.txt
