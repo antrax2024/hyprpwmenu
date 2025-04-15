@@ -26,10 +26,6 @@ class AppConfig(BaseConfig):
     logoffCommand: str
     MainWindow: MainWindow
 
-    def setConfigSources(self, configPath: str) -> None:
-        self.CONFIG_SOURCES = FileSource(file=configPath)
-        self.reload()
-
 
 def printAsciiArt() -> None:
     asciiArt = r"""
@@ -63,14 +59,8 @@ def passArgs() -> None:
     # Processamento dos argumentos
     args: argparse.Namespace = parser.parse_args()
 
-    print(args.config)
-
-    appConfig = AppConfig()
-
-    # if args.config != CONFIG_FILE:
-    #    CONFIG_FILE = args.config
-
-    # print(f"Config file: {CONFIG_FILE}")
+    AppConfig.CONFIG_SOURCES = FileSource(file=args.config)
+    print("Using config file: ", args.config)
 
 
 if __name__ == "__main__":
