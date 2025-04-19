@@ -1,7 +1,7 @@
 [Desktop Entry]
-Name=Power Menu (pwrmenu)
-Exec=/home/antrax/pwrmenu/pwrmenu
+Name=Power Menu (hyprpwmenu)
+Exec=/home/antrax/hyprpwmenu/hyprpwmenu
 Type=Application
-Icon=pwrmenu
+Icon=hyprpwmenu
 Categories=Development;
 Terminal=false

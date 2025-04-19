@@ -11,7 +11,7 @@ class MainWindow(BaseConfig):
 class AppConfig(BaseConfig):
     CONFIG_SOURCES = FileSource(
         file=os.path.join(
-            os.path.expanduser(path="~"), ".config", "pwrmenu", "config.yaml"
+            os.path.expanduser(path="~"), ".config", "hyprpwmenu", "config.yaml"
         )
     )
     iconColor: str
@@ -49,5 +49,5 @@ def getGitVersionInfo() -> str:
 if __name__ == "__main__":
     printAsciiArt()
     version = getGitVersionInfo()
-    print(f"pwrmenu - Version: {version}")
+    print(f"hyprpwmenu - Version: {version}")
     print("-" * 30)

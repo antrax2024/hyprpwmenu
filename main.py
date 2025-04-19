@@ -218,7 +218,7 @@ def passArgs() -> None:
     printAsciiArt()
     # Configuração do parser
     parser = argparse.ArgumentParser(
-        description=f"pwrmenu - A Modern Power Menu for Hyprland. Version: {getGitVersionInfo()}.",
+        description=f"hyprpwmenu - A Modern Power Menu for Hyprland. Version: {getGitVersionInfo()}.",
     )
 
     # Argumentos
@@ -235,7 +235,7 @@ def passArgs() -> None:
         "-v",
         "--version",
         action="version",
-        version=f"pwrmenu - Version: {getGitVersionInfo()}",
+        version=f"hyprpwmenu - Version: {getGitVersionInfo()}",
         help="Show the version and exit",
     )
 
