@@ -6,8 +6,9 @@
 general:
   icon_color: "#19e6c0" # Color of the icons
   icon_color_active: "black" # Color of the active icons
-  icon_width: 120 # Width of the icons
-  icon_height: 120 # Height of the icons
+  icon_width: 80 # Width of the icons
+  icon_height: 80 # Height of the icons
+  font_size: 18px; # Font size for the text under the buttons
 
 # Main Window configuration
 main_window:
@@ -20,14 +21,17 @@ main_window:
 # Shutdown icon and command
 shutdown:
   icon: "fa6s.power-off" # Path to the shutdown icon
+  icon_color: "#9575CD" # Color of the icons
   command: "poweroff" # Command to execute when the shutdown icon is clicked
 
 # Reboot icon and command
 reboot:
   icon: "fa6s.repeat" # Path to the reboot icon
+  icon_color: "#18FFFF" # Color of the icons
   command: "reboot" # Command to execute when the reboot icon is clicked
 
 # Logoff icon and command
 logoff:
   icon: "ri.logout-box-r-fill" # Path to the logoff icon
+  icon_color: "#69F0AE" # Color of the icons
   command: "hyprctl dispatch exit" # Command to execute when the logout icon is clicked

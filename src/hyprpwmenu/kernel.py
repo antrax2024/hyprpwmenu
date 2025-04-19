@@ -192,12 +192,12 @@ class MainWindow(QWidget):
             stderr=subprocess.DEVNULL,
         )
 
-    def createButton(self, tooltip: str, icon: QIcon, iconSize: QSize) -> QToolButton:
+    def createButton(self, text: str, icon: QIcon, iconSize: QSize) -> QToolButton:
         """
         Creates a QToolButton with specified properties.
 
         Args:
-            tooltip (str): The text to show when hovering over the button.
+            text (str): The text to show below the icon.
             icon (QIcon): The icon for the button (created using qtawesome).
             iconSize (QSize): The desired size of the icon.
 
@@ -207,7 +207,8 @@ class MainWindow(QWidget):
         button = QToolButton()
         button.setIcon(icon)
         button.setIconSize(iconSize)
-        button.setToolTip(tooltip)
+        button.setText(text)
+        button.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
         # Set focus policy to allow keyboard focus
         button.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
         return button
@@ -215,39 +216,86 @@ class MainWindow(QWidget):
     def applyStyles(self) -> None:
         """
         Applies CSS-like stylesheets for appearance and hover/focus effects.
+        Includes specific styles for individual buttons.
         """
-        self.setStyleSheet(
-            """
-            QWidget {
-                background-color: %s; /* Window background */
-            }
-            QToolButton {
-                background-color: transparent; /* Default transparent background */
-                border: 2px solid transparent; /* Add transparent border to reserve space */
-                border-radius: 25px; /* Rounded corners */
-                padding: 5px; /* Add some padding around the icon */
-                margin: 0px; /* No margin between buttons */
-            }
-            /* Style for when the button has keyboard focus */
-            QToolButton:focus {
-                border: 2px solid %s; 
-                background-color: transparent; /* Slightly lighter background when focused */
-            }
-            /* Optional: Style for when the mouse is hovering */
-            QToolButton:hover {
-                background-color: #263238; /* Dark gray background on hover */
-            }
-            QToolTip {
-                color: black;
-                background-color: lightgray;
-                border: 1px solid black;
-            }
+        # Base styles for all widgets and buttons
+        baseStyles = f"""
+            QWidget {{
+                background-color: {self.appConfig.main_window.background_color}; /* Window background */
+            }}
         """
-            % (
-                self.appConfig.main_window.background_color,
-                self.appConfig.general.icon_color,
-            )
-        )
+
+        # Combine base and specific styles
+        self.setStyleSheet(baseStyles)
+
+    # def applyStyles(self) -> None:
+    #     """
+    #     Applies CSS-like stylesheets for appearance and hover/focus effects.
+    #     Includes specific styles for individual buttons.
+    #     """
+    #     # Base styles for all widgets and buttons
+    #     baseStyles = f"""
+    #         QWidget {{
+    #             background-color: {self.appConfig.main_window.background_color}; /* Window background */
+    #         }}
+    #         QToolButton {{
+    #             background-color: transparent; /* Default transparent background */
+    #             border: 2px solid transparent; /* Add transparent border to reserve space */
+    #             border-radius: 25px; /* Rounded corners */
+    #             padding: 5px; /* Add some padding around the icon */
+    #             margin: 0px; /* No margin between buttons */
+    #             color: {self.appConfig.general.icon_color}; /* Text color */
+    #             font-size: 16px; /* Font size */
+    #         }}
+    #         /* Style for when the button has keyboard focus */
+    #         QToolButton:focus {{
+    #             border: 2px solid {self.appConfig.general.icon_color};
+    #             background-color: transparent; /* Slightly lighter background when focused */
+    #         }}
+    #         /* Optional: Style for when the mouse is hovering */
+    #         QToolButton:hover {{
+    #             background-color: #263238; /* Dark gray background on hover */
+    #         }}
+    #     """
+
+    #     # Specific styles for each button
+    #     specificStyles = """
+    #         /* Shutdown button specific styles */
+    #         QToolButton#shutdownButton {
+    #             color: #FF5252; /* Red text for shutdown */
+    #         }
+    #         QToolButton#shutdownButton:focus {
+    #             border-color: #FF5252;
+    #         }
+    #         QToolButton#shutdownButton:hover {
+    #             background-color: rgba(255, 82, 82, 0.2);
+    #         }
+
+    #         /* Reboot button specific styles */
+    #         QToolButton#rebootButton {
+    #             color: #FFC107; /* Amber text for reboot */
+    #         }
+    #         QToolButton#rebootButton:focus {
+    #             border-color: #FFC107;
+    #         }
+    #         QToolButton#rebootButton:hover {
+    #             background-color: rgba(255, 193, 7, 0.2);
+    #         }
+
+    #         /* Logoff button specific styles */
+    #         QToolButton#logoffButton {
+    #             color: #4CAF50; /* Green text for logoff */
+    #         }
+    #         QToolButton#logoffButton:focus {
+    #             border-color: #4CAF50;
+    #         }
+    #         QToolButton#logoffButton:hover {
+    #             background-color: rgba(76, 175, 80, 0.2);
+    #         }
+    #     """
+
+    #     # Combine base and specific styles
+    #     self.setStyleSheet(baseStyles)
 
     # --- MÉTODO CORRIGIDO ---
     def keyPressEvent(self, event: QKeyEvent) -> None:  # type: ignore

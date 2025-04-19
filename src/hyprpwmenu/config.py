@@ -32,6 +32,7 @@ class General(BaseConfig):
     icon_color_active: str  # Color of the icon when active
     icon_width: int  # Width of the icon
     icon_height: int  # Height of the icon
+    font_size: str  # Font size for the text under the icon
 
 
 # Main Window
@@ -46,18 +47,21 @@ class MainWindow(BaseConfig):
 # Shutdown icon and command
 class Shutdown(BaseConfig):
     icon: str
+    icon_color: str
     command: str
 
 
 # Reboot icon and command
 class Reboot(BaseConfig):
     icon: str
+    icon_color: str
     command: str
 
 
 # Logoff icon and command
 class Logoff(BaseConfig):
     icon: str
+    icon_color: str
     command: str
 
 
