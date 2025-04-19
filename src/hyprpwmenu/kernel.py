@@ -1,10 +1,10 @@
 import os
 from PyQt6.QtWidgets import QWidget, QHBoxLayout, QToolButton
 from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtGui import QKeyEvent, QIcon
+from PyQt6.QtGui import QKeyEvent, QIcon, QGuiApplication
 import qtawesome as qta
 from hyprpy import Hyprland
-from .config import AppConfig
+from .config import APP_NAME, AppConfig
 
 
 class MainWindow(QWidget):
@@ -18,7 +18,12 @@ class MainWindow(QWidget):
         """
         super().__init__()
         self.appConfig = appConfig
-        self.setWindowTitle("Power Menu")
+        self.setWindowTitle(f"{APP_NAME}")
+
+        # Set application name and class before creating QWidget
+        QGuiApplication.setApplicationName("hyprpwmenu")
+        QGuiApplication.setDesktopFileName("hyprpwmenu")
+        QGuiApplication.setApplicationDisplayName("hyprpwmenu")
 
         # List to hold the buttons for easy navigation
         self.buttons = []
@@ -104,8 +109,18 @@ class MainWindow(QWidget):
         print(f"  Size: {window.width}x{window.height}")
         print(f"  Position: ({window.position_x}, {window.position_y})")
         print(f"  Workspace: {window.workspace.id}")
-        # print(f"  Floating: {window.floating}")
-        # print(f"  Fullscreen: {window.fullscreen}")
+        windows = instance.get_windows()
+        for window in windows:
+            print(f"  Window: {window.wm_class}")
+            print(f"  Title: {window.title}")
+            print(f"  Size: {window.width}x{window.height}")
+            print(f"  Position: ({window.position_x}, {window.position_y})")
+            print(f"  Workspace: {window.workspace.id}")
+            print("-" * 80)
+
+    # print(f"  Floating: {window.floating}")
+    # print(f"  Fullscreen: {window.fullscreen}")
+    # hyprctlDispatch(rule=r"togglefloating")
 
     def shutdownButtonClick(self) -> None:
         """
@@ -227,3 +242,13 @@ class MainWindow(QWidget):
         else:
             # Handle other keys normally by passing the event to the parent
             super().keyPressEvent(event)
+
+
+def hyprctlDispatch(rule: str) -> None:
+    """
+    Executes a command Dispatch using the Hyprland control tool (hyprctl).
+
+    Args:
+        rule (str): The rule to execute.
+    """
+    os.system(command=f"hyprctl dispatch {rule}")
