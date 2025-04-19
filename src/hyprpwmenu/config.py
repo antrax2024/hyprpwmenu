@@ -1,7 +1,5 @@
 import os
 import sys
-from typing import Any
-from click import clear
 from confz import BaseConfig, FileSource
 from .constants import APP_NAME
 import shutil
@@ -38,7 +36,10 @@ class General(BaseConfig):
 
 # Main Window
 class MainWindow(BaseConfig):
-    background_color: str
+    fullscreen: bool  # Fullscreen mode
+    width: int  # Width of the window
+    height: int  # Height of the window
+    background_color: str  # Background color
 
 
 # Shutdown icon and command

@@ -11,6 +11,9 @@ general:
 
 # Main Window configuration
 main_window:
+  fullscreen: true # Set to true to make the main window fullscreen
+  width: 800 # Width of the main window
+  height: 300 # Height of the main window
   background_color: "#000000" # Background color of the main window
 
 # Shutdown icon and command

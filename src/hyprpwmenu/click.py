@@ -32,6 +32,7 @@ def cli(config_file) -> None:
 
     if config_file:
         # determine if file exists
+
         if not os.path.exists(path=config_file):
             click.echo(
                 message=f"Configuration file does not exist: {config_file}.\nCreating a new..."

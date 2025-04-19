@@ -3,15 +3,22 @@ import time
 from PyQt6.QtWidgets import QWidget, QHBoxLayout, QToolButton
 from PyQt6.QtCore import QSize, Qt
 from PyQt6.QtGui import QKeyEvent, QIcon, QGuiApplication
-import qtawesome as qta
 from .config import APP_NAME, AppConfig
 import multiprocessing
+from types import SimpleNamespace
+import qtawesome as qta
 
 
 class MainWindow(QWidget):
     """
     Main application window displaying control buttons.
     """
+
+    # rules = SimpleNamespace(
+    #     floating="'togglefloating class:^(hyprpwmenu)$'",
+    #     fullscreen="'togglefullscreen 0 class:^(hyprpwmenu)$'",
+    #     centerwindow="'centerwindow class:^(hyprpwmenu)$'",
+    # )
 
     def __init__(self, appConfig: AppConfig) -> None:
         """
@@ -94,12 +101,16 @@ class MainWindow(QWidget):
         # Set the layout on the main window
         self.setLayout(layout)
 
-        # Make window floating
-        # hyprctlDispatch(rule="'togglefloating class:^(hyprpwmenu)$'")
+        # Adjusting Windows Parameters
+        ## Make window floating
         childProcess = multiprocessing.Process(
             target=childDispatch, args=("'togglefloating class:^(hyprpwmenu)$'",)
         )
         childProcess.start()
+        ## Analizing if the window is fullscreen
+        if self.appConfig.main_window.fullscreen:
+            # Set the window to fullscreen
+            self.showFullScreen()
 
     def shutdownButtonClick(self) -> None:
         """
