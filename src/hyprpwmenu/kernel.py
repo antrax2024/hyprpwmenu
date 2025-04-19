@@ -4,10 +4,11 @@ import subprocess
 from PyQt6.QtWidgets import QWidget, QHBoxLayout, QToolButton
 from PyQt6.QtCore import QSize, Qt
 from PyQt6.QtGui import QKeyEvent, QIcon, QGuiApplication
-from .config import APP_NAME, AppConfig
+from .config import AppConfig
 import multiprocessing
 from types import SimpleNamespace
 import qtawesome as qta
+from .constants import APP_NAME, APP_VERSION
 
 
 class MainWindow(QWidget):
@@ -122,6 +123,10 @@ class MainWindow(QWidget):
         # Set the layout on the main window
         self.setLayout(layout)
 
+        # Ensure the shutdown button gets focus
+        if self.buttons:
+            self.buttons[0].setFocus()
+
         # Adjusting Windows Parameters
         ## Make window floating
         floatingProcess = multiprocessing.Process(
@@ -219,7 +224,7 @@ class MainWindow(QWidget):
             QToolButton {
                 background-color: transparent; /* Default transparent background */
                 border: 2px solid transparent; /* Add transparent border to reserve space */
-                border-radius: 15px; /* Rounded corners */
+                border-radius: 25px; /* Rounded corners */
                 padding: 5px; /* Add some padding around the icon */
                 margin: 0px; /* No margin between buttons */
             }
@@ -230,7 +235,7 @@ class MainWindow(QWidget):
             }
             /* Optional: Style for when the mouse is hovering */
             QToolButton:hover {
-                background-color: #222222; /* Dark gray background on hover */
+                background-color: #263238; /* Dark gray background on hover */
             }
             QToolTip {
                 color: black;
