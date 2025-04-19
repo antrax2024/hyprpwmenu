@@ -1,10 +1,11 @@
 import os
+import time
 from PyQt6.QtWidgets import QWidget, QHBoxLayout, QToolButton
 from PyQt6.QtCore import QSize, Qt
 from PyQt6.QtGui import QKeyEvent, QIcon, QGuiApplication
 import qtawesome as qta
-from hyprpy import Hyprland
 from .config import APP_NAME, AppConfig
+import multiprocessing
 
 
 class MainWindow(QWidget):
@@ -92,35 +93,13 @@ class MainWindow(QWidget):
 
         # Set the layout on the main window
         self.setLayout(layout)
-        # Adjust window size to fit content snugly
-        self.adjustSize()
-        # Optional: Make window non-resizable
-        # self.setFixedSize(self.size())
-        instance = Hyprland()
-        # Fetch active window and display information:
-        window = instance.get_active_window()
-        print(f"window.wm_class {window.wm_class}")
-        print(f"window.width {window.width}")
-        print(f"window.position_x {window.position_x}")
-        # Print window information in a more readable format
-        print("Active Window Information:")
-        print(f"  Class: {window.wm_class}")
-        print(f"  Title: {window.title}")
-        print(f"  Size: {window.width}x{window.height}")
-        print(f"  Position: ({window.position_x}, {window.position_y})")
-        print(f"  Workspace: {window.workspace.id}")
-        windows = instance.get_windows()
-        for window in windows:
-            print(f"  Window: {window.wm_class}")
-            print(f"  Title: {window.title}")
-            print(f"  Size: {window.width}x{window.height}")
-            print(f"  Position: ({window.position_x}, {window.position_y})")
-            print(f"  Workspace: {window.workspace.id}")
-            print("-" * 80)
 
-    # print(f"  Floating: {window.floating}")
-    # print(f"  Fullscreen: {window.fullscreen}")
-    # hyprctlDispatch(rule=r"togglefloating")
+        # Make window floating
+        # hyprctlDispatch(rule="'togglefloating class:^(hyprpwmenu)$'")
+        childProcess = multiprocessing.Process(
+            target=childDispatch, args=("'togglefloating class:^(hyprpwmenu)$'",)
+        )
+        childProcess.start()
 
     def shutdownButtonClick(self) -> None:
         """
@@ -242,6 +221,13 @@ class MainWindow(QWidget):
         else:
             # Handle other keys normally by passing the event to the parent
             super().keyPressEvent(event)
+
+
+def childDispatch(rule: str) -> None:
+    # print("childDispatch started")
+    time.sleep(0.1)  # Atraso de 100ms.
+    hyprctlDispatch(rule)
+    # print("childDispatch finished")
 
 
 def hyprctlDispatch(rule: str) -> None:

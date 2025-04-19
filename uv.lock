@@ -54,7 +54,6 @@ source = { editable = "." }
 dependencies = [
     { name = "click" },
     { name = "confz" },
-    { name = "hyprpy" },
     { name = "pyqt6" },
     { name = "qtawesome" },
 ]
@@ -63,21 +62,8 @@ dependencies = [
 requires-dist = [
     { name = "click", specifier = ">=8.1.8" },
     { name = "confz", specifier = ">=2.1.0" },
-    { name = "hyprpy", specifier = ">=0.2.0" },
     { name = "pyqt6", specifier = ">=6.9.0" },
     { name = "qtawesome", specifier = ">=1.4.0" },
-]
-
-[[package]]
-name = "hyprpy"
-version = "0.2.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "pydantic" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/fa/0a/f4b2a79bc512d3acb01a7f72d1e761de479f642a5f7342fe57d2f9dcc220/hyprpy-0.2.0.tar.gz", hash = "sha256:7ffd5a0ed00ab249e52ef27ad849399a89c2cd3fcb2dc9878355da377afaaa9c", size = 24518 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/1b/b8/c68b6f213eec11baa6a6fcf45daafcf5f062f3e6e5b04f08830c4c2a9bfa/hyprpy-0.2.0-py3-none-any.whl", hash = "sha256:91fa24d28c0f24803dede3c649e03e21757b5c813579e68385805d4d7b4ba5f5", size = 28399 },
 ]
 
 [[package]]
