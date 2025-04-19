@@ -1,5 +1,6 @@
 import os
 import time
+import subprocess
 from PyQt6.QtWidgets import QWidget, QHBoxLayout, QToolButton
 from PyQt6.QtCore import QSize, Qt
 from PyQt6.QtGui import QKeyEvent, QIcon, QGuiApplication
@@ -14,11 +15,12 @@ class MainWindow(QWidget):
     Main application window displaying control buttons.
     """
 
-    # rules = SimpleNamespace(
-    #     floating="'togglefloating class:^(hyprpwmenu)$'",
-    #     fullscreen="'togglefullscreen 0 class:^(hyprpwmenu)$'",
-    #     centerwindow="'centerwindow class:^(hyprpwmenu)$'",
-    # )
+    rules = SimpleNamespace(
+        focus="focuswindow class:hyprpwmenu",
+        floating="togglefloating",
+        fullscreen="fullscreen",
+        centerwindow="centerwindow 0",
+    )
 
     def __init__(self, appConfig: AppConfig) -> None:
         """
@@ -103,35 +105,68 @@ class MainWindow(QWidget):
 
         # Adjusting Windows Parameters
         ## Make window floating
-        childProcess = multiprocessing.Process(
-            target=childDispatch, args=("'togglefloating class:^(hyprpwmenu)$'",)
+        floatingProcess = multiprocessing.Process(
+            target=self.childDispatch, args=("'togglefloating class:^(hyprpwmenu)$'",)
         )
-        childProcess.start()
+        floatingProcess.start()
         ## Analizing if the window is fullscreen
         if self.appConfig.main_window.fullscreen:
+            print("Fullscreen mode enabled")
             # Set the window to fullscreen
-            self.showFullScreen()
+            fullscreenProcess = multiprocessing.Process(
+                target=self.childDispatch,
+                args=(self.rules.fullscreen,),
+            )
+            fullscreenProcess.start()
+        else:
+            print("Fullscreen mode disabled")
+            # Resize the window to the specified dimensions
+            sizeProcess = multiprocessing.Process(
+                target=self.childDispatch,
+                args=(
+                    f"resizeactive exact {self.appConfig.main_window.width} {self.appConfig.main_window.height}",
+                ),
+            )
+            sizeProcess.start()
+            # center the window
+            centerProcess = multiprocessing.Process(
+                target=self.childDispatch,
+                args=(self.rules.centerwindow,),
+            )
+            centerProcess.start()
 
     def shutdownButtonClick(self) -> None:
         """
         Action performed when the shutdown button is clicked or activated.
         """
-        print("Shutdown button clicked")
-        os.system(command=self.appConfig.shutdown.command)
+        subprocess.run(
+            self.appConfig.shutdown.command,
+            shell=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
 
     def rebootButtonClick(self) -> None:
         """
         Action performed when the reboot button is clicked or activated.
         """
-        print("Reboot button clicked")
-        os.system(command=self.appConfig.reboot.command)
+        subprocess.run(
+            self.appConfig.reboot.command,
+            shell=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
 
     def logoffButtonClick(self) -> None:
         """
         Action performed when the logoff button is clicked or activated.
         """
-        print("Logoff button clicked")
-        os.system(command=self.appConfig.logoff.command)
+        subprocess.run(
+            self.appConfig.logoff.command,
+            shell=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
 
     def createButton(self, tooltip: str, icon: QIcon, iconSize: QSize) -> QToolButton:
         """
@@ -233,19 +268,25 @@ class MainWindow(QWidget):
             # Handle other keys normally by passing the event to the parent
             super().keyPressEvent(event)
 
+    def childDispatch(self, rule: str) -> None:
+        # print("childDispatch started")
+        time.sleep(0.1)  # Atraso de 100ms.
+        # First dispatch the focus rule to ensure the window is focused
+        # self.hyprctlDispatch(rule=self.rules.focus)
+        # Then dispatch the actual rule
+        self.hyprctlDispatch(rule=rule)
+        # print("childDispatch finished")
 
-def childDispatch(rule: str) -> None:
-    # print("childDispatch started")
-    time.sleep(0.1)  # Atraso de 100ms.
-    hyprctlDispatch(rule)
-    # print("childDispatch finished")
+    def hyprctlDispatch(self, rule: str) -> None:
+        """
+        Executes a command Dispatch using the Hyprland control tool (hyprctl).
 
-
-def hyprctlDispatch(rule: str) -> None:
-    """
-    Executes a command Dispatch using the Hyprland control tool (hyprctl).
-
-    Args:
-        rule (str): The rule to execute.
-    """
-    os.system(command=f"hyprctl dispatch {rule}")
+        Args:
+            rule (str): The rule to execute.
+        """
+        subprocess.run(
+            f"hyprctl dispatch focuswindow class:hyprpwmenu ; hyprctl dispatch {rule}",
+            shell=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
