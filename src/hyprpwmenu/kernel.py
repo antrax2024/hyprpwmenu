@@ -97,8 +97,27 @@ class MainWindow(QWidget):
         logoffButton.clicked.connect(self.logoffButtonClick)
         self.buttons.append(logoffButton)
 
-        for button in self.buttons:
-            layout.addWidget(button)
+        # Add a stretch at the beginning to center the buttons
+        layout.addStretch(1)
+        # Add first button
+        layout.addWidget(shutdownButton)
+        # space_between_buttons = 20  # Adjust this value to control spacing
+        space_between_buttons = (
+            self.appConfig.main_window.space_between_buttons
+        )  # Adjust this value to control spacing
+        layout.addSpacing(space_between_buttons)
+
+        # Add second button
+        layout.addWidget(rebootButton)
+
+        # Add fixed-width spacer
+        layout.addSpacing(space_between_buttons)
+
+        # Add third button
+        layout.addWidget(logoffButton)
+
+        # Add a stretch at the end to center the buttons
+        layout.addStretch(1)
 
         # Set the layout on the main window
         self.setLayout(layout)

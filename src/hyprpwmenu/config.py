@@ -39,6 +39,7 @@ class MainWindow(BaseConfig):
     fullscreen: bool  # Fullscreen mode
     width: int  # Width of the window
     height: int  # Height of the window
+    space_between_buttons: int  # Fixed space between buttons
     background_color: str  # Background color
 
 

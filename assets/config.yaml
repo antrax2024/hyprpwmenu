@@ -14,6 +14,7 @@ main_window:
   fullscreen: true # Set to true to make the main window fullscreen
   width: 720 # Width of the main window
   height: 350 # Height of the main window
+  space_between_buttons: 60 # Space between buttons
   background_color: "#000000" # Background color of the main window
 
 # Shutdown icon and command
