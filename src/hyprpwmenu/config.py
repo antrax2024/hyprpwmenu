@@ -26,17 +26,10 @@ def createConfigFile(configFile: str) -> None:
         sys.exit(1)
 
 
-# General specifications
-class General(BaseConfig):
-    icon_color: str  # Color of the icon
-    icon_color_active: str  # Color of the icon when active
-    icon_width: int  # Width of the icon
-    icon_height: int  # Height of the icon
-    font_size: str  # Font size for the text under the icon
-
-
 # Main Window
 class MainWindow(BaseConfig):
+    icon_size: int  # Width of the icon
+    font_size: str  # Font size for the text under the icon
     fullscreen: bool  # Fullscreen mode
     width: int  # Width of the window
     height: int  # Height of the window
@@ -48,6 +41,7 @@ class MainWindow(BaseConfig):
 class Shutdown(BaseConfig):
     icon: str
     icon_color: str
+    icon_color_active: str
     command: str
 
 
@@ -55,6 +49,7 @@ class Shutdown(BaseConfig):
 class Reboot(BaseConfig):
     icon: str
     icon_color: str
+    icon_color_active: str
     command: str
 
 
@@ -62,6 +57,7 @@ class Reboot(BaseConfig):
 class Logoff(BaseConfig):
     icon: str
     icon_color: str
+    icon_color_active: str
     command: str
 
 
@@ -74,7 +70,6 @@ class AppConfig(BaseConfig):
         )
     )
 
-    general: General  # General
     main_window: MainWindow  # Main Window
     shutdown: Shutdown  # Shutdown icon and command
     logoff: Logoff  # Logoff icon and command

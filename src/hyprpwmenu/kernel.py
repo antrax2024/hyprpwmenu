@@ -64,23 +64,23 @@ class MainWindow(QWidget):
         # Icons
         shutdownIcon = qta.icon(
             self.appConfig.shutdown.icon,
-            color=self.appConfig.general.icon_color,
-            color_active=self.appConfig.general.icon_color_active,
+            color=self.appConfig.shutdown.icon_color,
+            color_active=self.appConfig.shutdown.icon_color_active,
         )
         rebootIcon = qta.icon(
             self.appConfig.reboot.icon,
-            color=self.appConfig.general.icon_color,
-            color_active=self.appConfig.general.icon_color_active,
+            color=self.appConfig.reboot.icon_color,
+            color_active=self.appConfig.reboot.icon_color_active,
         )
         logoffIcon = qta.icon(
             self.appConfig.logoff.icon,
-            color=self.appConfig.general.icon_color,
-            color_active=self.appConfig.general.icon_color_active,
+            color=self.appConfig.logoff.icon_color,
+            color_active=self.appConfig.logoff.icon_color_active,
         )
 
         # Icon size
         iconSize = QSize(
-            self.appConfig.general.icon_width, self.appConfig.general.icon_height
+            self.appConfig.main_window.icon_size, self.appConfig.main_window.icon_size
         )
 
         # Create buttons and add them to layout and list
