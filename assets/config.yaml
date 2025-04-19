@@ -1,0 +1,36 @@
+# hyprpwmenu config file
+
+# This file is used to configure the hyprpwmenu script
+# It is a YAML file, so make sure to follow the syntax rules
+# You can use comments in YAML files by starting a line with '#'
+# The script will look for this file in the same directory as the script
+# You can also specify the path to the config file using the -c option
+# The script will look for the config file in the following order:
+# 1. The path specified with the -c option
+# 2. The path specified in the config file
+
+# General specifications
+general:
+  icon_color: "#19e6c0" # Color of the icons
+  icon_color_active: "black" # Color of the active icons
+  icon_width: 120 # Width of the icons
+  icon_height: 120 # Height of the icons
+
+# Main Window configuration
+main_window:
+  background_color: "#000000" # Background color of the main window
+
+# Shutdown icon and command
+shutdown:
+  icon: "fa6s.power-off" # Path to the shutdown icon
+  command: "poweroff" # Command to execute when the shutdown icon is clicked
+
+# Reboot icon and command
+reboot:
+  icon: "fa6s.repeat" # Path to the reboot icon
+  command: "reboot" # Command to execute when the reboot icon is clicked
+
+# Logoff icon and command
+logoff:
+  icon: "ri.logout-box-r-fill" # Path to the logoff icon
+  command: "hyprctl dispatch exit" # Command to execute when the logout icon is clicked

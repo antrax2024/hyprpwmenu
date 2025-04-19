@@ -41,6 +41,38 @@ def createConfigFile(configFile: str) -> None:
         raise e
 
 
+# General specifications
+class General(BaseConfig):
+    icon_color: str  # Color of the icon
+    icon_color_active: str  # Color of the icon when active
+    icon_width: int  # Width of the icon
+    icon_height: int  # Height of the icon
+
+
+# Main Window
+class MainWindow(BaseConfig):
+    backgroun_color: str
+
+
+# Shutdown icon and command
+class Shutdown(BaseConfig):
+    icon: str
+    command: str
+
+
+# Reboot icon and command
+class Reboot(BaseConfig):
+    icon: str
+    command: str
+
+
+# Logoff icon and command
+class Logoff(BaseConfig):
+    icon: str
+    command: str
+
+
+# Main configuration class
 class AppConfig(BaseConfig):
 
     CONFIG_SOURCES = FileSource(
@@ -49,9 +81,11 @@ class AppConfig(BaseConfig):
         )
     )
 
-    docker_host: str
-    containers: list[str]
-    time_main_loop: int
+    general: General  # General
+    main_window: MainWindow  # Main Window
+    shutdown: Shutdown  # Shutdown icon and command
+    Logoff: Logoff  # Logoff icon and command
+    reboot: Reboot  # Reboot icon and command
 
 
 if __name__ == "__main__":
