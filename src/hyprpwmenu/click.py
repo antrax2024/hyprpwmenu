@@ -8,7 +8,14 @@ from .constants import APP_NAME, APP_VERSION, DEFAULT_CONFIG_FILE
 CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
 
 
-@click.command(context_settings=CONTEXT_SETTINGS)
+class CustomHelpCommand(click.Command):
+    def format_help(self, ctx: click.Context, formatter: click.HelpFormatter) -> None:
+        """Custom help formatter that includes app name and version."""
+        formatter.write(f"{APP_NAME} v{APP_VERSION}\n\n")
+        super().format_help(ctx=ctx, formatter=formatter)
+
+
+@click.command(cls=CustomHelpCommand, context_settings=CONTEXT_SETTINGS)
 @click.option(
     "-c",
     "--config",
@@ -23,7 +30,7 @@ def cli(config_file) -> None:
 
     if config_file:
         # determine if file exists
-        if not os.path.exists(config_file):
+        if not os.path.exists(path=config_file):
             click.echo(
                 message=f"Configuration file does not exist: {config_file}.\nCreating a new..."
             )
@@ -32,6 +39,10 @@ def cli(config_file) -> None:
         else:
             click.echo(message=f"Using config from: {config_file}")
 
-    # AppConfig.CONFIG_SOURCES = FileSource(file=config_file)
-    # appConfig = AppConfig()
-    # click.echo(message=f"Using config: {appConfig}")
+    AppConfig.CONFIG_SOURCES = FileSource(file=config_file)
+    try:
+        appConfig = AppConfig()
+        click.echo(message=f"Using config: {appConfig}")
+    except Exception as e:
+        click.echo(message=f"Error loading config: {e}")
+        sys.exit(1)

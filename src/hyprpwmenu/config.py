@@ -38,7 +38,7 @@ class General(BaseConfig):
 
 # Main Window
 class MainWindow(BaseConfig):
-    backgroun_color: str
+    background_color: str
 
 
 # Shutdown icon and command
@@ -71,7 +71,7 @@ class AppConfig(BaseConfig):
     general: General  # General
     main_window: MainWindow  # Main Window
     shutdown: Shutdown  # Shutdown icon and command
-    Logoff: Logoff  # Logoff icon and command
+    logoff: Logoff  # Logoff icon and command
     reboot: Reboot  # Reboot icon and command
 
 
