@@ -3,6 +3,8 @@ import sys
 import click
 from .config import AppConfig, FileSource, createConfigFile
 from .constants import APP_NAME, APP_VERSION, DEFAULT_CONFIG_FILE
+from PyQt6.QtWidgets import QApplication
+from .kernel import MainWindow
 
 
 CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
@@ -42,7 +44,11 @@ def cli(config_file) -> None:
     AppConfig.CONFIG_SOURCES = FileSource(file=config_file)
     try:
         appConfig = AppConfig()
-        click.echo(message=f"Using config: {appConfig}")
+        # click.echo(message=f"Using config: {appConfig}")
+        app = QApplication(sys.argv)
+        window = MainWindow(appConfig=appConfig)
+        window.show()
+        sys.exit(app.exec())
     except Exception as e:
         click.echo(message=f"Error loading config: {e}")
         sys.exit(1)
