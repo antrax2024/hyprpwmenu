@@ -1,2 +1,4 @@
 def main() -> None:
-    print("Hello from hyprpwmenu!")
+    from .click import cli
+
+    cli()

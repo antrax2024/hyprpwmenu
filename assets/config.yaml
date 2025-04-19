@@ -1,13 +1,6 @@
-# hyprpwmenu config file
-
-# This file is used to configure the hyprpwmenu script
+# This file is used to configure the hyprpwmenu
 # It is a YAML file, so make sure to follow the syntax rules
 # You can use comments in YAML files by starting a line with '#'
-# The script will look for this file in the same directory as the script
-# You can also specify the path to the config file using the -c option
-# The script will look for the config file in the following order:
-# 1. The path specified with the -c option
-# 2. The path specified in the config file
 
 # General specifications
 general:

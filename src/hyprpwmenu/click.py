@@ -3,7 +3,6 @@ import sys
 import click
 from .config import AppConfig, FileSource, createConfigFile
 from .constants import APP_NAME, APP_VERSION, DEFAULT_CONFIG_FILE
-from .kernel import monitorContainers
 
 
 CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
@@ -19,40 +18,20 @@ CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
     help=f"Specifies the file config.yaml file (default: {DEFAULT_CONFIG_FILE})",
 )
 def cli(config_file) -> None:
-    """Monitors a list of specified Docker containers and automatically upgrades them when new images are released."""
+    """A modern powermenu for Hyprland."""
     click.echo(message=f"{APP_NAME} v{APP_VERSION}\n")
 
     if config_file:
         # determine if file exists
         if not os.path.exists(config_file):
             click.echo(
-                message=f"Configuration file does not exist: {config_file}. Creating a new one."
+                message=f"Configuration file does not exist: {config_file}.\nCreating a new..."
             )
             # create the directory if it does not exist
-            dir_name = os.path.dirname(config_file)
-            try:
-                os.makedirs(
-                    name=dir_name,
-                    exist_ok=True,
-                )
-            except Exception as e:
-                click.echo(message=f"Error creating directory {dir_name}: {e}")
-                sys.exit(1)
-
-            if dir_name:
-                os.makedirs(
-                    name=dir_name,
-                    exist_ok=True,
-                )
-            # create the config file
             createConfigFile(configFile=config_file)
         else:
             click.echo(message=f"Using config from: {config_file}")
 
-    AppConfig.CONFIG_SOURCES = FileSource(file=config_file)
-    appConfig = AppConfig()
-    os.environ["DOCKER_HOST"] = appConfig.docker_host
-    monitorContainers(
-        ctToWatch=appConfig.containers,
-        time_main_loop=appConfig.time_main_loop,
-    )
+    # AppConfig.CONFIG_SOURCES = FileSource(file=config_file)
+    # appConfig = AppConfig()
+    # click.echo(message=f"Using config: {appConfig}")
