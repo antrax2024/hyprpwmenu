@@ -1,24 +1,25 @@
-# HyprPwMenu
+# hyprpwmenu
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/antrax2024/dockmate/refs/heads/main/assets/banner-logo.jpg" alt="DockMate Logo">
+  <img src="https://raw.githubusercontent.com/antrax2024/hyprpwmenu/refs/heads/main/assets/banner.jpg" alt="hyprpwmenu Logo">
 </p>
 
 <div align="center">
   <span>
     <img alt="PyPI - Version" src="https://img.shields.io/pypi/v/dockmate">
     <img alt="AUR Version" src="https://img.shields.io/aur/version/dockmate">
-    <img src="https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2Fantrax2024%2Fdockmate%2Frefs%2Fheads%2Fmain%2Fpyproject.toml" alt="Python Version" />
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/antrax2024/dockmate">
+    <img alt="Python Version from PEP 621 TOML" src="https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2Fantrax2024%2Fhyprpwmenu%2Frefs%2Fheads%2Fmain%2Fpyproject.toml">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/antrax2024/hyprpwmenu">
     <img alt="PyPI - License" src="https://img.shields.io/pypi/l/dockmate">
-  </span>
+
+</span>
 </div>
 
-A modern and customizable power menu for Hyprland compositor.
+A modern and customizable power menu for [Hyprland](https://hyprland.org/https:/) compositor.
 
 ## Overview
 
-**hyprpwmenu** provides a sleek graphical interface for system operations (shutdown, reboot, and logoff) in Hyprland Wayland compositor environments. Built with Python and PyQt6, it offers extensive customization through configuration files and CSS styling.
+**hyprpwmenu** provides a sleek graphical interface for system operations (_shutdown, reboot, and logoff_) in [Hyprland](https://hyprland.org/https:/) Wayland compositor. Built with Python and PyQt6, it offers extensive customization through configuration files and CSS styling.
 
 ## Installation
 
@@ -30,7 +31,7 @@ pip install hyprpwmenu
 
 ### Install with AUR
 
-hyprpwmenu is available in [AUR](https://aur.archlinux.org/).
+**hyprpwmenu** is available in [AUR](https://aur.archlinux.org/).
 
 ```bash
 paru -S hyprpwmenu
@@ -46,7 +47,7 @@ hyprpwmenu [OPTIONS]
 
 ### Command Line Options
 
-Based on the `click.py` file, the following command-line options are available:
+The following command-line options are available:
 
 | Option           | Argument | Description                                  | Default Value                      |
 | ---------------- | -------- | -------------------------------------------- | ---------------------------------- |
@@ -58,7 +59,7 @@ If the specified configuration or style files don't exist at the provided paths 
 
 ## Configuration (`config.yaml`)
 
-hyprpwmenu uses a YAML configuration file (typically `~/.config/hyprpwmenu/config.yaml`) to define its behavior and the specifics of the power actions (shutdown, reboot and logoff).
+**hyprpwmenu** uses a YAML configuration file (typically `~/.config/hyprpwmenu/config.yaml`) to define its behavior and the specifics of the power actions (shutdown, reboot and logoff).
 
 ```yaml
 # This file is used to configure the hyprpwmenu
