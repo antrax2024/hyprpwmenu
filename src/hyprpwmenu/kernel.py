@@ -6,7 +6,6 @@ from PyQt6.QtGui import QKeyEvent, QIcon, QGuiApplication, QFontDatabase
 from .config import AppConfig
 import multiprocessing
 from types import SimpleNamespace
-import qtawesome as qta
 from .constants import APP_NAME, APP_VERSION
 
 
@@ -63,35 +62,30 @@ class MainWindow(QWidget):
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
 
-        # Icons
-        shutdownIcon = qta.icon(
-            self.appConfig.shutdown.icon,
-        )
-        rebootIcon = qta.icon(
-            self.appConfig.reboot.icon,
-        )
-        logoffIcon = qta.icon(
-            self.appConfig.logoff.icon,
-        )
-
         # Create buttons and add them to layout and list
         # shutdownButton
         shutdownButton = self.createButton(
-            "Shutdown", icon_unicode="\uf011", objectName="shutdownButton"
+            text="Shutdown",
+            icon_unicode=self.appConfig.shutdown.icon,
+            objectName="shutdownButton",
         )
         shutdownButton.clicked.connect(self.shutdownButtonClick)
         self.buttons.append(shutdownButton)
 
         # rebootButton
         rebootButton = self.createButton(
-            "Reboot", icon_unicode="\uf2f9", objectName="rebootButton"
+            text="Reboot",
+            icon_unicode=self.appConfig.reboot.icon,
+            objectName="rebootButton",
         )
         rebootButton.clicked.connect(self.rebootButtonClick)
         self.buttons.append(rebootButton)
 
         # logoffButton
         logoffButton = self.createButton(
-            "Logoff", icon_unicode="\uf2f5", objectName="logoffButton"
+            text="Logoff",
+            icon_unicode=self.appConfig.logoff.icon,
+            objectName="logoffButton",
         )
         logoffButton.clicked.connect(self.logoffButtonClick)
         self.buttons.append(logoffButton)
