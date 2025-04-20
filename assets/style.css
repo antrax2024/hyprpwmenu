@@ -15,31 +15,30 @@ QToolButton {
 
 /* Shutdown button primary color styling */
 QToolButton#shutdownButton {
-    color: rgba(255, 82, 82, 0.9);
+    color: #C68EFD;
 }
 
 /* Shutdown icon styling: Font Awesome icon and color */
 QToolButton QLabel#iconshutdownButton {
-    font-family: "Font Awesome 6 Free";
     font-size: 84px;
-    color: rgba(255, 82, 82, 0.9);
+    color: #C68EFD;
 }
 
 /* Shutdown label text styling: font family, size, and color */
 QToolButton QLabel#textshutdownButton {
     font-family: Arial;
     font-size: 22px;
-    color: rgba(255, 82, 82, 0.9);
+    color: #C68EFD;
 }
 
 /* Focus state border color for shutdown button */
 QToolButton#shutdownButton:focus {
-    border-color: #FF5252;
+    border-color: #C68EFD;
 }
 
 /* Reboot button primary color styling */
 QToolButton#rebootButton {
-    color: #FFC107;
+    color: #48A6A7;
 }
 
 /* Reboot icon styling: Font Awesome icon and color */
@@ -47,24 +46,24 @@ QToolButton QLabel#iconrebootButton {
     font-family: "Font Awesome 6 Free";
     /* Nome exato da fonte */
     font-size: 84px;
-    color: #FFC107;
+    color: #48A6A7;
 }
 
 /* Reboot label text styling: font family, size, and color */
 QToolButton QLabel#textrebootButton {
     font-family: Arial;
     font-size: 22px;
-    color: #FFC107;
+    color: #48A6A7;
 }
 
 /* Focus state border color for reboot button */
 QToolButton#rebootButton:focus {
-    border-color: #FFC107;
+    border-color: #48A6A7;
 }
 
 /* Logoff button primary color styling */
 QToolButton#logoffButton {
-    color: #4CAF50;
+    color: #A0C878;
 }
 
 /* Logoff icon styling: Font Awesome icon and color */
@@ -72,17 +71,17 @@ QToolButton QLabel#iconlogoffButton {
     font-family: "Font Awesome 6 Free";
     /* Nome exato da fonte */
     font-size: 84px;
-    color: #4CAF50;
+    color: #A0C878;
 }
 
 /* Logoff label text styling: font family, size, and color */
 QToolButton QLabel#textlogoffButton {
     font-family: Arial;
     font-size: 22px;
-    color: #4CAF50;
+    color: #A0C878;
 }
 
 /* Focus state border color for logoff button */
 QToolButton#logoffButton:focus {
-    border-color: #4CAF50;
+    border-color: #A0C878;
 }
