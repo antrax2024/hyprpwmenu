@@ -5,9 +5,9 @@
 # Main Window configuration
 main_window:
   fullscreen: true # Set to true to make the main window fullscreen
-  width: 720 # Width of the main window
-  height: 350 # Height of the main window
-  space_between_buttons: 60 # Space between buttons
+  width: 720 # Width of the main window (pixels)
+  height: 350 # Height of the main window (pixels)
+  space_between_buttons: 40 # Space between buttons (pixels)
 
 # Shutdown icon and command
 # The icon is unicode for a Font Awesome icon,

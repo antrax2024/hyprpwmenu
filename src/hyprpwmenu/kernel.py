@@ -94,7 +94,7 @@ class MainWindow(QWidget):
         layout.addStretch(1)
         # Add first button
         layout.addWidget(shutdownButton)
-        # space_between_buttons = 20  # Adjust this value to control spacing
+        # space_between_buttons
         space_between_buttons = (
             self.appConfig.main_window.space_between_buttons
         )  # Adjust this value to control spacing

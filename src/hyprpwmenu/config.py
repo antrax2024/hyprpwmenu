@@ -5,7 +5,7 @@ from .constants import APP_NAME
 import shutil
 
 
-def createConfigFile(configFile: str) -> None:
+def createConfigFile(configFile: str, type: str = "config") -> None:
     """
     Create the config file if it doesn't exist.
     """
@@ -19,7 +19,10 @@ def createConfigFile(configFile: str) -> None:
                 )
 
             # copy the file assets/config.yaml to dir_name
-            shutil.copy2(src="assets/config.yaml", dst=dir_name)
+            if type == "config":
+                shutil.copy2(src="assets/config.yaml", dst=dir_name)
+            else:  # type == "style"
+                shutil.copy2(src="assets/style.css", dst=dir_name)
 
     except Exception as e:
         print(f"Error creating config file: {e}")
