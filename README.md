@@ -1,7 +1,7 @@
 # hyprpwmenu
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/antrax2024/hyprpwmenu/refs/heads/main/assets/banner.jpg" alt="hyprpwmenu Logo">
+  <img src="https://raw.githubusercontent.com/antrax2024/hyprpwmenu/refs/heads/main/src/hyprpwmenu/assets/banner.jpg" alt="hyprpwmenu Logo">
 </p>
 
 <div align="center">
