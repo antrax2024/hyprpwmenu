@@ -2,7 +2,7 @@ import time
 import subprocess
 from PyQt6.QtWidgets import QLabel, QVBoxLayout, QWidget, QHBoxLayout, QToolButton
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QKeyEvent, QIcon, QGuiApplication, QFontDatabase
+from PyQt6.QtGui import QKeyEvent, QGuiApplication, QFontDatabase
 from .config import AppConfig
 import multiprocessing
 from types import SimpleNamespace
@@ -57,11 +57,17 @@ class MainWindow(QWidget):
         """
         Sets up the user interface elements like layout and buttons.
         """
+
+        mainLayout = QVBoxLayout(self)
+        mainLayout.setContentsMargins(0, 0, 0, 0)
+        mainLayout.setSpacing(0)
+        mainLayout.addStretch(1)
+
         # Horizontal layout
-        layout = QHBoxLayout()
+        buttonsLayout = QHBoxLayout()
         # Remove spacing and margins for a tighter look
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(0)
+        buttonsLayout.setContentsMargins(0, 0, 0, 0)
+        buttonsLayout.setSpacing(0)
 
         # Create buttons and add them to layout and list
         # shutdownButton
@@ -92,29 +98,41 @@ class MainWindow(QWidget):
         self.buttons.append(logoffButton)
 
         # Add a stretch at the beginning to center the buttons
-        layout.addStretch(1)
+        buttonsLayout.addStretch(1)
         # Add first button
-        layout.addWidget(shutdownButton)
+        buttonsLayout.addWidget(shutdownButton)
         # space_between_buttons
         space_between_buttons = (
             self.appConfig.main_window.space_between_buttons
         )  # Adjust this value to control spacing
-        layout.addSpacing(space_between_buttons)
+        buttonsLayout.addSpacing(space_between_buttons)
 
         # Add second button
-        layout.addWidget(rebootButton)
+        buttonsLayout.addWidget(rebootButton)
 
         # Add fixed-width spacer
-        layout.addSpacing(space_between_buttons)
+        buttonsLayout.addSpacing(space_between_buttons)
 
         # Add third button
-        layout.addWidget(logoffButton)
+        buttonsLayout.addWidget(logoffButton)
 
         # Add a stretch at the end to center the buttons
-        layout.addStretch(1)
+        buttonsLayout.addStretch(1)
 
-        # Set the layout on the main window
-        self.setLayout(layout)
+        # add buttonsLayout to mainLayout
+        mainLayout.addLayout(buttonsLayout)
+        mainLayout.addStretch(1)
+
+        # Create a label for app name and version
+        appInfoLabel = QLabel(f"{APP_NAME} v{APP_VERSION}")
+        appInfoLabel.setAlignment(Qt.AlignmentFlag.AlignRight)
+        appInfoLabel.setObjectName("app_info_label")
+        # Cria um sublayout horizontal para a label
+        bottomLayout = QHBoxLayout()
+        bottomLayout.addStretch(1)  # Empurra a label para a direita
+        bottomLayout.addWidget(appInfoLabel)
+
+        mainLayout.addLayout(bottomLayout)
 
         # Ensure the shutdown button gets focus
         if self.buttons:

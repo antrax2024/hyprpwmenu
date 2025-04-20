@@ -86,9 +86,9 @@ QToolButton#logoffButton:focus {
     border-color: #A0C878;
 }
 
-#versionLabel {
-    color: #fff;
-    font-size: 40px;
-    padding-right: 5px;
-    padding-bottom: 3px;
+#app_info_label {
+    color: #81E7AF;
+    font-size: 14pt;
+    padding-bottom: 10px;
+    padding-right: 10px;
 }
