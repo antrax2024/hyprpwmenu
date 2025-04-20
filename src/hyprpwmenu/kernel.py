@@ -64,37 +64,33 @@ class MainWindow(QWidget):
         # Icons
         shutdownIcon = qta.icon(
             self.appConfig.shutdown.icon,
-            color=self.appConfig.shutdown.icon_color,
-            color_active=self.appConfig.shutdown.icon_color_active,
         )
         rebootIcon = qta.icon(
             self.appConfig.reboot.icon,
-            color=self.appConfig.reboot.icon_color,
-            color_active=self.appConfig.reboot.icon_color_active,
         )
         logoffIcon = qta.icon(
             self.appConfig.logoff.icon,
-            color=self.appConfig.logoff.icon_color,
-            color_active=self.appConfig.logoff.icon_color_active,
         )
 
-        # Icon size
-        iconSize = QSize(
-            self.appConfig.main_window.icon_size, self.appConfig.main_window.icon_size
-        )
+        # # Icon size
+        # iconSize = QSize(
+        #     self.appConfig.main_window.icon_size, self.appConfig.main_window.icon_size
+        # )
 
         # Create buttons and add them to layout and list
 
         # shutdownButton
-        shutdownButton = self.createButton("Shutdown", shutdownIcon, iconSize)
+        shutdownButton = self.createButton("Shutdown", shutdownIcon, "shutdownButton")
         shutdownButton.clicked.connect(self.shutdownButtonClick)
         self.buttons.append(shutdownButton)
+
         # rebootButton
-        rebootButton = self.createButton("Reboot", rebootIcon, iconSize)
+        rebootButton = self.createButton("Reboot", rebootIcon, "rebootButton")
         rebootButton.clicked.connect(self.rebootButtonClick)
         self.buttons.append(rebootButton)
+
         # logoffButton
-        logoffButton = self.createButton("Logoff", logoffIcon, iconSize)
+        logoffButton = self.createButton("Logoff", logoffIcon, "logoffButton")
         logoffButton.clicked.connect(self.logoffButtonClick)
         self.buttons.append(logoffButton)
 
@@ -192,7 +188,9 @@ class MainWindow(QWidget):
             stderr=subprocess.DEVNULL,
         )
 
-    def createButton(self, text: str, icon: QIcon, iconSize: QSize) -> QToolButton:
+    def createButton(
+        self, text: str, icon: QIcon, objectName: str = None  # type: ignore
+    ) -> QToolButton:
         """
         Creates a QToolButton with specified properties.
 
@@ -200,102 +198,42 @@ class MainWindow(QWidget):
             text (str): The text to show below the icon.
             icon (QIcon): The icon for the button (created using qtawesome).
             iconSize (QSize): The desired size of the icon.
+            objectName (str): The object name for CSS selector targeting.
 
         Returns:
             QToolButton: The configured tool button.
         """
         button = QToolButton()
         button.setIcon(icon)
-        button.setIconSize(iconSize)
         button.setText(text)
         button.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
-        # Set focus policy to allow keyboard focus
         button.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+
+        # Set object name if provided for CSS styling
+        if objectName:
+            button.setObjectName(objectName)
+
         return button
 
     def applyStyles(self) -> None:
         """
-        Applies CSS-like stylesheets for appearance and hover/focus effects.
-        Includes specific styles for individual buttons.
+        Applies CSS-like stylesheets from external CSS file.
+        Dynamically replaces variables with configuration values.
         """
-        # Base styles for all widgets and buttons
-        baseStyles = f"""
-            QWidget {{
-                background-color: {self.appConfig.main_window.background_color}; /* Window background */
-            }}
-        """
+        # Path to CSS file (relative to the module)
+        cssPath = "assets/style.css"
 
-        # Combine base and specific styles
-        self.setStyleSheet(baseStyles)
+        try:
+            # Read CSS file content
+            with open(cssPath, "r") as cssFile:
+                cssContent = cssFile.read()
 
-    # def applyStyles(self) -> None:
-    #     """
-    #     Applies CSS-like stylesheets for appearance and hover/focus effects.
-    #     Includes specific styles for individual buttons.
-    #     """
-    #     # Base styles for all widgets and buttons
-    #     baseStyles = f"""
-    #         QWidget {{
-    #             background-color: {self.appConfig.main_window.background_color}; /* Window background */
-    #         }}
-    #         QToolButton {{
-    #             background-color: transparent; /* Default transparent background */
-    #             border: 2px solid transparent; /* Add transparent border to reserve space */
-    #             border-radius: 25px; /* Rounded corners */
-    #             padding: 5px; /* Add some padding around the icon */
-    #             margin: 0px; /* No margin between buttons */
-    #             color: {self.appConfig.general.icon_color}; /* Text color */
-    #             font-size: 16px; /* Font size */
-    #         }}
-    #         /* Style for when the button has keyboard focus */
-    #         QToolButton:focus {{
-    #             border: 2px solid {self.appConfig.general.icon_color};
-    #             background-color: transparent; /* Slightly lighter background when focused */
-    #         }}
-    #         /* Optional: Style for when the mouse is hovering */
-    #         QToolButton:hover {{
-    #             background-color: #263238; /* Dark gray background on hover */
-    #         }}
-    #     """
+            # Apply the stylesheet
+            self.setStyleSheet(cssContent)
 
-    #     # Specific styles for each button
-    #     specificStyles = """
-    #         /* Shutdown button specific styles */
-    #         QToolButton#shutdownButton {
-    #             color: #FF5252; /* Red text for shutdown */
-    #         }
-    #         QToolButton#shutdownButton:focus {
-    #             border-color: #FF5252;
-    #         }
-    #         QToolButton#shutdownButton:hover {
-    #             background-color: rgba(255, 82, 82, 0.2);
-    #         }
-
-    #         /* Reboot button specific styles */
-    #         QToolButton#rebootButton {
-    #             color: #FFC107; /* Amber text for reboot */
-    #         }
-    #         QToolButton#rebootButton:focus {
-    #             border-color: #FFC107;
-    #         }
-    #         QToolButton#rebootButton:hover {
-    #             background-color: rgba(255, 193, 7, 0.2);
-    #         }
-
-    #         /* Logoff button specific styles */
-    #         QToolButton#logoffButton {
-    #             color: #4CAF50; /* Green text for logoff */
-    #         }
-    #         QToolButton#logoffButton:focus {
-    #             border-color: #4CAF50;
-    #         }
-    #         QToolButton#logoffButton:hover {
-    #             background-color: rgba(76, 175, 80, 0.2);
-    #         }
-    #     """
-
-    #     # Combine base and specific styles
-    #     self.setStyleSheet(baseStyles)
+        except FileNotFoundError:
+            print(f"Warning: CSS file not found at {cssPath}")
+            # Fallback to inline styles
 
     # --- MÉTODO CORRIGIDO ---
     def keyPressEvent(self, event: QKeyEvent) -> None:  # type: ignore

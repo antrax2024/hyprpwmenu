@@ -28,36 +28,27 @@ def createConfigFile(configFile: str) -> None:
 
 # Main Window
 class MainWindow(BaseConfig):
-    icon_size: int  # Width of the icon
-    font_size: str  # Font size for the text under the icon
     fullscreen: bool  # Fullscreen mode
     width: int  # Width of the window
     height: int  # Height of the window
     space_between_buttons: int  # Fixed space between buttons
-    background_color: str  # Background color
 
 
 # Shutdown icon and command
 class Shutdown(BaseConfig):
     icon: str
-    icon_color: str
-    icon_color_active: str
     command: str
 
 
 # Reboot icon and command
 class Reboot(BaseConfig):
     icon: str
-    icon_color: str
-    icon_color_active: str
     command: str
 
 
 # Logoff icon and command
 class Logoff(BaseConfig):
     icon: str
-    icon_color: str
-    icon_color_active: str
     command: str
 
 
