@@ -1,9 +1,8 @@
-import os
 import time
 import subprocess
-from PyQt6.QtWidgets import QWidget, QHBoxLayout, QToolButton
-from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtGui import QKeyEvent, QIcon, QGuiApplication
+from PyQt6.QtWidgets import QLabel, QVBoxLayout, QWidget, QHBoxLayout, QToolButton
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QKeyEvent, QIcon, QGuiApplication, QFontDatabase
 from .config import AppConfig
 import multiprocessing
 from types import SimpleNamespace
@@ -35,6 +34,9 @@ class MainWindow(QWidget):
         QGuiApplication.setApplicationName("hyprpwmenu")
         QGuiApplication.setDesktopFileName("hyprpwmenu")
         QGuiApplication.setApplicationDisplayName("hyprpwmenu")
+
+        # Load Font Awesome font
+        self.loadFontAwesome()
 
         # List to hold the buttons for easy navigation
         self.buttons = []
@@ -72,25 +74,25 @@ class MainWindow(QWidget):
             self.appConfig.logoff.icon,
         )
 
-        # # Icon size
-        # iconSize = QSize(
-        #     self.appConfig.main_window.icon_size, self.appConfig.main_window.icon_size
-        # )
-
         # Create buttons and add them to layout and list
-
         # shutdownButton
-        shutdownButton = self.createButton("Shutdown", shutdownIcon, "shutdownButton")
+        shutdownButton = self.createButton(
+            "Shutdown", icon_unicode="\uf011", objectName="shutdownButton"
+        )
         shutdownButton.clicked.connect(self.shutdownButtonClick)
         self.buttons.append(shutdownButton)
 
         # rebootButton
-        rebootButton = self.createButton("Reboot", rebootIcon, "rebootButton")
+        rebootButton = self.createButton(
+            "Reboot", icon_unicode="\uf2f9", objectName="rebootButton"
+        )
         rebootButton.clicked.connect(self.rebootButtonClick)
         self.buttons.append(rebootButton)
 
         # logoffButton
-        logoffButton = self.createButton("Logoff", logoffIcon, "logoffButton")
+        logoffButton = self.createButton(
+            "Logoff", icon_unicode="\uf2f5", objectName="logoffButton"
+        )
         logoffButton.clicked.connect(self.logoffButtonClick)
         self.buttons.append(logoffButton)
 
@@ -155,6 +157,11 @@ class MainWindow(QWidget):
             )
             centerProcess.start()
 
+    def loadFontAwesome(self) -> None:
+        """Carrega a fonte Font Awesome no aplicativo."""
+        font_id = QFontDatabase.addApplicationFont("assets/fontawesome-webfont.ttf")
+        self.font_family = QFontDatabase.applicationFontFamilies(font_id)[0]
+
     def shutdownButtonClick(self) -> None:
         """
         Action performed when the shutdown button is clicked or activated.
@@ -189,29 +196,32 @@ class MainWindow(QWidget):
         )
 
     def createButton(
-        self, text: str, icon: QIcon, objectName: str = None  # type: ignore
+        self, text: str, icon_unicode: str, objectName: str = None  # type: ignore
     ) -> QToolButton:
         """
-        Creates a QToolButton with specified properties.
+        Cria um QToolButton com ícone do Font Awesome e texto.
 
         Args:
-            text (str): The text to show below the icon.
-            icon (QIcon): The icon for the button (created using qtawesome).
-            iconSize (QSize): The desired size of the icon.
-            objectName (str): The object name for CSS selector targeting.
-
-        Returns:
-            QToolButton: The configured tool button.
+            icon_unicode (str): Código Unicode do ícone (ex: "\uf015" para "home").
         """
         button = QToolButton()
-        button.setIcon(icon)
-        button.setText(text)
-        button.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
+        button.setObjectName(objectName)
         button.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
 
-        # Set object name if provided for CSS styling
-        if objectName:
-            button.setObjectName(objectName)
+        # Layout vertical para ícone e texto
+        layout = QVBoxLayout(button)
+        layout.setContentsMargins(10, 10, 10, 10)
+        layout.setSpacing(4)
+
+        # Label do ícone (Font Awesome)
+        icon_label = QLabel(icon_unicode)
+        icon_label.setObjectName(f"icon{objectName}")
+        layout.addWidget(icon_label, alignment=Qt.AlignmentFlag.AlignCenter)
+
+        # Label do texto
+        text_label = QLabel(text)
+        text_label.setObjectName(f"text{objectName}")
+        layout.addWidget(text_label, alignment=Qt.AlignmentFlag.AlignCenter)
 
         return button
 

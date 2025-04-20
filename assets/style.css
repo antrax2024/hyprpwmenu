@@ -7,11 +7,10 @@ QWidget {
 QToolButton {
     background-color: transparent;
     border: 2px solid transparent;
-    border-radius: 25px;
-    padding: 5px;
-    margin: 0px;
-    color: #FFFFFF;
-    font-size: 16px;
+    border-radius: 15px;
+    padding: 15px;
+    width: 100px;
+    height: 100px;
 }
 
 QToolButton:focus {
@@ -19,25 +18,47 @@ QToolButton:focus {
     background-color: transparent;
 }
 
-QToolButton:hover {
+/*QToolButton:hover {
     background-color: #263238;
-}
+}*/
 
 /* Shutdown button specific styles */
 QToolButton#shutdownButton {
-    color: #FF5252;
+    color: rgba(255, 82, 82, 0.9);
+}
+
+QToolButton QLabel#iconshutdownButton {
+    font-family: "Font Awesome 6 Free";
+    font-size: 84px;
+    color: rgba(255, 82, 82, 0.9);
+}
+
+QToolButton QLabel#textshutdownButton {
+    font-family: Arial;
+    font-size: 22px;
+    color: rgba(255, 82, 82, 0.9);
 }
 
 QToolButton#shutdownButton:focus {
     border-color: #FF5252;
 }
 
-QToolButton#shutdownButton:hover {
-    background-color: rgba(255, 82, 82, 0.2);
-}
 
 /* Reboot button specific styles */
 QToolButton#rebootButton {
+    color: #FFC107;
+}
+
+QToolButton QLabel#iconrebootButton {
+    font-family: "Font Awesome 6 Free";
+    /* Nome exato da fonte */
+    font-size: 84px;
+    color: #FFC107;
+}
+
+QToolButton QLabel#textrebootButton {
+    font-family: Arial;
+    font-size: 22px;
     color: #FFC107;
 }
 
@@ -45,19 +66,24 @@ QToolButton#rebootButton:focus {
     border-color: #FFC107;
 }
 
-QToolButton#rebootButton:hover {
-    background-color: rgba(255, 193, 7, 0.2);
-}
-
 /* Logoff button specific styles */
 QToolButton#logoffButton {
     color: #4CAF50;
 }
 
-QToolButton#logoffButton:focus {
-    border-color: #4CAF50;
+QToolButton QLabel#iconlogoffButton {
+    font-family: "Font Awesome 6 Free";
+    /* Nome exato da fonte */
+    font-size: 84px;
+    color: #4CAF50;
 }
 
-QToolButton#logoffButton:hover {
-    background-color: rgba(76, 175, 80, 0.2);
+QToolButton QLabel#textlogoffButton {
+    font-family: Arial;
+    font-size: 22px;
+    color: #4CAF50;
+}
+
+QToolButton#logoffButton:focus {
+    border-color: #4CAF50;
 }
