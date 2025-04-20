@@ -85,3 +85,10 @@ QToolButton QLabel#textlogoffButton {
 QToolButton#logoffButton:focus {
     border-color: #A0C878;
 }
+
+#versionLabel {
+    color: #fff;
+    font-size: 40px;
+    padding-right: 5px;
+    padding-bottom: 3px;
+}
