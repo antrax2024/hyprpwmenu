@@ -49,7 +49,7 @@ wheels = [
 
 [[package]]
 name = "hyprpwmenu"
-version = "0.1.8"
+version = "0.1.12"
 source = { editable = "." }
 dependencies = [
     { name = "click" },
