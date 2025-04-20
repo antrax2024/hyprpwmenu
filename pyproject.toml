@@ -1,6 +1,6 @@
 [project]
 name            = "hyprpwmenu"
-version         = "0.1.3"
+version         = "0.1.4"
 description     = "A modern powermenu for Hyprland."
 readme          = "README.md"
 authors         = [{ name = "Antrax", email = "fredcox@gmail.com" }]
