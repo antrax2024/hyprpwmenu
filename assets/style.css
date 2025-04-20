@@ -1,9 +1,9 @@
-/* Base styles */
-
+/* Root widget background color styling */
 QWidget {
     background-color: #121212;
 }
 
+/* Base style for all tool buttons: transparent background, border, rounded corners, padding, fixed size */
 QToolButton {
     background-color: transparent;
     border: 2px solid transparent;
@@ -13,42 +13,36 @@ QToolButton {
     height: 100px;
 }
 
-QToolButton:focus {
-    border: 2px solid #3498DB;
-    background-color: transparent;
-}
-
-/*QToolButton:hover {
-    background-color: #263238;
-}*/
-
-/* Shutdown button specific styles */
+/* Shutdown button primary color styling */
 QToolButton#shutdownButton {
     color: rgba(255, 82, 82, 0.9);
 }
 
+/* Shutdown icon styling: Font Awesome icon and color */
 QToolButton QLabel#iconshutdownButton {
     font-family: "Font Awesome 6 Free";
     font-size: 84px;
     color: rgba(255, 82, 82, 0.9);
 }
 
+/* Shutdown label text styling: font family, size, and color */
 QToolButton QLabel#textshutdownButton {
     font-family: Arial;
     font-size: 22px;
     color: rgba(255, 82, 82, 0.9);
 }
 
+/* Focus state border color for shutdown button */
 QToolButton#shutdownButton:focus {
     border-color: #FF5252;
 }
 
-
-/* Reboot button specific styles */
+/* Reboot button primary color styling */
 QToolButton#rebootButton {
     color: #FFC107;
 }
 
+/* Reboot icon styling: Font Awesome icon and color */
 QToolButton QLabel#iconrebootButton {
     font-family: "Font Awesome 6 Free";
     /* Nome exato da fonte */
@@ -56,21 +50,24 @@ QToolButton QLabel#iconrebootButton {
     color: #FFC107;
 }
 
+/* Reboot label text styling: font family, size, and color */
 QToolButton QLabel#textrebootButton {
     font-family: Arial;
     font-size: 22px;
     color: #FFC107;
 }
 
+/* Focus state border color for reboot button */
 QToolButton#rebootButton:focus {
     border-color: #FFC107;
 }
 
-/* Logoff button specific styles */
+/* Logoff button primary color styling */
 QToolButton#logoffButton {
     color: #4CAF50;
 }
 
+/* Logoff icon styling: Font Awesome icon and color */
 QToolButton QLabel#iconlogoffButton {
     font-family: "Font Awesome 6 Free";
     /* Nome exato da fonte */
@@ -78,12 +75,14 @@ QToolButton QLabel#iconlogoffButton {
     color: #4CAF50;
 }
 
+/* Logoff label text styling: font family, size, and color */
 QToolButton QLabel#textlogoffButton {
     font-family: Arial;
     font-size: 22px;
     color: #4CAF50;
 }
 
+/* Focus state border color for logoff button */
 QToolButton#logoffButton:focus {
     border-color: #4CAF50;
 }
