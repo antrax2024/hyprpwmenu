@@ -7,6 +7,7 @@ from .config import AppConfig
 import multiprocessing
 from types import SimpleNamespace
 from .constants import APP_NAME, APP_VERSION
+import importlib.resources
 
 
 class MainWindow(QWidget):
@@ -30,23 +31,27 @@ class MainWindow(QWidget):
         self.style_file = style_file
         self.setWindowTitle(f"{APP_NAME}")
 
+        # List to hold the buttons for easy navigation (initialize early)
+        self.buttons = []
+        # Index of the currently focused button (still useful for arrow key logic)
+        self.currentFocusIndex = 0
+
         # Set application name and class before creating QWidget
         QGuiApplication.setApplicationName("hyprpwmenu")
         QGuiApplication.setDesktopFileName("hyprpwmenu")
         QGuiApplication.setApplicationDisplayName("hyprpwmenu")
 
-        # Load Font Awesome font
+        print("Loading Font Awesome font...")
+        self.FontAwesomeFile = importlib.resources.files("hyprpwmenu").joinpath(
+            f"assets/fontawesome-webfont.ttf"
+        )
         self.loadFontAwesome()
 
-        # List to hold the buttons for easy navigation
-        self.buttons = []
-        # Index of the currently focused button (still useful for arrow key logic)
-        self.currentFocusIndex = 0
-
-        # Setup UI elements
+        print("Setting up UI...")
         self.setupUI()
 
         # Apply global styles using stylesheets
+        print("Applying styles...")
         self.applyStyles()
 
         # Set initial focus to the first button
@@ -172,7 +177,7 @@ class MainWindow(QWidget):
 
     def loadFontAwesome(self) -> None:
         """Carrega a fonte Font Awesome no aplicativo."""
-        font_id = QFontDatabase.addApplicationFont("assets/fontawesome-webfont.ttf")
+        font_id = QFontDatabase.addApplicationFont(str(self.FontAwesomeFile))
         self.font_family = QFontDatabase.applicationFontFamilies(font_id)[0]
 
     def shutdownButtonClick(self) -> None:

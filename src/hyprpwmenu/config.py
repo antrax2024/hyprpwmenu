@@ -2,7 +2,7 @@ import os
 import sys
 from confz import BaseConfig, FileSource
 from .constants import APP_NAME
-import shutil
+import importlib.resources
 
 
 def createConfigFile(configFile: str, type: str = "config") -> None:
@@ -19,10 +19,17 @@ def createConfigFile(configFile: str, type: str = "config") -> None:
                 )
 
             # copy the file assets/config.yaml to dir_name
-            if type == "config":
-                shutil.copy2(src="assets/config.yaml", dst=dir_name)
-            else:  # type == "style"
-                shutil.copy2(src="assets/style.css", dst=dir_name)
+            # Get the file content from package resources
+            target_filename = os.path.basename(configFile)
+            source_file = "config.yaml" if type == "config" else "style.css"
+            # Use importlib.resources to get asset path
+            with (
+                importlib.resources.files("hyprpwmenu")
+                .joinpath(f"assets/{source_file}")
+                .open("rb") as src_file
+            ):
+                with open(configFile, "wb") as dst_file:
+                    dst_file.write(src_file.read())
 
     except Exception as e:
         print(f"Error creating config file: {e}")

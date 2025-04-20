@@ -63,7 +63,6 @@ def cli(config_file, style_file) -> None:
     AppConfig.CONFIG_SOURCES = FileSource(file=config_file)
     try:
         appConfig = AppConfig()
-        # click.echo(message=f"Using config: {appConfig}")
         app = QApplication(sys.argv)
         window = MainWindow(appConfig=appConfig, style_file=style_file)
         window.show()
