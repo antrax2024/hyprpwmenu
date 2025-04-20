@@ -21,12 +21,13 @@ class MainWindow(QWidget):
         centerwindow="centerwindow 0",
     )
 
-    def __init__(self, appConfig: AppConfig) -> None:
+    def __init__(self, appConfig: AppConfig, style_file: str) -> None:
         """
         Initializes the main window, layout, buttons, and styles.
         """
         super().__init__()
         self.appConfig = appConfig
+        self.style_file = style_file
         self.setWindowTitle(f"{APP_NAME}")
 
         # Set application name and class before creating QWidget
@@ -127,7 +128,7 @@ class MainWindow(QWidget):
         floatingProcess.start()
         ## Analizing if the window is fullscreen
         if self.appConfig.main_window.fullscreen:
-            print("Fullscreen mode enabled")
+            print("Fullscreen mode\t\t: enabled")
             # Set the window to fullscreen
             fullscreenProcess = multiprocessing.Process(
                 target=self.childDispatch,
@@ -135,7 +136,7 @@ class MainWindow(QWidget):
             )
             fullscreenProcess.start()
         else:
-            print("Fullscreen mode disabled")
+            print("Fullscreen mode\t\t: disabled")
             # Resize the window to the specified dimensions
             sizeProcess = multiprocessing.Process(
                 target=self.childDispatch,
@@ -225,7 +226,7 @@ class MainWindow(QWidget):
         Dynamically replaces variables with configuration values.
         """
         # Path to CSS file (relative to the module)
-        cssPath = "assets/style.css"
+        cssPath = self.style_file
 
         try:
             # Read CSS file content

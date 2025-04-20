@@ -46,7 +46,7 @@ def cli(config_file, style_file) -> None:
             # create the directory if it does not exist
             createConfigFile(configFile=style_file, type="style")
         else:
-            click.echo(message=f"Using config from: {config_file}")
+            click.echo(message=f"Using style from\t: {style_file}")
 
     if config_file:
         # determine if file exists
@@ -58,14 +58,14 @@ def cli(config_file, style_file) -> None:
             # create the directory if it does not exist
             createConfigFile(configFile=config_file, type="config")
         else:
-            click.echo(message=f"Using config from: {config_file}")
+            click.echo(message=f"Using config from\t: {config_file}")
 
     AppConfig.CONFIG_SOURCES = FileSource(file=config_file)
     try:
         appConfig = AppConfig()
         # click.echo(message=f"Using config: {appConfig}")
         app = QApplication(sys.argv)
-        window = MainWindow(appConfig=appConfig)
+        window = MainWindow(appConfig=appConfig, style_file=style_file)
         window.show()
         sys.exit(app.exec())
     except Exception as e:
