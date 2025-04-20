@@ -1,34 +1,41 @@
 # HyprPwMenu
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/antrax2024/dockmate/refs/heads/main/assets/banner-logo.jpg" alt="DockMate Logo">
+</p>
+
+<div align="center">
+  <span>
+    <img alt="PyPI - Version" src="https://img.shields.io/pypi/v/dockmate">
+    <img alt="AUR Version" src="https://img.shields.io/aur/version/dockmate">
+    <img src="https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2Fantrax2024%2Fdockmate%2Frefs%2Fheads%2Fmain%2Fpyproject.toml" alt="Python Version" />
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/antrax2024/dockmate">
+    <img alt="PyPI - License" src="https://img.shields.io/pypi/l/dockmate">
+  </span>
+</div>
+
 A modern and customizable power menu for Hyprland compositor.
 
 ## Overview
 
-HyprPwMenu provides a sleek graphical interface for system operations like shutdown, reboot, and logoff in Hyprland Wayland compositor environments. Built with Python and PyQt6, it offers extensive customization through configuration files and CSS styling.
+**hyprpwmenu** provides a sleek graphical interface for system operations (shutdown, reboot, and logoff) in Hyprland Wayland compositor environments. Built with Python and PyQt6, it offers extensive customization through configuration files and CSS styling.
 
 ## Installation
 
-### Dependencies
-
-- Python 3.13+
-- PyQt6
-- click
-- Font Awesome 6 (for icons)
-
-### Installing with pip
+### Install with pip
 
 ```bash
 pip install hyprpwmenu
 ```
 
-### Installing from source
+### Install with AUR
+
+hyprpwmenu is available in [AUR](https://aur.archlinux.org/).
 
 ```bash
-git clone https://github.com/your-username/hyprpwmenu.git # Replace with actual repo URL if available
-cd hyprpwmenu
-uv venv
-source .venv/bin/activate
-uv pip install -e .
+paru -S hyprpwmenu
+# or
+yay -S  hyprpwmenu
 ```
 
 ## Usage
@@ -41,67 +48,53 @@ hyprpwmenu [OPTIONS]
 
 Based on the `click.py` file, the following command-line options are available:
 
-| Option           | Argument | Description                                   | Default Value                      |
-| ---------------- | -------- | --------------------------------------------- | ---------------------------------- |
-| `-c`, `--config` | `FILE`   | Specifies the path to the `config.yaml` file. | `~/.config/hyprpwmenu/config.yaml` |
-| `-s`, `--style`  | `FILE`   | Specifies the path to the `style.css` file.   | `~/.config/hyprpwmenu/style.css`   |
-| `-h`, `--help`   |          | Show the help message and exit.               | N/A                                |
+| Option           | Argument | Description                                  | Default Value                      |
+| ---------------- | -------- | -------------------------------------------- | ---------------------------------- |
+| `-c`, `--config` | `FILE`   | Specifies the path to the`config.yaml` file. | `~/.config/hyprpwmenu/config.yaml` |
+| `-s`, `--style`  | `FILE`   | Specifies the path to the`style.css` file.   | `~/.config/hyprpwmenu/style.css`   |
+| `-h`, `--help`   |          | Show the help message and exit.              | N/A                                |
 
-If the specified configuration or style files don't exist at the provided paths (or the default paths), HyprPwMenu will attempt to create default versions.
+If the specified configuration or style files don't exist at the provided paths (or the default paths), hyprpwmenu will attempt to create default versions.
 
 ## Configuration (`config.yaml`)
 
-HyprPwMenu uses a YAML configuration file (typically `~/.config/hyprpwmenu/config.yaml`) to define its behavior and the specifics of the power actions.
-
-_(Note: The exact structure of `config.yaml` is defined within the application's config handling logic, which was not provided. However, a typical configuration might include the following parameters):_
+hyprpwmenu uses a YAML configuration file (typically `~/.config/hyprpwmenu/config.yaml`) to define its behavior and the specifics of the power actions (shutdown, reboot and logoff).
 
 ```yaml
-# Example config.yaml structure
-buttons:
-  shutdown:
-    command: "systemctl poweroff" # Command to execute for shutdown
-    icon: "" # Font Awesome 6 icon code (e.g., power-off)
-    label: "Shutdown" # Text label for the button
-    keybind: "s" # Optional keyboard shortcut within the app
-  reboot:
-    command: "systemctl reboot"
-    icon: "" # e.g., redo
-    label: "Reboot"
-    keybind: "r"
-  logoff:
-    command: "hyprctl dispatch exit" # Command for logging out of Hyprland
-    icon: "" # e.g., sign-out-alt
-    label: "Log Out"
-    keybind: "l"
-  # Add other buttons like sleep, lock screen etc. as needed
-  # lock:
-  #   command: "your-lock-command"
-  #   icon: "" # e.g., lock
-  #   label: "Lock"
-  #   keybind: "k"
+# This file is used to configure the hyprpwmenu
+# It is a YAML file, so make sure to follow the syntax rules
+# You can use comments in YAML files by starting a line with '#'
 
-window:
-  position: "center" # Window position (e.g., center, top-right, etc. - depends on implementation)
-  width: 450 # Window width in pixels
-  height: 200 # Window height in pixels
-  opacity: 0.95 # Window opacity (0.0 to 1.0)
-  layout: "horizontal" # Button layout (e.g., horizontal, vertical)
-  spacing: 20 # Spacing between buttons
+# Main Window configuration
+main_window:
+  fullscreen: true # Set to true to make the main window fullscreen
+  width: 720 # Width of the main window (pixels)
+  height: 350 # Height of the main window (pixels)
+  space_between_buttons: 40 # Space between buttons (pixels)
 
-keybindings: # Global keybindings within the app
-  exit: "Escape" # Key to close the power menu window
+# Shutdown icon and command
+# The icon is unicode for a Font Awesome icon,
+# you can find the list of icons here: https://fontawesome.com/icons/
+shutdown:
+  icon: "\uf011"
+  command: "poweroff" # Command to execute when the shutdown icon is clicked
 
-# Other potential options:
-# - Font settings
-# - Margins
-# - Corner radius (if not handled by CSS)
+# Reboot icon and command
+reboot:
+  icon: "\uf2f9"
+  command: "reboot" # Command to execute when the reboot icon is clicked
+
+# Logoff icon and command
+logoff:
+  icon: "\uf2f5"
+  command: "hyprctl dispatch exit" # Command to execute when the logout icon is clicked
 ```
 
 Please refer to the default generated `config.yaml` or the application's source code for the definitive structure and available options.
 
 ## Styling (`style.css`)
 
-The visual appearance of HyprPwMenu is controlled via a CSS file (default: `~/.config/hyprpwmenu/style.css`). The provided `assets/style.css` defines the default look and feel.
+The visual appearance of hyprpwmenu is controlled via a CSS file (default: `~/.config/hyprpwmenu/style.css`).
 
 Key customizable elements via CSS include:
 
@@ -130,7 +123,7 @@ You can modify the default `style.css` or provide your own using the `-s` comman
 
 ## Integration with Hyprland
 
-To launch HyprPwMenu using a keybinding in Hyprland, add a line similar to the following to your `hyprland.conf`:
+To launch hyprpwmenu using a keybinding in Hyprland, add a line similar to the following to your `hyprland.conf`:
 
 ```
 # Example: Bind Super + X to launch hyprpwmenu
@@ -143,9 +136,59 @@ Adjust the keybinding (`SUPER, X`) as needed.
 
 Contributions are welcome! Please feel free to submit issues or pull requests to the project repository.
 
-_(Please add the actual repository link here if available)_
+### Getting Started
+
+1. Fork the repository
+2. Clone your fork: `git clone https://github.com/yourusername/hyprpwmenu.git`
+3. Create a new branch: `git checkout -b feature/your-feature-name`
+4. Install development dependencies: `uv pip install -e ".[dev]"`
+
+### Development Guidelines
+
+- Follow PEP8 style guidelines
+- Add type hints to all new functions
+- Write tests for new features
+- Update documentation as needed
+
+### Submitting Changes
+
+1. Commit your changes: `git commit -m "Add feature: description"`
+2. Push to your fork: `git push origin feature/your-feature-name`
+3. Open a pull request against the main repository
+
+### Reporting Issues
+
+When reporting issues, please include:
+
+- A clear description of the problem
+- Steps to reproduce
+- Expected vs actual behavior
+- Your environment details (Python version, OS, etc.)
 
 ## License
 
-This project is likely licensed under an open-source license. Please include a `LICENSE` file in the repository. If none is present, assume it is proprietary unless otherwise stated.
-_(Consider adding a specific license, e.g., MIT License)_
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+```
+MIT License
+
+Copyright (c) 2023 HyprPwMenu Contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
