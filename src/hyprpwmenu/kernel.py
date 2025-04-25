@@ -30,6 +30,7 @@ class MainWindow(QWidget):
         self.appConfig = appConfig
         self.style_file = style_file
         self.setWindowTitle(f"{APP_NAME}")
+        self.setObjectName("hyprpwmenu")
 
         # List to hold the buttons for easy navigation (initialize early)
         self.buttons = []
