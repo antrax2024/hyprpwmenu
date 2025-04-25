@@ -20,6 +20,8 @@ QToolButton#shutdownButton {
 
 /* Shutdown icon styling: Font Awesome icon and color */
 QToolButton QLabel#iconshutdownButton {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900; /* Solid variant */
     font-size: 84px;
     color: #C68EFD;
 }
@@ -44,7 +46,7 @@ QToolButton#rebootButton {
 /* Reboot icon styling: Font Awesome icon and color */
 QToolButton QLabel#iconrebootButton {
     font-family: "Font Awesome 6 Free";
-    /* Nome exato da fonte */
+    font-weight: 900; /* Solid variant */
     font-size: 84px;
     color: #48A6A7;
 }
@@ -69,7 +71,7 @@ QToolButton#logoffButton {
 /* Logoff icon styling: Font Awesome icon and color */
 QToolButton QLabel#iconlogoffButton {
     font-family: "Font Awesome 6 Free";
-    /* Nome exato da fonte */
+    font-weight: 900; /* Solid variant */
     font-size: 84px;
     color: #A0C878;
 }

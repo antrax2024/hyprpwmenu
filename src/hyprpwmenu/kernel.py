@@ -1,5 +1,6 @@
 import time
 import subprocess
+
 from PyQt6.QtWidgets import QLabel, QVBoxLayout, QWidget, QHBoxLayout, QToolButton
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QKeyEvent, QGuiApplication, QFontDatabase
@@ -43,9 +44,6 @@ class MainWindow(QWidget):
         QGuiApplication.setApplicationDisplayName("hyprpwmenu")
 
         print("Loading Font Awesome font...")
-        self.FontAwesomeFile = importlib.resources.files("hyprpwmenu").joinpath(
-            f"assets/fontawesome-webfont.ttf"
-        )
         self.loadFontAwesome()
 
         print("Setting up UI...")
@@ -177,9 +175,63 @@ class MainWindow(QWidget):
             centerProcess.start()
 
     def loadFontAwesome(self) -> None:
-        """Carrega a fonte Font Awesome no aplicativo."""
-        font_id = QFontDatabase.addApplicationFont(str(self.FontAwesomeFile))
-        self.font_family = QFontDatabase.applicationFontFamilies(font_id)[0]
+        """
+        Load Font Awesome 6 Free font variants from the assets directory.
+        Loads Solid, Regular, and Brands versions.
+
+        Returns:
+            None
+        """
+        try:
+            # Define paths to all three font variants
+            fontPathSolid = str(
+                importlib.resources.files("hyprpwmenu").joinpath(
+                    "assets/Font Awesome 6 Free-Solid-900.otf"
+                )
+            )
+            fontPathRegular = str(
+                importlib.resources.files("hyprpwmenu").joinpath(
+                    "assets/Font Awesome 6 Free-Regular-400.otf"
+                )
+            )
+            fontPathBrands = str(
+                importlib.resources.files("hyprpwmenu").joinpath(
+                    "assets/Font Awesome 6 Brands-Regular-400.otf"
+                )
+            )
+
+            # Load all font variants
+            idSolid = QFontDatabase.addApplicationFont(fontPathSolid)
+            idRegular = QFontDatabase.addApplicationFont(fontPathRegular)
+            idBrands = QFontDatabase.addApplicationFont(fontPathBrands)
+
+            loadingErrors = []
+
+            # Check for loading errors
+            if idSolid < 0:
+                loadingErrors.append("Solid")
+            if idRegular < 0:
+                loadingErrors.append("Regular")
+            if idBrands < 0:
+                loadingErrors.append("Brands")
+
+            if loadingErrors:
+                print(
+                    f"Error: Failed to load Font Awesome variants: {', '.join(loadingErrors)}"
+                )
+            else:
+                # Get font families for each variant
+                familiesSolid = QFontDatabase.applicationFontFamilies(idSolid)
+                familiesRegular = QFontDatabase.applicationFontFamilies(idRegular)
+                familiesBrands = QFontDatabase.applicationFontFamilies(idBrands)
+
+                print(f"Font Awesome loaded successfully:")
+                print(f"- Solid families: {familiesSolid}")
+                print(f"- Regular families: {familiesRegular}")
+                print(f"- Brands families: {familiesBrands}")
+
+        except Exception as e:
+            print(f"Error loading Font Awesome fonts: {e}")
 
     def shutdownButtonClick(self) -> None:
         """
