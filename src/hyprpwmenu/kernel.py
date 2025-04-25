@@ -1,12 +1,9 @@
 import time
 import subprocess
-
 from PyQt6.QtWidgets import QLabel, QVBoxLayout, QWidget, QHBoxLayout, QToolButton
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QKeyEvent, QGuiApplication, QFontDatabase
 from .config import AppConfig
-import multiprocessing
-from types import SimpleNamespace
 from .constants import APP_NAME, APP_VERSION
 import importlib.resources
 
@@ -15,13 +12,6 @@ class MainWindow(QWidget):
     """
     Main application window displaying control buttons.
     """
-
-    rules = SimpleNamespace(
-        focus="focuswindow class:hyprpwmenu",
-        floating="togglefloating",
-        fullscreen="fullscreen",
-        centerwindow="centerwindow 0",
-    )
 
     def __init__(self, appConfig: AppConfig, style_file: str) -> None:
         """
@@ -106,9 +96,7 @@ class MainWindow(QWidget):
         # Add first button
         buttonsLayout.addWidget(shutdownButton)
         # space_between_buttons
-        space_between_buttons = (
-            self.appConfig.main_window.space_between_buttons
-        )  # Adjust this value to control spacing
+        space_between_buttons = 35
         buttonsLayout.addSpacing(space_between_buttons)
 
         # Add second button
@@ -137,42 +125,6 @@ class MainWindow(QWidget):
         bottomLayout.addWidget(appInfoLabel)
 
         mainLayout.addLayout(bottomLayout)
-
-        # Ensure the shutdown button gets focus
-        if self.buttons:
-            self.buttons[0].setFocus()
-
-        # Adjusting Windows Parameters
-        ## Make window floating
-        floatingProcess = multiprocessing.Process(
-            target=self.childDispatch, args=("'togglefloating class:^(hyprpwmenu)$'",)
-        )
-        floatingProcess.start()
-        ## Analizing if the window is fullscreen
-        if self.appConfig.main_window.fullscreen:
-            print("Fullscreen mode\t\t: enabled")
-            # Set the window to fullscreen
-            fullscreenProcess = multiprocessing.Process(
-                target=self.childDispatch,
-                args=(self.rules.fullscreen,),
-            )
-            fullscreenProcess.start()
-        else:
-            print("Fullscreen mode\t\t: disabled")
-            # Resize the window to the specified dimensions
-            sizeProcess = multiprocessing.Process(
-                target=self.childDispatch,
-                args=(
-                    f"resizeactive exact {self.appConfig.main_window.width} {self.appConfig.main_window.height}",
-                ),
-            )
-            sizeProcess.start()
-            # center the window
-            centerProcess = multiprocessing.Process(
-                target=self.childDispatch,
-                args=(self.rules.centerwindow,),
-            )
-            centerProcess.start()
 
     def loadFontAwesome(self) -> None:
         """
@@ -358,26 +310,3 @@ class MainWindow(QWidget):
         else:
             # Handle other keys normally by passing the event to the parent
             super().keyPressEvent(event)
-
-    def childDispatch(self, rule: str) -> None:
-        # print("childDispatch started")
-        time.sleep(0.1)  # Atraso de 100ms.
-        # First dispatch the focus rule to ensure the window is focused
-        # self.hyprctlDispatch(rule=self.rules.focus)
-        # Then dispatch the actual rule
-        self.hyprctlDispatch(rule=rule)
-        # print("childDispatch finished")
-
-    def hyprctlDispatch(self, rule: str) -> None:
-        """
-        Executes a command Dispatch using the Hyprland control tool (hyprctl).
-
-        Args:
-            rule (str): The rule to execute.
-        """
-        subprocess.run(
-            f"hyprctl dispatch focuswindow class:hyprpwmenu ; hyprctl dispatch {rule}",
-            shell=True,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )

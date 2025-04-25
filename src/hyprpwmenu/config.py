@@ -36,14 +36,6 @@ def createConfigFile(configFile: str, type: str = "config") -> None:
         sys.exit(1)
 
 
-# Main Window
-class MainWindow(BaseConfig):
-    fullscreen: bool  # Fullscreen mode
-    width: int  # Width of the window
-    height: int  # Height of the window
-    space_between_buttons: int  # Fixed space between buttons
-
-
 # Shutdown icon and command
 class Shutdown(BaseConfig):
     icon: str
@@ -71,7 +63,6 @@ class AppConfig(BaseConfig):
         )
     )
 
-    main_window: MainWindow  # Main Window
     shutdown: Shutdown  # Shutdown icon and command
     logoff: Logoff  # Logoff icon and command
     reboot: Reboot  # Reboot icon and command

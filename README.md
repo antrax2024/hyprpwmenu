@@ -23,6 +23,17 @@ A modern and customizable power menu for [Hyprland](https://hyprland.org/https:/
 
 ## Installation
 
+### Important
+
+Before continuing, write these rules in your Hyprland configuration file `hyprland.conf`.
+
+```ini
+# hyprpwmenu
+windowrulev2 = float,class:hyprpwmenu # necessary
+#windowrulev2 = fullscreen,class:hyprpwmenu # only if you want fullscreen
+windowrulev2 = size 720 250,class:hyprpwmenu
+```
+
 ### Install with pip
 
 ```bash
@@ -66,13 +77,6 @@ If the specified configuration or style files don't exist at the provided paths 
 # It is a YAML file, so make sure to follow the syntax rules
 # You can use comments in YAML files by starting a line with '#'
 
-# Main Window configuration
-main_window:
-  fullscreen: true # Set to true to make the main window fullscreen
-  width: 720 # Width of the main window (pixels)
-  height: 350 # Height of the main window (pixels)
-  space_between_buttons: 40 # Space between buttons (pixels)
-
 # Shutdown icon and command
 # The icon is unicode for a Font Awesome icon,
 # you can find the list of icons here: https://fontawesome.com/icons/
@@ -100,7 +104,7 @@ The visual appearance of hyprpwmenu is controlled via a CSS file (default: `~/.c
 Key customizable elements via CSS include:
 
 - **`QWidget`**: Styles the main application window background.
-  - Default: Dark grey (`#121212`).
+  - Default: Dark grey (`#020f18`).
 - **`QToolButton`**: Base style for all action buttons (Shutdown, Reboot, Logoff).
   - Default: Transparent background, no initial border, rounded corners (`15px`), fixed size (`100x100px`), padding (`15px`).
 - **`QToolButton#<name>Button`**: Specific styling for individual buttons (e.g., `QToolButton#shutdownButton`).
@@ -126,45 +130,12 @@ You can modify the default `style.css` or provide your own using the `-s` comman
 
 To launch hyprpwmenu using a keybinding in Hyprland, add a line similar to the following to your `hyprland.conf`:
 
-```
+```ini
 # Example: Bind Super + X to launch hyprpwmenu
 bind = SUPER, X, exec, hyprpwmenu
 ```
 
 Adjust the keybinding (`SUPER, X`) as needed.
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit issues or pull requests to the project repository.
-
-### Getting Started
-
-1. Fork the repository
-2. Clone your fork: `git clone https://github.com/yourusername/hyprpwmenu.git`
-3. Create a new branch: `git checkout -b feature/your-feature-name`
-4. Install development dependencies: `uv pip install -e ".[dev]"`
-
-### Development Guidelines
-
-- Follow PEP8 style guidelines
-- Add type hints to all new functions
-- Write tests for new features
-- Update documentation as needed
-
-### Submitting Changes
-
-1. Commit your changes: `git commit -m "Add feature: description"`
-2. Push to your fork: `git push origin feature/your-feature-name`
-3. Open a pull request against the main repository
-
-### Reporting Issues
-
-When reporting issues, please include:
-
-- A clear description of the problem
-- Steps to reproduce
-- Expected vs actual behavior
-- Your environment details (Python version, OS, etc.)
 
 ## License
 

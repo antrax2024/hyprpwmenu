@@ -2,13 +2,6 @@
 # It is a YAML file, so make sure to follow the syntax rules
 # You can use comments in YAML files by starting a line with '#'
 
-# Main Window configuration
-main_window:
-  fullscreen: true # Set to true to make the main window fullscreen
-  width: 720 # Width of the main window (pixels)
-  height: 350 # Height of the main window (pixels)
-  space_between_buttons: 40 # Space between buttons (pixels)
-
 # Shutdown icon and command
 # The icon is unicode for a Font Awesome icon,
 # you can find the list of icons here: https://fontawesome.com/icons/
