@@ -1,6 +1,6 @@
 <!-- markdownlint-disable -->
 
-# hyprpwmenu
+# 🚀 hyprpwmenu
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/antrax2024/hyprpwmenu/refs/heads/main/src/hyprpwmenu/assets/banner.jpg" alt="hyprpwmenu Logo">
@@ -12,14 +12,13 @@
     <img alt="AUR Version" src="https://img.shields.io/aur/version/hyprpwmenu">
     <img alt="Python Version from PEP 621 TOML" src="https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2Fantrax2024%2Fhyprpwmenu%2Frefs%2Fheads%2Fmain%2Fpyproject.toml">
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/antrax2024/hyprpwmenu">
-    <img alt="PyPI - License" src="https://img.shields.io/pypi/l/dockmate">
-
+    <img alt="PyPI - License" src="https://img.shields.io/pypi/l/hyprpwmenu">
 </span>
 </div>
 
 A modern and customizable power menu for [Hyprland](https://hyprland.org/https:/) compositor.
 
-## Overview
+## 📖 Overview
 
 **hyprpwmenu** provides a sleek graphical interface for system operations (_shutdown, reboot, and logoff_) in [Hyprland](https://hyprland.org/https:/) Wayland compositor. Built with Python and PyQt6, it offers extensive customization through configuration files and CSS styling.
 
@@ -52,7 +51,7 @@ paru -S hyprpwmenu
 yay -S  hyprpwmenu
 ```
 
-## Usage
+## 🛠️ Usage
 
 ```bash
 hyprpwmenu [OPTIONS]
@@ -70,7 +69,7 @@ The following command-line options are available:
 
 If the specified configuration or style files don't exist at the provided paths (or the default paths), hyprpwmenu will attempt to create default versions.
 
-## Configuration (`config.yaml`)
+## ⚙️ Configuration (`config.yaml`)
 
 **hyprpwmenu** uses a YAML configuration file (typically `~/.config/hyprpwmenu/config.yaml`) to define its behavior and the specifics of the power actions (shutdown, reboot and logoff).
 
@@ -99,7 +98,7 @@ logoff:
 
 Please refer to the default generated `config.yaml` or the application's source code for the definitive structure and available options.
 
-## Styling (`style.css`)
+## 🎨 Styling (`style.css`)
 
 The visual appearance of hyprpwmenu is controlled via a CSS file (default: `~/.config/hyprpwmenu/style.css`).
 
@@ -128,7 +127,7 @@ Default Theme Colors:
 
 You can modify the default `style.css` or provide your own using the `-s` command-line option to completely change the appearance.
 
-## Integration with Hyprland
+## 🔗 Integration with Hyprland
 
 To launch hyprpwmenu using a keybinding in Hyprland, add a line similar to the following to your `hyprland.conf`:
 
@@ -139,7 +138,7 @@ bind = SUPER, X, exec, hyprpwmenu
 
 Adjust the keybinding (`SUPER, X`) as needed.
 
-## License
+## 📜 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
