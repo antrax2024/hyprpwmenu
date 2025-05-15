@@ -1,4 +1,3 @@
-import time
 import subprocess
 from PyQt6.QtWidgets import QLabel, QVBoxLayout, QWidget, QHBoxLayout, QToolButton
 from PyQt6.QtCore import Qt
@@ -177,7 +176,7 @@ class MainWindow(QWidget):
                 familiesRegular = QFontDatabase.applicationFontFamilies(idRegular)
                 familiesBrands = QFontDatabase.applicationFontFamilies(idBrands)
 
-                print(f"Font Awesome loaded successfully:")
+                print("Font Awesome loaded successfully:")
                 print(f"- Solid families: {familiesSolid}")
                 print(f"- Regular families: {familiesRegular}")
                 print(f"- Brands families: {familiesBrands}")
@@ -219,7 +218,10 @@ class MainWindow(QWidget):
         )
 
     def createButton(
-        self, text: str, icon_unicode: str, objectName: str = None  # type: ignore
+        self,
+        text: str,
+        icon_unicode: str,
+        objectName: str = None,  # type: ignore
     ) -> QToolButton:
         """
         Cria um QToolButton com ícone do Font Awesome e texto.

@@ -1,3 +1,5 @@
+<!-- markdownlint-disable -->
+
 # hyprpwmenu
 
 <p align="center">

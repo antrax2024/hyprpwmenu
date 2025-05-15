@@ -18,9 +18,7 @@ def createConfigFile(configFile: str, type: str = "config") -> None:
                     exist_ok=True,
                 )
 
-            # copy the file assets/config.yaml to dir_name
             # Get the file content from package resources
-            target_filename = os.path.basename(configFile)
             source_file = "config.yaml" if type == "config" else "style.css"
             # Use importlib.resources to get asset path
             with (
@@ -56,7 +54,6 @@ class Logoff(BaseConfig):
 
 # Main configuration class
 class AppConfig(BaseConfig):
-
     CONFIG_SOURCES = FileSource(
         file=os.path.join(
             os.path.expanduser(path="~"), ".config", f"{APP_NAME}", "config.yaml"
