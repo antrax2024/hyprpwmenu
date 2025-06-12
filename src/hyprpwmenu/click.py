@@ -63,10 +63,10 @@ def cli(config_file, style_file) -> None:
     AppConfig.CONFIG_SOURCES = FileSource(file=config_file)
     try:
         appConfig = AppConfig()
-        app = QApplication(sys.argv)
-        window = MainWindow(appConfig=appConfig, style_file=style_file)
-        window.show()
-        sys.exit(app.exec())
+        # app = QApplication(sys.argv)
+        # window = MainWindow(appConfig=appConfig, style_file=style_file)
+        # window.show()
+        # sys.exit(app.exec())
     except Exception as e:
         click.echo(message=f"Error loading config: {e}")
         sys.exit(1)
