@@ -9,7 +9,7 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Gtk4LayerShell", "1.0")
 
 from gi.repository import Gtk, Gtk4LayerShell, GLib  # pyright: ignore # noqa
-from hyprpwmenu.constants import APP_NAME  # pyright: ignore # noqa
+from hyprpwmenu.constants import APP_NAME, DEFAULT_STYLE_FILE  # pyright: ignore # noqa
 
 
 class Window:
@@ -46,9 +46,10 @@ class Window:
 
         # Adicionar estilo CSS para melhor aparência
         css_provider = Gtk.CssProvider()
+        css_provider.load_from_path(f"{DEFAULT_STYLE_FILE}")
         css_provider.load_from_data(b"""
             window {
-                background-color: rgba(0, 0, 0, 0.8);
+                background-color: rgba(0, 0, 0, 1.0);
                 border-radius: 10px;
             }
             label {
@@ -73,7 +74,7 @@ class Window:
         window.present()
 
         # Fechar automaticamente após 3 segundos (opcional)
-        GLib.timeout_add_seconds(3, lambda: window.close())
+        # GLib.timeout_add_seconds(3, lambda: window.close())
 
     def on_close(self, window):
         self.app.quit()
