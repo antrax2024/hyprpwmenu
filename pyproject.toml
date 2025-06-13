@@ -7,12 +7,12 @@ license = { text = "MIT" }
 authors = [{ name = "Antrax", email = "fredcox@gmail.com" }]
 requires-python = ">=3.13"
 dependencies = [
-    "click>=8.1.8",
-    "confz>=2.1.0",
-    "pygobject>=3.52.3",
-    "pygobject-stubs>=2.13.0",
-    "pyqt6>=6.9.0",
-    "rich>=14.0.0",
+  "click>=8.1.8",
+  "confz>=2.1.0",
+  "pygobject>=3.52.3",
+  "pygobject-stubs>=2.13.0",
+  "pyqt6>=6.9.0",
+  "rich>=14.0.0",
 ]
 
 [project.urls]
