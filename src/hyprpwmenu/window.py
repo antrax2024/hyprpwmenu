@@ -17,47 +17,47 @@ from gi.repository import Gtk, Gtk4LayerShell  # pyright: ignore # noqa
 
 class Window:
     def __init__(self):
-        # Criar a aplicação GTK
+        # Create the GTK application
         self.app = Gtk.Application(application_id=f"com.example.{APP_NAME}")
         self.app.connect("activate", self.on_activate)
 
-        # Configurar manipulador de sinal para SIGINT (Ctrl+C)
+        # Configure signal handler for SIGINT (Ctrl+C)
         signal.signal(signal.SIGINT, self.signal_handler)
 
     def signal_handler(self, signum, frame):
-        """Manipulador para SIGINT (Ctrl+C)"""
+        """Handler for SIGINT (Ctrl+C)"""
         printLog("Exiting...")
         if hasattr(self, "app"):
             self.app.quit()
         sys.exit(0)
 
     def on_activate(self, app):
-        # Criar a janela principal
+        # Create the main window
         window = Gtk.ApplicationWindow(application=app)
         window.set_title(f"{APP_NAME}")
 
-        # Inicializar o GTK4 Layer Shell para a janela
+        # Initialize GTK4 Layer Shell for the window
         Gtk4LayerShell.init_for_window(window)
 
-        # Configurar a camada (overlay layer para ficar acima de outras janelas)
+        # Configure the layer (overlay layer to stay above other windows)
         Gtk4LayerShell.set_layer(window, Gtk4LayerShell.Layer.OVERLAY)
 
-        # Ancorar a janela no centro da tela
+        # Anchor the window in the center of the screen
         Gtk4LayerShell.set_anchor(window, Gtk4LayerShell.Edge.TOP, False)
         Gtk4LayerShell.set_anchor(window, Gtk4LayerShell.Edge.BOTTOM, False)
         Gtk4LayerShell.set_anchor(window, Gtk4LayerShell.Edge.LEFT, False)
         Gtk4LayerShell.set_anchor(window, Gtk4LayerShell.Edge.RIGHT, False)
 
-        # Definir tamanho fixo para a janela
+        # Set fixed size for the window
         window.set_default_size(300, 150)
 
-        # Criar o label com a palavra "gonha"
+        # Create the label with the word "gonha"
         label = Gtk.Label()
         label.set_markup('<span font_size="xx-large" weight="bold">gonha</span>')
         label.set_halign(Gtk.Align.CENTER)
         label.set_valign(Gtk.Align.CENTER)
 
-        # Adicionar estilo CSS para melhor aparência
+        # Add CSS style for better appearance
         css_provider = Gtk.CssProvider()
         css_provider.load_from_path(f"{DEFAULT_STYLE_FILE}")
         display = window.get_display()
@@ -65,12 +65,13 @@ class Window:
             display, css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
         )
         printLog("CSS provider loaded")  # Adicionar o label à janela
+        # Add the label to the window
         window.set_child(label)
 
-        # Conectar evento de fechamento
+        # Connect close event
         window.connect("close-request", self.on_close)
 
-        # Mostrar a janela
+        # Show the window
         window.present()
 
     def on_close(self, window):
