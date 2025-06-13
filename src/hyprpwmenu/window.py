@@ -6,10 +6,12 @@ CDLL("libgtk4-layer-shell.so")
 import gi  # pyright: ignore # noqa
 
 gi.require_version("Gtk", "4.0")
+gi.require_version("Gdk", "4.0")
 gi.require_version("Gtk4LayerShell", "1.0")
 
 from gi.repository import Gtk, Gtk4LayerShell, GLib  # pyright: ignore # noqa
 from hyprpwmenu.constants import APP_NAME, DEFAULT_STYLE_FILE  # pyright: ignore # noqa
+from hyprpwmenu.util import printLog
 
 
 class Window:
@@ -47,24 +49,11 @@ class Window:
         # Adicionar estilo CSS para melhor aparência
         css_provider = Gtk.CssProvider()
         css_provider.load_from_path(f"{DEFAULT_STYLE_FILE}")
-        css_provider.load_from_data(b"""
-            window {
-                background-color: rgba(0, 0, 0, 1.0);
-                border-radius: 10px;
-            }
-            label {
-                color: white;
-                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            }
-        """)
-
-        # Aplicar o CSS
-        style_context = window.get_style_context()
-        style_context.add_provider(
-            css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+        display = window.get_display()
+        Gtk.StyleContext.add_provider_for_display(
+            display, css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
         )
-
-        # Adicionar o label à janela
+        printLog("CSS provider loaded")  # Adicionar o label à janela
         window.set_child(label)
 
         # Conectar evento de fechamento

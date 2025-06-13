@@ -1,7 +1,9 @@
+window {
+  background-color: rgba(0, 0, 0, 1.0);
+  border-radius: 10px;
+}
 
-
-            window {
-                background-color: rgba(0, 0, 0, 1.0);
-                border-radius: 10px;
-            }
-
+label {
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
