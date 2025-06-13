@@ -1,17 +1,18 @@
 from ctypes import CDLL
+import signal
+import sys
+from hyprpwmenu.constants import APP_NAME, DEFAULT_STYLE_FILE
+from hyprpwmenu.util import printLog
 
 CDLL("libgtk4-layer-shell.so")
 
-#!/usr/bin/env python3
 import gi  # pyright: ignore # noqa
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Gdk", "4.0")
 gi.require_version("Gtk4LayerShell", "1.0")
 
-from gi.repository import Gtk, Gtk4LayerShell, GLib  # pyright: ignore # noqa
-from hyprpwmenu.constants import APP_NAME, DEFAULT_STYLE_FILE  # pyright: ignore # noqa
-from hyprpwmenu.util import printLog
+from gi.repository import Gtk, Gtk4LayerShell  # pyright: ignore # noqa
 
 
 class Window:
@@ -19,6 +20,16 @@ class Window:
         # Criar a aplicação GTK
         self.app = Gtk.Application(application_id=f"com.example.{APP_NAME}")
         self.app.connect("activate", self.on_activate)
+
+        # Configurar manipulador de sinal para SIGINT (Ctrl+C)
+        signal.signal(signal.SIGINT, self.signal_handler)
+
+    def signal_handler(self, signum, frame):
+        """Manipulador para SIGINT (Ctrl+C)"""
+        printLog("Exiting...")
+        if hasattr(self, "app"):
+            self.app.quit()
+        sys.exit(0)
 
     def on_activate(self, app):
         # Criar a janela principal
@@ -62,15 +73,12 @@ class Window:
         # Mostrar a janela
         window.present()
 
-        # Fechar automaticamente após 3 segundos (opcional)
-        # GLib.timeout_add_seconds(3, lambda: window.close())
-
     def on_close(self, window):
         self.app.quit()
         return False
 
     def run(self):
-        return self.app.run()
+        return self.app.run([])
 
 
 if __name__ == "__main__":
