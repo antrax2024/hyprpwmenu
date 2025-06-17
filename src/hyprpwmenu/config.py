@@ -3,6 +3,7 @@ import sys
 from confz import BaseConfig, FileSource
 from .constants import APP_NAME
 import importlib.resources
+from typing import List
 
 
 def createConfigFile(configFile: str, type: str = "config") -> None:
@@ -40,6 +41,11 @@ class MainWindow(BaseConfig):
     height: int = 150
 
 
+class Button:
+    icon: str = ""
+    id: str
+
+
 # Main configuration class
 class AppConfig(BaseConfig):
     CONFIG_SOURCES = FileSource(
@@ -48,6 +54,7 @@ class AppConfig(BaseConfig):
         )
     )
     mainwindow: MainWindow
+    buttons: List[Button]
 
 
 if __name__ == "__main__":

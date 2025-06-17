@@ -128,8 +128,9 @@ class Window:
     def run(self):
         return self.app.run([])
 
-    def makeButton(self, icon: str) -> Gtk.Button:
+    def makeButton(self, icon: str, id: str) -> Gtk.Button:
         button = Gtk.Button(label=f"{icon}")
+        button.set_name(id)
         return button
 
 
