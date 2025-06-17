@@ -71,10 +71,10 @@ class Window:
         mainBox.set_halign(Gtk.Align.CENTER)
         mainBox.set_valign(Gtk.Align.CENTER)
 
-        buttonTeste1 = Gtk.Button(label="󰐥")
+        buttonTeste1 = self.makeButton("󰐥")
         buttonTeste1.set_name("buttonTeste1")
+        buttonTeste2 = Gtk.Button(label="")
 
-        buttonTeste2 = Gtk.Button(label="Teste2")
         mainBox.append(buttonTeste1)
         mainBox.append(buttonTeste2)
 
@@ -127,6 +127,10 @@ class Window:
 
     def run(self):
         return self.app.run([])
+
+    def makeButton(self, icon: str) -> Gtk.Button:
+        button = Gtk.Button(label=f"{icon}")
+        return button
 
 
 if __name__ == "__main__":
