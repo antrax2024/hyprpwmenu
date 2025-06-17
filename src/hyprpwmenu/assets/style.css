@@ -7,8 +7,28 @@ window {
 }
 
 button {
+  background-color: #000000;
   margin-right: 8px;
   margin-left: 8px;
   min-width: 120px;
   min-height: 120px;
+  padding: 8px;
+  border-radius: 10px;
+}
+
+button image {
+
+  background-color: #000000;
+}
+
+button#buttonPowerOff:hover {
+  border: 2px solid #ff0000;
+}
+
+button#buttonPowerOff:active {
+  border: 2px solid #ff0000;
+}
+
+button#buttonPowerOff:selected {
+  border: 2px solid #ff0000;
 }
