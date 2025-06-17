@@ -1,14 +1,3 @@
-# - This is a Python 3.13 application
-# - Enforce static typing (type hints) in all functions
-# - Enable rich terminal output using `rich`
-# - Manage Python dependencies and builds with `uv`
-# - Adhere to PEP8 code style standards
-# - Maintain English-only documentation and code comments
-# - Apply camelCase convention for variables, methods and functions
-# **Note**: While camelCase conflicts with PEP8's snake_case recommendation
-# for Python, this requirement takes precedence per project specifications
-# Utils Functions
-#
 import os
 import subprocess
 from rich.console import Console
@@ -22,10 +11,6 @@ cl._log_render.omit_repeated_times = False
 
 def printLog(message: str) -> None:
     cl.log(message)
-
-
-def bytesToGb(bytes_value):
-    return int(bytes_value / (1024**3))
 
 
 def printLine() -> None:

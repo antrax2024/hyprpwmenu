@@ -8,27 +8,63 @@ window {
 
 button {
   background-color: #000000;
+  background-image: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  text-shadow: none;
   margin-right: 8px;
   margin-left: 8px;
   min-width: 120px;
   min-height: 120px;
   padding: 8px;
   border-radius: 10px;
+  -gtk-outline-radius: 0;
+  -gtk-outline-offset: 0;
+}
+
+button:hover {
+  background-color: #000000;
+  background-image: none;
+  border: 2px solid #40a02b;
+  /* Green border on hover */
+  box-shadow: none;
+  text-shadow: none;
+  -gtk-outline-radius: 0;
+}
+
+button:active {
+  background-color: #000000;
+  background-image: none;
+  border: 2px solid #40a02b;
+  /* Green border when active */
+  box-shadow: none;
+  text-shadow: none;
+  -gtk-outline-radius: 0;
+}
+
+button:focus {
+  background-color: #000000;
+  background-image: none;
+  border: 2px solid #40a02b;
+  /* Green border when focused */
+  box-shadow: none;
+  outline: none;
+  text-shadow: none;
+  -gtk-outline-radius: 0;
+  -gtk-outline-offset: 0;
+}
+
+button:checked {
+  background-color: #000000;
+  background-image: none;
+  border: 2px solid #40a02b;
+  /* Green border when checked */
+  box-shadow: none;
+  text-shadow: none;
 }
 
 button image {
-
   background-color: #000000;
 }
 
-button#buttonPowerOff:hover {
-  border: 2px solid #ff0000;
-}
-
-button#buttonPowerOff:active {
-  border: 2px solid #ff0000;
-}
-
-button#buttonPowerOff:selected {
-  border: 2px solid #ff0000;
-}

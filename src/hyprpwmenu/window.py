@@ -23,7 +23,7 @@ class Window:
     buttons: List[Gtk.Button]
     currentFocusIndex = 0
 
-    def __init__(self):
+    def __init__(self) -> None:
         # Create the GTK application
         printLog("Initializing GTK application...")
         self.app = Gtk.Application(application_id=f"com.antrax.{APP_NAME}")
@@ -36,14 +36,14 @@ class Window:
         printLog("Configuring signal handler for SIGINT...")
         signal.signal(signal.SIGINT, self.signal_handler)
 
-    def signal_handler(self, signum, frame):
+    def signal_handler(self, signum, frame) -> None:
         """Handler for SIGINT (Ctrl+C)"""
         printLog("Exiting...")
         if hasattr(self, "app"):
             self.app.quit()
         sys.exit(0)
 
-    def on_key_pressed(self, controller, keyval, keycode, state):
+    def on_key_pressed(self, controller, keyval, keycode, state) -> bool:
         """Handler for key press events"""
         printLog(f"Key pressed: keyval={keyval}, keycode={keycode}")
 
@@ -61,7 +61,7 @@ class Window:
 
         return False
 
-    def on_activate(self, app):
+    def on_activate(self, app) -> None:
         # Create the main window
         printLog("Creating main window...")
         window = Gtk.ApplicationWindow(application=app)
@@ -126,7 +126,7 @@ class Window:
         # window.grab_focus()
         #
 
-    def onWindowRealize(self, window):
+    def onWindowRealize(self, window) -> None:
         """
         Callback executed when the window is fully realized (drawn on screen).
         This is the ideal place to set initial focus.
@@ -150,11 +150,11 @@ class Window:
 
         return button
 
-    def on_close(self, window):
+    def on_close(self, window) -> bool:
         self.app.quit()
         return False
 
-    def run(self):
+    def run(self) -> int:
         return self.app.run([])
 
 
