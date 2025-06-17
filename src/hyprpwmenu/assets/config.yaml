@@ -3,14 +3,14 @@
 # You can use comments in YAML files by starting a line with '#'
 
 buttons:
-  - icon: "A"
+  - icon_path: "/home/antrax/.config/hyprpwmenu/shutdown.png"
     id: "buttonPowerOff"
     command: "poweroff"
 
-  - icon: "B"
+  - icon_path: "/home/antrax/.config/hyprpwmenu/reboot.png"
     id: "buttonRestart"
     command: "reboot"
 
-  - icon: "C"
+  - icon_path: "/home/antrax/.config/hyprpwmenu/logoff.png"
     id: "buttonLogout"
     command: "hyprctl dispatch exit"

@@ -80,7 +80,7 @@ class Window:
 
         printLog("Adding buttons to the main box...")
         for b in appConfig.buttons:
-            mainBox.append(self.makeButton(icon=b.icon, id=b.id))
+            mainBox.append(self.makeButton(icon_path=b.icon_path, id=b.id))
 
         # Configure the layer (overlay layer to stay above other windows)
         printLog("Configuring layer...")
@@ -115,15 +115,16 @@ class Window:
         # Connect close event
         window.connect("close-request", self.on_close)
 
+        # Connect to the "realize" signal of the window
+        # This ensures the window and its children are fully drawn before we try to set focus
+        window.connect("realize", self.onWindowRealize)
+
         # Show the window and grab focus
         window.present()
 
         # Force focus on the window after it's presented
         # window.grab_focus()
         #
-        # Connect to the "realize" signal of the window
-        # This ensures the window and its children are fully drawn before we try to set focus
-        # window.connect("realize", self.onWindowRealize)
 
     def onWindowRealize(self, window):
         """
@@ -134,22 +135,13 @@ class Window:
         printLog("Requesting focus for the first button...")
         self.buttons[self.currentFocusIndex].grab_focus()
 
-    def makeButton(self, icon: str, id: str) -> Gtk.Button:
-        # Create the label
-        label = Gtk.Label(label=icon)
-
-        # Set horizontal and vertical alignment for the label
-        # This tells the label to expand and center its content within the space it's given
-        label.set_halign(Gtk.Align.CENTER)
-        label.set_valign(Gtk.Align.CENTER)
-
-        # Also, make sure the label expands to fill available space within the button
-        label.set_hexpand(True)
-        label.set_vexpand(True)
+    def makeButton(self, icon_path: str, id: str) -> Gtk.Button:
+        # Criar a imagem a partir do arquivo PNG
+        image = Gtk.Image.new_from_file(icon_path)
 
         # Create the button
         button = Gtk.Button.new()
-        button.set_child(label)  # Set the configured label as the button's child
+        button.set_child(image)  # Set the configured label as the button's child
         button.set_name(
             id
         )  # Use set_name for the widget ID, not set_id (deprecated/internal)
