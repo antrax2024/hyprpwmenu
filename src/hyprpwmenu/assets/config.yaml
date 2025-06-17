@@ -2,13 +2,15 @@
 # It is a YAML file, so make sure to follow the syntax rules
 # You can use comments in YAML files by starting a line with '#'
 
-mainwindow:
-  width: 500
-  height: 150
+buttons:
+  - icon: "i"
+    id: "buttonPowerOff"
+    command: "poweroff"
 
-  buttons:
-    - icon: "g"
-      id: "ahhhhh"
+  - icon: "g"
+    id: "buttonRestart"
+    command: "reboot"
 
-    - icon: "a"
-      id: "hummmmm"
+  - icon: "t"
+    id: "buttonLogout"
+    command: "hyprctl dispatch exit"

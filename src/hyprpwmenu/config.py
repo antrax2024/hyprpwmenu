@@ -38,13 +38,7 @@ def createConfigFile(configFile: str, type: str = "config") -> None:
 class Button(BaseConfig):
     icon: str
     id: str
-
-
-# Shutdown icon and command
-class MainWindow(BaseConfig):
-    width: int = 300
-    height: int = 150
-    buttons: List[Button]
+    command: str
 
 
 # Main configuration class
@@ -54,7 +48,7 @@ class AppConfig(BaseConfig):
             os.path.expanduser(path="~"), ".config", f"{APP_NAME}", "config.yaml"
         )
     )
-    mainwindow: MainWindow
+    buttons: List[Button]
 
 
 if __name__ == "__main__":

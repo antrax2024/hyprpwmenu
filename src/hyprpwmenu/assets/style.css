@@ -2,12 +2,19 @@ window {
   background-color: #000000;
   border: 2px solid #40a02b;
   border-radius: 10px;
+  min-width: 800px;
+  min-height: 600px;
 }
 
-#buttonTeste1 {
+button {
+  font-size: 84px;
+  margin-right: 8px;
+  margin-left: 8px;
+  min-width: 120px;
+  min-height: 120px;
+}
+
+button:active {
   color: #40a02b;
   border: 2px solid #40a02b;
-  border-radius: 10px;
-  font-size: 54px;
-  margin-right: 20px;
 }

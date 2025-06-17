@@ -71,16 +71,9 @@ class Window:
         mainBox.set_halign(Gtk.Align.CENTER)
         mainBox.set_valign(Gtk.Align.CENTER)
 
-        buttonTeste1 = self.makeButton(icon="󰐥", id="buttonTeste1")
-        buttonTeste1.set_name("buttonTeste1")
-        buttonTeste2 = Gtk.Button(label="")
-
-        buttons = appConfig.mainwindow.buttons
-        for button in buttons:
-            printLog(f"button ===> {button}")
-
-        mainBox.append(buttonTeste1)
-        mainBox.append(buttonTeste2)
+        printLog("Adding buttons to the main box...")
+        for b in appConfig.buttons:
+            mainBox.append(self.makeButton(icon=b.icon, id=b.id))
 
         # Configure the layer (overlay layer to stay above other windows)
         printLog("Configuring layer...")
@@ -96,10 +89,6 @@ class Window:
         Gtk4LayerShell.set_anchor(window, Gtk4LayerShell.Edge.BOTTOM, False)
         Gtk4LayerShell.set_anchor(window, Gtk4LayerShell.Edge.LEFT, False)
         Gtk4LayerShell.set_anchor(window, Gtk4LayerShell.Edge.RIGHT, False)
-
-        # Set fixed size for the window
-        printLog("Setting fixed size for the window...")
-        window.set_default_size(appConfig.mainwindow.width, appConfig.mainwindow.height)
 
         # Create and configure the key event controller
         printLog("Setting up key event controller...")
@@ -133,7 +122,9 @@ class Window:
         return self.app.run([])
 
     def makeButton(self, icon: str, id: str) -> Gtk.Button:
-        button = Gtk.Button(label=f"{icon}")
+        label = Gtk.Label(label=icon)
+        button = Gtk.Button.new()
+        button.set_child(label)
         button.set_name(id)
         return button
 
