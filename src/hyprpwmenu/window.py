@@ -3,6 +3,7 @@ import signal
 import sys
 from hyprpwmenu.constants import APP_NAME, DEFAULT_STYLE_FILE
 from hyprpwmenu.util import printLog
+from hyprpwmenu.config import AppConfig
 
 CDLL("libgtk4-layer-shell.so")
 
@@ -14,12 +15,14 @@ gi.require_version("Gtk4LayerShell", "1.0")
 
 from gi.repository import Gtk, Gdk, Gtk4LayerShell  # pyright: ignore # noqa
 
+appConfig = AppConfig()
+
 
 class Window:
     def __init__(self):
         # Create the GTK application
         printLog("Initializing GTK application...")
-        self.app = Gtk.Application(application_id=f"com.example.{APP_NAME}")
+        self.app = Gtk.Application(application_id=f"com.antrax.{APP_NAME}")
         self.app.connect("activate", self.on_activate)
 
         # Configure signal handler for SIGINT (Ctrl+C)
@@ -61,6 +64,12 @@ class Window:
         printLog("Initializing GTK4 Layer Shell...")
         Gtk4LayerShell.init_for_window(window)
 
+        mainBox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        window.set_child(mainBox)
+
+        buttonTeste = Gtk.Button(label="Teste")
+        mainBox.append(buttonTeste)
+
         # Configure the layer (overlay layer to stay above other windows)
         printLog("Configuring layer...")
         Gtk4LayerShell.set_layer(window, Gtk4LayerShell.Layer.OVERLAY)
@@ -78,23 +87,13 @@ class Window:
 
         # Set fixed size for the window
         printLog("Setting fixed size for the window...")
-        window.set_default_size(600, 150)
+        window.set_default_size(appConfig.mainwindow.width, appConfig.mainwindow.height)
 
         # Create and configure the key event controller
         printLog("Setting up key event controller...")
         key_controller = Gtk.EventControllerKey()
         key_controller.connect("key-pressed", self.on_key_pressed)
         window.add_controller(key_controller)
-
-        # Create the label with the word "gonha"
-        label = Gtk.Label()
-        label.set_markup('<span font_size="xx-large" weight="bold">gonha</span>')
-        label.set_halign(Gtk.Align.CENTER)
-        label.set_valign(Gtk.Align.CENTER)
-
-        # Make the label focusable to receive keyboard events
-        label.set_can_focus(True)
-        label.set_focusable(True)
 
         # Add CSS style for better appearance
         css_provider = Gtk.CssProvider()
@@ -105,9 +104,6 @@ class Window:
         )
         printLog("CSS provider loaded")
 
-        # Add the label to the window
-        window.set_child(label)
-
         # Connect close event
         window.connect("close-request", self.on_close)
 
@@ -115,8 +111,7 @@ class Window:
         window.present()
 
         # Force focus on the window after it's presented
-        window.grab_focus()
-        label.grab_focus()
+        # window.grab_focus()
 
     def on_close(self, window):
         self.app.quit()

@@ -35,21 +35,9 @@ def createConfigFile(configFile: str, type: str = "config") -> None:
 
 
 # Shutdown icon and command
-class Shutdown(BaseConfig):
-    icon: str
-    command: str
-
-
-# Reboot icon and command
-class Reboot(BaseConfig):
-    icon: str
-    command: str
-
-
-# Logoff icon and command
-class Logoff(BaseConfig):
-    icon: str
-    command: str
+class MainWindow(BaseConfig):
+    width: int = 300
+    height: int = 150
 
 
 # Main configuration class
@@ -59,10 +47,7 @@ class AppConfig(BaseConfig):
             os.path.expanduser(path="~"), ".config", f"{APP_NAME}", "config.yaml"
         )
     )
-
-    shutdown: Shutdown  # Shutdown icon and command
-    logoff: Logoff  # Logoff icon and command
-    reboot: Reboot  # Reboot icon and command
+    mainwindow: MainWindow
 
 
 if __name__ == "__main__":

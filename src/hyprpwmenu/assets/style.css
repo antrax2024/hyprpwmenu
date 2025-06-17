@@ -1,5 +1,6 @@
 window {
-  background-color: rgba(0, 0, 0, 1.0);
+  background-color: #000000;
+  border: 2px solid #40a02b;
   border-radius: 10px;
 }
 
