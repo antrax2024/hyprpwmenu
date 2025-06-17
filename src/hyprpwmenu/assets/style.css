@@ -19,47 +19,37 @@ button {
   min-height: 120px;
   padding: 8px;
   border-radius: 10px;
-  -gtk-outline-radius: 0;
-  -gtk-outline-offset: 0;
 }
 
 button:hover {
   background-color: #000000;
   background-image: none;
   border: 2px solid #40a02b;
-  /* Green border on hover */
   box-shadow: none;
   text-shadow: none;
-  -gtk-outline-radius: 0;
 }
 
 button:active {
   background-color: #000000;
   background-image: none;
   border: 2px solid #40a02b;
-  /* Green border when active */
   box-shadow: none;
   text-shadow: none;
-  -gtk-outline-radius: 0;
 }
 
 button:focus {
   background-color: #000000;
   background-image: none;
   border: 2px solid #40a02b;
-  /* Green border when focused */
   box-shadow: none;
   outline: none;
-  text-shadow: none;
-  -gtk-outline-radius: 0;
-  -gtk-outline-offset: 0;
+  text-shadow: none;  
 }
 
 button:checked {
   background-color: #000000;
   background-image: none;
   border: 2px solid #40a02b;
-  /* Green border when checked */
   box-shadow: none;
   text-shadow: none;
 }

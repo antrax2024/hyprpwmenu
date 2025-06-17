@@ -1,6 +1,4 @@
 from ctypes import CDLL
-import signal
-import sys
 from hyprpwmenu.constants import APP_NAME, DEFAULT_STYLE_FILE
 from hyprpwmenu.util import printLog
 from hyprpwmenu.config import AppConfig
@@ -32,17 +30,6 @@ class Window:
         printLog("Initializing button list...")
         self.buttons = []
 
-        # Configure signal handler for SIGINT (Ctrl+C)
-        printLog("Configuring signal handler for SIGINT...")
-        signal.signal(signal.SIGINT, self.signal_handler)
-
-    def signal_handler(self, signum, frame) -> None:
-        """Handler for SIGINT (Ctrl+C)"""
-        printLog("Exiting...")
-        if hasattr(self, "app"):
-            self.app.quit()
-        sys.exit(0)
-
     def on_key_pressed(self, controller, keyval, keycode, state) -> bool:
         """Handler for key press events"""
         printLog(f"Key pressed: keyval={keyval}, keycode={keycode}")
@@ -52,14 +39,44 @@ class Window:
             printLog("Key 'q' pressed - Exiting...")
             self.app.quit()
             return True
-
         # Check if ESC key is pressed
         elif keyval == Gdk.KEY_Escape:
             printLog("ESC key pressed - Exiting...")
             self.app.quit()
             return True
+        elif keyval == 114:
+            printLog("Right Arrow (-->) key pressed - Activating button...")
+            if self.currentFocusIndex < len(self.buttons):
+                self.buttons[self.currentFocusIndex].activate()
+            return True
 
         return False
+
+    def onMouseEnter(
+        self,
+        controller: Gtk.EventControllerMotion,
+        x: float,
+        y: float,
+        button: Gtk.Button,
+    ) -> None:
+        """Handler for mouse enter event - gives focus to button"""
+        printLog(f"Mouse entered button: {button.get_name()}")
+        button.grab_focus()
+
+        # Update currentFocusIndex to match the focused button
+        try:
+            self.currentFocusIndex = self.buttons.index(button)
+            printLog(f"Updated focus index to: {self.currentFocusIndex}")
+        except ValueError:
+            printLog("Warning: Button not found in buttons list")
+
+    def onMouseLeave(
+        self, controller: Gtk.EventControllerMotion, button: Gtk.Button
+    ) -> None:
+        """Handler for mouse leave event"""
+        printLog(f"Mouse left button: {button.get_name()}")
+        # Optionally, you can implement logic here if needed
+        # For now, we keep the focus to maintain keyboard navigation
 
     def on_activate(self, app) -> None:
         # Create the main window
@@ -122,10 +139,6 @@ class Window:
         # Show the window and grab focus
         window.present()
 
-        # Force focus on the window after it's presented
-        # window.grab_focus()
-        #
-
     def onWindowRealize(self, window) -> None:
         """
         Callback executed when the window is fully realized (drawn on screen).
@@ -145,6 +158,17 @@ class Window:
         button.set_name(
             id
         )  # Use set_name for the widget ID, not set_id (deprecated/internal)
+
+        # Add motion controller for hover effects
+        motionController = Gtk.EventControllerMotion()
+        motionController.connect(
+            "enter",
+            lambda controller, x, y: self.onMouseEnter(controller, x, y, button),
+        )
+        motionController.connect(
+            "leave", lambda controller: self.onMouseLeave(controller, button)
+        )
+        button.add_controller(motionController)
 
         self.buttons.append(button)
 
