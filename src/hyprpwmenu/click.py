@@ -1,10 +1,13 @@
 import os
 import sys
 import click
-from .config import AppConfig, FileSource, createConfigFile
-from .constants import APP_NAME, APP_VERSION, DEFAULT_CONFIG_FILE, DEFAULT_STYLE_FILE
-from PyQt6.QtWidgets import QApplication
-from .kernel import MainWindow
+from hyprpwmenu.config import AppConfig, FileSource, createConfigFile
+from hyprpwmenu.constants import (
+    APP_NAME,
+    APP_VERSION,
+    DEFAULT_CONFIG_FILE,
+    DEFAULT_STYLE_FILE,
+)
 
 
 CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
