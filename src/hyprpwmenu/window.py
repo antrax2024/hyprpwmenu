@@ -75,6 +75,10 @@ class Window:
         buttonTeste1.set_name("buttonTeste1")
         buttonTeste2 = Gtk.Button(label="")
 
+        buttons = appConfig.mainwindow.buttons
+        for button in buttons:
+            printLog(f"button ===> {button}")
+
         mainBox.append(buttonTeste1)
         mainBox.append(buttonTeste2)
 

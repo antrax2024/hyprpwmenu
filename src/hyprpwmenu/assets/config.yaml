@@ -6,4 +6,9 @@ mainwindow:
   width: 500
   height: 150
 
-  buttons: []
+  buttons:
+    - icon: "g"
+      id: "ahhhhh"
+
+    - icon: "a"
+      id: "hummmmm"
