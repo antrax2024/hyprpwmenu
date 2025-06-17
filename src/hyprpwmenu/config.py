@@ -35,15 +35,16 @@ def createConfigFile(configFile: str, type: str = "config") -> None:
         sys.exit(1)
 
 
+class Button(BaseConfig):
+    icon: str
+    id: str
+
+
 # Shutdown icon and command
 class MainWindow(BaseConfig):
     width: int = 300
     height: int = 150
-
-
-class Button:
-    icon: str = ""
-    id: str
+    buttons: List[Button]
 
 
 # Main configuration class
@@ -54,7 +55,6 @@ class AppConfig(BaseConfig):
         )
     )
     mainwindow: MainWindow
-    buttons: List[Button]
 
 
 if __name__ == "__main__":

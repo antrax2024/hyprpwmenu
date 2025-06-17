@@ -71,7 +71,7 @@ class Window:
         mainBox.set_halign(Gtk.Align.CENTER)
         mainBox.set_valign(Gtk.Align.CENTER)
 
-        buttonTeste1 = self.makeButton("󰐥")
+        buttonTeste1 = self.makeButton(icon="󰐥", id="buttonTeste1")
         buttonTeste1.set_name("buttonTeste1")
         buttonTeste2 = Gtk.Button(label="")
 
