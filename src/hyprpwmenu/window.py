@@ -4,6 +4,7 @@ import sys
 from hyprpwmenu.constants import APP_NAME, DEFAULT_STYLE_FILE
 from hyprpwmenu.util import printLog
 from hyprpwmenu.config import AppConfig
+from typing import List
 
 CDLL("libgtk4-layer-shell.so")
 
@@ -19,11 +20,17 @@ appConfig = AppConfig()
 
 
 class Window:
+    buttons: List[Gtk.Button]
+    currentFocusIndex = 0
+
     def __init__(self):
         # Create the GTK application
         printLog("Initializing GTK application...")
         self.app = Gtk.Application(application_id=f"com.antrax.{APP_NAME}")
         self.app.connect("activate", self.on_activate)
+
+        printLog("Initializing button list...")
+        self.buttons = []
 
         # Configure signal handler for SIGINT (Ctrl+C)
         printLog("Configuring signal handler for SIGINT...")
@@ -113,6 +120,43 @@ class Window:
 
         # Force focus on the window after it's presented
         # window.grab_focus()
+        #
+        # Connect to the "realize" signal of the window
+        # This ensures the window and its children are fully drawn before we try to set focus
+        # window.connect("realize", self.onWindowRealize)
+
+    def onWindowRealize(self, window):
+        """
+        Callback executed when the window is fully realized (drawn on screen).
+        This is the ideal place to set initial focus.
+        """
+        # Request focus for the first button
+        printLog("Requesting focus for the first button...")
+        self.buttons[self.currentFocusIndex].grab_focus()
+
+    def makeButton(self, icon: str, id: str) -> Gtk.Button:
+        # Create the label
+        label = Gtk.Label(label=icon)
+
+        # Set horizontal and vertical alignment for the label
+        # This tells the label to expand and center its content within the space it's given
+        label.set_halign(Gtk.Align.CENTER)
+        label.set_valign(Gtk.Align.CENTER)
+
+        # Also, make sure the label expands to fill available space within the button
+        label.set_hexpand(True)
+        label.set_vexpand(True)
+
+        # Create the button
+        button = Gtk.Button.new()
+        button.set_child(label)  # Set the configured label as the button's child
+        button.set_name(
+            id
+        )  # Use set_name for the widget ID, not set_id (deprecated/internal)
+
+        self.buttons.append(button)
+
+        return button
 
     def on_close(self, window):
         self.app.quit()
@@ -120,13 +164,6 @@ class Window:
 
     def run(self):
         return self.app.run([])
-
-    def makeButton(self, icon: str, id: str) -> Gtk.Button:
-        label = Gtk.Label(label=icon)
-        button = Gtk.Button.new()
-        button.set_child(label)
-        button.set_name(id)
-        return button
 
 
 if __name__ == "__main__":
