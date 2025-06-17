@@ -4,7 +4,10 @@ window {
   border-radius: 10px;
 }
 
-label {
-  color: white;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+#buttonTeste1 {
+  color: #40a02b;
+  border: 2px solid #40a02b;
+  border-radius: 10px;
+  font-size: 54px;
+  margin-right: 20px;
 }

@@ -64,11 +64,19 @@ class Window:
         printLog("Initializing GTK4 Layer Shell...")
         Gtk4LayerShell.init_for_window(window)
 
+        printLog("Creating main box...")
         mainBox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        printLog("Adding main box to the window...")
         window.set_child(mainBox)
+        mainBox.set_halign(Gtk.Align.CENTER)
+        mainBox.set_valign(Gtk.Align.CENTER)
 
-        buttonTeste = Gtk.Button(label="Teste")
-        mainBox.append(buttonTeste)
+        buttonTeste1 = Gtk.Button(label="󰐥")
+        buttonTeste1.set_name("buttonTeste1")
+
+        buttonTeste2 = Gtk.Button(label="Teste2")
+        mainBox.append(buttonTeste1)
+        mainBox.append(buttonTeste2)
 
         # Configure the layer (overlay layer to stay above other windows)
         printLog("Configuring layer...")
