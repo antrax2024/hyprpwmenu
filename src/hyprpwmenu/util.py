@@ -185,7 +185,7 @@ def executeCommand(command: str) -> Tuple[int, str, str]:
 
 
 def copyAssetFile(destination: str, asset: str) -> None:
-    # if destination directory does not exist, create it
+    destination = os.path.expanduser(destination)
     if not os.path.exists(destination):
         os.makedirs(destination)
     source = importlib.resources.files(APP_NAME).joinpath(f"assets/{asset}")

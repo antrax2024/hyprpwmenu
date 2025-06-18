@@ -24,6 +24,7 @@ Features:
 """
 
 from ctypes import CDLL
+import os
 from hyprpwmenu.constants import APP_NAME, DEFAULT_STYLE_FILE
 from hyprpwmenu.util import printLog, executeCommand
 from hyprpwmenu.config import AppConfig
@@ -375,7 +376,7 @@ class Window:
             - Sets tooltip text
         """
         # Create image from PNG file
-        image = Gtk.Image.new_from_file(icon_path)
+        image = Gtk.Image.new_from_file(os.path.expanduser(icon_path))
 
         # Create the button
         button = Gtk.Button.new()

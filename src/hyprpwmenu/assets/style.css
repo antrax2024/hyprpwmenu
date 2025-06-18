@@ -2,8 +2,8 @@ window {
   background-color: #000000;
   border: 2px solid #40a02b;
   border-radius: 10px;
-  min-width: 800px;
-  min-height: 400px;
+  min-width: 720px;
+  min-height: 320px;
 }
 
 button {

@@ -10,19 +10,19 @@
 # Each button has the following properties based on the Button class:
 buttons:
   # Power Off Button
-  - icon_path: "/home/antrax/.config/hyprpwmenu/shutdown.png"  # str: Path to PNG icon file
+  - icon_path: "~/.config/hyprpwmenu/shutdown.png"  # str: Path to PNG icon file
     id: "buttonPowerOff"                                       # str: CSS identification for styling
     hint: "Power Off"                                          # str: Tooltip text shown on hover
     command: "poweroff"                                        # str: System command executed when clicked
 
   # Restart Button
-  - icon_path: "/home/antrax/.config/hyprpwmenu/reboot.png"    # str: Path to PNG icon file
+  - icon_path: "~/.config/hyprpwmenu/reboot.png"    # str: Path to PNG icon file
     id: "buttonRestart"                                        # str: CSS identification for styling
     hint: "Restart"                                            # str: Tooltip text shown on hover
     command: "reboot"                                          # str: System command executed when clicked
 
   # Logout Button
-  - icon_path: "/home/antrax/.config/hyprpwmenu/logoff.png"    # str: Path to PNG icon file
+  - icon_path: "~/.config/hyprpwmenu/logoff.png"    # str: Path to PNG icon file
     id: "buttonLogout"                                         # str: CSS identification for styling
     hint: "Log Off"                                            # str: Tooltip text shown on hover
     command: "hyprctl dispatch exit"                           # str: Hyprland command to exit session
