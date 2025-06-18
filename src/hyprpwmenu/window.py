@@ -14,8 +14,6 @@ gi.require_version("Gtk4LayerShell", "1.0")
 
 from gi.repository import Gtk, Gdk, Gtk4LayerShell  # pyright: ignore # noqa
 
-appConfig = AppConfig()
-
 
 class Window:
     buttons: List[Gtk.Button]
@@ -26,6 +24,7 @@ class Window:
         printLog("Initializing GTK application...")
         self.app = Gtk.Application(application_id=f"com.antrax.{APP_NAME}")
         self.app.connect("activate", self.on_activate)
+        self.appConfig = AppConfig()
 
         printLog("Initializing button list...")
         self.buttons = []
@@ -44,10 +43,35 @@ class Window:
             printLog("ESC key pressed - Exiting...")
             self.app.quit()
             return True
-        elif keyval == 114:
-            printLog("Right Arrow (-->) key pressed - Activating button...")
-            if self.currentFocusIndex < len(self.buttons):
-                self.buttons[self.currentFocusIndex].activate()
+
+        elif keyval == Gdk.KEY_Right:
+            printLog("Right arrow key pressed")
+            self.currentFocusIndex += 1
+            if self.currentFocusIndex >= len(self.buttons):
+                self.currentFocusIndex = 0
+
+            self.buttons[self.currentFocusIndex].grab_focus()
+            self.buttons[self.currentFocusIndex].set_state_flags(
+                Gtk.StateFlags.FOCUSED, False
+            )
+            self.updateHintLabel()
+
+            return True
+
+        elif keyval == Gdk.KEY_Left:
+            printLog(f"Left arrow key pressed")
+            self.currentFocusIndex -= 1
+
+            printLog(f"New focus index: {self.currentFocusIndex}")
+            if self.currentFocusIndex < 0:
+                self.currentFocusIndex = len(self.buttons) - 1
+
+            self.buttons[self.currentFocusIndex].grab_focus()
+            self.buttons[self.currentFocusIndex].set_state_flags(
+                Gtk.StateFlags.FOCUSED, False
+            )
+            self.updateHintLabel()
+
             return True
 
         return False
@@ -67,8 +91,12 @@ class Window:
         try:
             self.currentFocusIndex = self.buttons.index(button)
             printLog(f"Updated focus index to: {self.currentFocusIndex}")
+            self.updateHintLabel()
         except ValueError:
             printLog("Warning: Button not found in buttons list")
+
+    def updateHintLabel(self) -> None:
+        self.hintLabel.set_label(self.appConfig.buttons[self.currentFocusIndex].hint)
 
     def onMouseLeave(
         self, controller: Gtk.EventControllerMotion, button: Gtk.Button
@@ -77,6 +105,10 @@ class Window:
         printLog(f"Mouse left button: {button.get_name()}")
         # Optionally, you can implement logic here if needed
         # For now, we keep the focus to maintain keyboard navigation
+
+    def onMouseClick(self, button: Gtk.Button) -> None:
+        """Handler for mouse click event"""
+        printLog(f"Mouse clicked button: {button.get_name()}")
 
     def on_activate(self, app) -> None:
         # Create the main window
@@ -89,21 +121,38 @@ class Window:
         Gtk4LayerShell.init_for_window(window)
 
         printLog("Creating main box...")
-        mainBox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-        printLog("Adding main box to the window...")
-        window.set_child(mainBox)
+        mainBox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+
+        printLog("Creating top and bottom boxes...")
+        topBox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        bottomBox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        mainBox.append(topBox)
+        mainBox.append(bottomBox)
+
+        printLog("Configuring main boxes alignment...")
         mainBox.set_halign(Gtk.Align.CENTER)
         mainBox.set_valign(Gtk.Align.CENTER)
+        topBox.set_halign(Gtk.Align.CENTER)
+        topBox.set_valign(Gtk.Align.CENTER)
+        bottomBox.set_halign(Gtk.Align.CENTER)
+        bottomBox.set_valign(Gtk.Align.CENTER)
+
+        printLog("Adding main box to the window...")
+        window.set_child(mainBox)
 
         printLog("Adding buttons to the main box...")
-        for b in appConfig.buttons:
-            mainBox.append(self.makeButton(icon_path=b.icon_path, id=b.id))
+        for b in self.appConfig.buttons:
+            topBox.append(self.makeButton(icon_path=b.icon_path, id=b.id))
+
+        self.hintLabel = Gtk.Label(label=self.appConfig.buttons[0].hint)
+        self.hintLabel.set_name("hint_label")
+        bottomBox.append(self.hintLabel)
 
         # Configure the layer (overlay layer to stay above other windows)
         printLog("Configuring layer...")
         Gtk4LayerShell.set_layer(window, Gtk4LayerShell.Layer.OVERLAY)
 
-        # Configure keyboard interactivity - IMPORTANTE!
+        # Configure keyboard interactivity - IMPORTANT!
         printLog("Setting keyboard interactivity...")
         Gtk4LayerShell.set_keyboard_mode(window, Gtk4LayerShell.KeyboardMode.EXCLUSIVE)
 
@@ -171,6 +220,8 @@ class Window:
         button.add_controller(motionController)
 
         self.buttons.append(button)
+        button.connect("clicked", self.onMouseClick)
+        button.set_tooltip_text(self.appConfig.buttons[self.currentFocusIndex].hint)
 
         return button
 

@@ -5,12 +5,15 @@
 buttons:
   - icon_path: "/home/antrax/.config/hyprpwmenu/shutdown.png"
     id: "buttonPowerOff"
+    hint: "Power Off"
     command: "poweroff"
 
   - icon_path: "/home/antrax/.config/hyprpwmenu/reboot.png"
     id: "buttonRestart"
+    hint: "Restart"
     command: "reboot"
 
   - icon_path: "/home/antrax/.config/hyprpwmenu/logoff.png"
     id: "buttonLogout"
+    hint: "Log Off"
     command: "hyprctl dispatch exit"

@@ -38,7 +38,8 @@ def createConfigFile(configFile: str, type: str = "config") -> None:
 class Button(BaseConfig):
     icon_path: str  # path to png icon
     id: str  # identification for css
-    command: str  # commando to run when clicked
+    hint: str  # tooltip hint
+    command: str  # command to run when clicked
 
 
 # Main configuration class
