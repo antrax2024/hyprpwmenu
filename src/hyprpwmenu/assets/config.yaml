@@ -1,19 +1,38 @@
-# This file is used to configure the hyprpwmenu
-# It is a YAML file, so make sure to follow the syntax rules
-# You can use comments in YAML files by starting a line with '#'
 
+# HyprPwMenu Configuration File
+# This file defines the buttons and their properties for the power menu application
+# Based on the AppConfig and Button classes from config.py
+
+# Main configuration object (AppConfig)
+# Contains a list of Button objects that define the power menu items
+
+# buttons: List[Button] - Array of button configurations
+# Each button has the following properties based on the Button class:
 buttons:
-  - icon_path: "/home/antrax/.config/hyprpwmenu/shutdown.png"
-    id: "buttonPowerOff"
-    hint: "Power Off"
-    command: "poweroff"
+  # Power Off Button
+  - icon_path: "/home/antrax/.config/hyprpwmenu/shutdown.png"  # str: Path to PNG icon file
+    id: "buttonPowerOff"                                       # str: CSS identification for styling
+    hint: "Power Off"                                          # str: Tooltip text shown on hover
+    command: "poweroff"                                        # str: System command executed when clicked
 
-  - icon_path: "/home/antrax/.config/hyprpwmenu/reboot.png"
-    id: "buttonRestart"
-    hint: "Restart"
-    command: "reboot"
+  # Restart Button
+  - icon_path: "/home/antrax/.config/hyprpwmenu/reboot.png"    # str: Path to PNG icon file
+    id: "buttonRestart"                                        # str: CSS identification for styling
+    hint: "Restart"                                            # str: Tooltip text shown on hover
+    command: "reboot"                                          # str: System command executed when clicked
 
-  - icon_path: "/home/antrax/.config/hyprpwmenu/logoff.png"
-    id: "buttonLogout"
-    hint: "Log Off"
-    command: "hyprctl dispatch exit"
+  # Logout Button
+  - icon_path: "/home/antrax/.config/hyprpwmenu/logoff.png"    # str: Path to PNG icon file
+    id: "buttonLogout"                                         # str: CSS identification for styling
+    hint: "Log Off"                                            # str: Tooltip text shown on hover
+    command: "hyprctl dispatch exit"                           # str: Hyprland command to exit session
+
+# Button Class Properties Documentation:
+# - icon_path (str): Absolute path to a PNG image file used as the button icon
+# - id (str): Unique identifier used for CSS styling and element identification
+# - hint (str): Text displayed as tooltip when user hovers over the button
+# - command (str): Shell command that will be executed when the button is clicked
+
+# Configuration File Location:
+# This file should be placed at: ~/.config/hyprpwmenu/config.yaml
+# It will be automatically created by the createConfigFile() function if it doesn't exist

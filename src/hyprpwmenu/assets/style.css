@@ -58,3 +58,10 @@ button image {
   background-color: #000000;
 }
 
+label#hint_label {
+  font-family: "Hack Nerd Font Mono", monospace;
+  color: #209fb5;
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 20px;
+}
