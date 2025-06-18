@@ -20,20 +20,9 @@ A modern and customizable power menu for [Hyprland](https://hyprland.org/https:/
 
 ## 📖 Overview
 
-**hyprpwmenu** provides a sleek graphical interface for system operations (_shutdown, reboot, and logoff_) in [Hyprland](https://hyprland.org/https:/) Wayland compositor. Built with Python and PyQt6, it offers extensive customization through configuration files and CSS styling.
+**hyprpwmenu** provides a sleek graphical interface for system operations (_shutdown, reboot, and logoff_) in [Hyprland](https://hyprland.org/https:/) Wayland compositor. Built with Python and Gtk4, it offers extensive customization through configuration files and CSS styling.
 
 ## Installation
-
-### Important
-
-Before continuing, write these rules in your Hyprland configuration file `hyprland.conf`.
-
-```ini
-# hyprpwmenu
-windowrulev2 = float,class:hyprpwmenu # necessary
-#windowrulev2 = fullscreen,class:hyprpwmenu # only if you want fullscreen
-windowrulev2 = size 720 250,class:hyprpwmenu
-```
 
 ### Install with pip
 
@@ -54,78 +43,141 @@ yay -S  hyprpwmenu
 ## 🛠️ Usage
 
 ```bash
-hyprpwmenu [OPTIONS]
+$ hyprpwmenu
 ```
 
-### Command Line Options
-
-The following command-line options are available:
-
-| Option           | Argument | Description                                  | Default Value                      |
-| ---------------- | -------- | -------------------------------------------- | ---------------------------------- |
-| `-c`, `--config` | `FILE`   | Specifies the path to the`config.yaml` file. | `~/.config/hyprpwmenu/config.yaml` |
-| `-s`, `--style`  | `FILE`   | Specifies the path to the`style.css` file.   | `~/.config/hyprpwmenu/style.css`   |
-| `-h`, `--help`   |          | Show the help message and exit.              | N/A                                |
-
-If the specified configuration or style files don't exist at the provided paths (or the default paths), hyprpwmenu will attempt to create default versions.
+If the configuration or style files don't exist at the XDG_CONFIG_PATH (**/home/your_username/.config/hyprpwmenu**), **hyprpwmenu** will attempt to create default versions.
 
 ## ⚙️ Configuration (`config.yaml`)
 
-**hyprpwmenu** uses a YAML configuration file (typically `~/.config/hyprpwmenu/config.yaml`) to define its behavior and the specifics of the power actions (shutdown, reboot and logoff).
+The behavior and appearance of hyprpwmenu is controlled via a YAML configuration file (default: `~/.config/hyprpwmenu/config.yaml`).
+
+### Configuration Structure
+
+The configuration file defines a list of buttons with their properties:
 
 ```yaml
-# This file is used to configure the hyprpwmenu
-# It is a YAML file, so make sure to follow the syntax rules
-# You can use comments in YAML files by starting a line with '#'
-
-# Shutdown icon and command
-# The icon is unicode for a Font Awesome icon,
-# you can find the list of icons here: https://fontawesome.com/icons/
-shutdown:
-  icon: "\uf011"
-  command: "poweroff" # Command to execute when the shutdown icon is clicked
-
-# Reboot icon and command
-reboot:
-  icon: "\uf2f9"
-  command: "reboot" # Command to execute when the reboot icon is clicked
-
-# Logoff icon and command
-logoff:
-  icon: "\uf2f5"
-  command: "hyprctl dispatch exit" # Command to execute when the logout icon is clicked
+buttons:
+  - icon_path: "/path/to/icon.png" # Path to PNG icon file
+    id: "buttonId" # CSS identifier for styling
+    hint: "Tooltip text" # Text shown on hover
+    command: "system_command" # Command executed when clicked
 ```
 
-Please refer to the default generated `config.yaml` or the application's source code for the definitive structure and available options.
+### Button Properties
+
+Each button supports the following properties:
+
+- **`icon_path`** (string): Absolute path to a PNG image file used as the button icon
+- **`id`** (string): Unique identifier used for CSS styling and element identification
+- **`hint`** (string): Text displayed as tooltip when user hovers over the button
+- **`command`** (string): Shell command that will be executed when the button is clicked
+
+### Default Configuration
+
+The default configuration includes three standard power menu actions:
+
+- **Power Off**: Executes `poweroff` command
+- **Restart**: Executes `reboot` command
+- **Logout**: Executes `hyprctl dispatch exit` for Hyprland session exit
+
+### Custom Commands
+
+You can customize the commands to suit your system setup. For example:
+
+- Use `systemctl poweroff` instead of `poweroff`
+- Add custom scripts: `/path/to/custom/script.sh`
+- Use different logout commands for other window managers
+
+If the configuration file doesn't exist, hyprpwmenu will create a default version automatically.
 
 ## 🎨 Styling (`style.css`)
 
 The visual appearance of hyprpwmenu is controlled via a CSS file (default: `~/.config/hyprpwmenu/style.css`).
 
-Key customizable elements via CSS include:
+### Key Customizable Elements
 
-- **`QWidget`**: Styles the main application window background.
-  - Default: Dark grey (`#020f18`).
-- **`QToolButton`**: Base style for all action buttons (Shutdown, Reboot, Logoff).
-  - Default: Transparent background, no initial border, rounded corners (`15px`), fixed size (`100x100px`), padding (`15px`).
-- **`QToolButton#<name>Button`**: Specific styling for individual buttons (e.g., `QToolButton#shutdownButton`).
-  - Default: Sets the primary color for the button's text and icon.
-- **`QToolButton QLabel#icon<name>Button`**: Styles the icon within a specific button.
-  - Default: Uses Font Awesome 6 Free font, large size (`84px`), specific color matching the button's theme.
-- **`QToolButton QLabel#text<name>Button`**: Styles the text label within a specific button.
-  - Default: Arial font, `22px` size, specific color matching the button's theme.
-- **`QToolButton#<name>Button:focus`**: Styles applied when a button receives focus (e.g., via keyboard navigation).
-  - Default: Adds a `2px` solid border using the button's specific color.
-- **`#app_info_label`**: Styles the label displaying the application name and version.
-  - Default: Greenish color (`#81E7AF`), `14pt` size, padding.
+#### **Window Container**
 
-Default Theme Colors:
+- **`window`**: Styles the main application window
+  - Background color, border styling, border radius
+  - Minimum dimensions (width/height)
+  - Default: Black background (`#000000`) with green border (`#40a02b`)
 
-- Shutdown: Purple (`#C68EFD`)
-- Reboot: Teal (`#48A6A7`)
-- Logoff: Green (`#A0C878`)
+#### **Button Base Styling**
 
-You can modify the default `style.css` or provide your own using the `-s` command-line option to completely change the appearance.
+- **`button`**: Base style for all action buttons
+  - Background, border, padding, dimensions
+  - Border radius for rounded corners
+  - Default: Black background, no border, `120x120px` minimum size, `10px` border radius
+
+#### **Button Interaction States**
+
+Individual buttons have specific styling for hover, active, focus, and checked states:
+
+- **`button#buttonPowerOff`**: Power off button interactions
+  - Default: Red border (`#e64553`) on interaction
+- **`button#buttonRestart`**: Restart button interactions
+  - Default: Blue border (`#04a5e5`) on interaction
+- **`button#buttonLogout`**: Logout button interactions
+  - Default: Orange border (`#df8e1d`) on interaction
+
+#### **Button Icons**
+
+- **`button image`**: Styles the icon images within buttons
+  - Background color matching the window theme
+
+#### **Hint Label**
+
+- **`label#hint_label`**: Styles the tooltip/hint text display
+  - Font family, color, size, weight, and positioning
+  - Default: "Hack Nerd Font Mono", cyan color (`#209fb5`), `24px` size
+
+### Default Color Scheme
+
+The default theme uses a dark color palette:
+
+- **Background**: Black (`#000000`)
+- **Window Border**: Green (`#40a02b`)
+- **Power Off**: Red (`#e64553`)
+- **Restart**: Blue (`#04a5e5`)
+- **Logout**: Orange (`#df8e1d`)
+- **Hint Text**: Cyan (`#209fb5`)
+
+### Custom Styling
+
+You can completely customize the appearance by:
+
+1. Modifying the default `~/.config/hyprpwmenu/style.css`
+2. Using the `-s` command-line option to specify a custom CSS file
+3. Adjusting colors, fonts, sizes, borders, and animations
+
+The CSS follows standard GTK4 styling conventions, allowing for extensive customization of the user interface.
+
+## 🔤 Keyboard Navigation
+
+hyprpwmenu block keyboard when execute and only release after the user choose one button (action) or quit hyprpwmenu.
+The app supports keyboard navigation for quick access without using the mouse:
+
+### Navigation
+
+- **Right Arrow (→)**: Select the next button
+- **Left Arrow (←)**: Select the previous button
+- **Enter**: Execute the command of the currently selected button
+- **q** or **ESC**: Quit application
+
+### Usage Tips
+
+- Use the arrow keys to cycle through available power menu options
+- The currently selected button will be highlighted with a colored border
+- Press Enter to confirm and execute the selected action
+- You can quickly navigate and execute commands using only the keyboard
+
+This keyboard navigation makes hyprpwmenu accessible and efficient for power users who prefer keyboard shortcuts over mouse interaction.
+
+hyprpwmenu supports keyboard navigation for quick access without using the mouse:
+
+This keyboard navigation makes hyprpwmenu accessible and efficient for power users who prefer keyboard shortcuts over mouse interaction.
 
 ## 🔗 Integration with Hyprland
 

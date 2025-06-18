@@ -12,16 +12,13 @@ Constants:
     DEFAULT_STYLE_FILE (str): Default path for CSS style file
     SPACES_DEFAULT (int): Default spacing value for console output formatting
 
-Example:
-    >>> from hyprpwmenu.constants import APP_NAME, APP_VERSION
-    >>> print(f"{APP_NAME} v{APP_VERSION}")
-    hyprpwmenu v0.2.0
+
 """
 
 import os
 
 #: Current version of the HyprPwMenu application
-APP_VERSION = "0.2.0"
+APP_VERSION = "0.2.4"
 
 #: Application name used for configuration directories and identification
 APP_NAME = "hyprpwmenu"
