@@ -26,7 +26,10 @@ import os
 import subprocess
 from rich.console import Console
 from hyprpwmenu.constants import SPACES_DEFAULT
+from hyprpwmenu.constants import APP_NAME
 from typing import Tuple
+import importlib.resources
+import shutil
 
 
 #: Rich console instance for enhanced output with timestamp logging
@@ -179,3 +182,11 @@ def executeCommand(command: str) -> Tuple[int, str, str]:
     )
     stdout, stderr = process.communicate()
     return process.returncode, stdout, stderr
+
+
+def copyAssetFile(destination: str, asset: str) -> None:
+    # if destination directory does not exist, create it
+    if not os.path.exists(destination):
+        os.makedirs(destination)
+    source = importlib.resources.files(APP_NAME).joinpath(f"assets/{asset}")
+    shutil.copy2(str(source), destination)

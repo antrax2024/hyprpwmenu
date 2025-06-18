@@ -20,62 +20,10 @@ Dependencies:
 """
 
 import os
-import sys
 from confz import BaseConfig, FileSource
 from .constants import APP_NAME
-import importlib.resources
+
 from typing import List
-
-
-def createConfigFile(configFile: str, type: str = "config") -> None:
-    """
-    Create default configuration or style files if they don't exist.
-
-    This function creates the necessary directory structure and copies default
-    files from the package assets to the specified location.
-
-    Args:
-        configFile: Absolute path where the file should be created
-        type: Type of file to create ("config" for YAML config, "style" for CSS)
-
-    Returns:
-        None: Creates file on disk
-
-    Raises:
-        SystemExit: If file creation fails due to permissions or other errors
-
-    Side Effects:
-        - Creates parent directories if they don't exist
-        - Copies default files from package assets
-        - Outputs error messages if creation fails
-
-    Example:
-        >>> createConfigFile("/home/user/.config/hyprpwmenu/config.yaml", "config")
-        >>> createConfigFile("/home/user/.config/hyprpwmenu/style.css", "style")
-    """
-    try:
-        if not os.path.exists(path=configFile):
-            dir_name: str = os.path.dirname(configFile)
-            if dir_name:
-                os.makedirs(
-                    name=dir_name,
-                    exist_ok=True,
-                )
-
-            # Get the file content from package resources
-            source_file = "config.yaml" if type == "config" else "style.css"
-            # Use importlib.resources to get asset path
-            with (
-                importlib.resources.files("hyprpwmenu")
-                .joinpath(f"assets/{source_file}")
-                .open("rb") as src_file
-            ):
-                with open(configFile, "wb") as dst_file:
-                    dst_file.write(src_file.read())
-
-    except Exception as e:
-        print(f"Error creating config file: {e}")
-        sys.exit(1)
 
 
 class Button(BaseConfig):

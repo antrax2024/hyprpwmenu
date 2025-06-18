@@ -26,15 +26,17 @@ APP_VERSION = "0.2.0"
 #: Application name used for configuration directories and identification
 APP_NAME = "hyprpwmenu"
 
-#: Default path for the YAML configuration file containing button definitions
-DEFAULT_CONFIG_FILE = os.path.join(
-    os.path.expanduser(path="~"), ".config", f"{APP_NAME}", "config.yaml"
+
+# default configuration and style file paths
+DEFAULT_CONFIG_DIR = os.path.join(
+    os.path.expanduser(path="~"), ".config", f"{APP_NAME}"
 )
 
+#: Default path for the YAML configuration file containing button definitions
+DEFAULT_CONFIG_FILE = os.path.join(DEFAULT_CONFIG_DIR, "config.yaml")
+
 #: Default path for the CSS style file containing visual theme definitions
-DEFAULT_STYLE_FILE = os.path.join(
-    os.path.expanduser(path="~"), ".config", f"{APP_NAME}", "style.css"
-)
+DEFAULT_STYLE_FILE = os.path.join(DEFAULT_CONFIG_DIR, "style.css")
 
 #: Default spacing value used for console output formatting in utility functions
 SPACES_DEFAULT = 15
