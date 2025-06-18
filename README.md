@@ -1,5 +1,3 @@
-<!-- markdownlint-disable -->
-
 # 🚀 hyprpwmenu
 
 <p align="center">
@@ -156,7 +154,7 @@ The CSS follows standard GTK4 styling conventions, allowing for extensive custom
 
 ## 🔤 Keyboard Navigation
 
-hyprpwmenu block keyboard when execute and only release after the user choose one button (action) or quit hyprpwmenu.
+**hyprpwmenu** `block` keyboard when execute and only release after the user choose one button (action) or quit **hyprpwmenu**.
 The app supports keyboard navigation for quick access without using the mouse:
 
 ### Navigation
@@ -175,7 +173,7 @@ The app supports keyboard navigation for quick access without using the mouse:
 
 This keyboard navigation makes hyprpwmenu accessible and efficient for power users who prefer keyboard shortcuts over mouse interaction.
 
-hyprpwmenu supports keyboard navigation for quick access without using the mouse:
+**hyprpwmenu** supports keyboard navigation for quick access without using the mouse:
 
 This keyboard navigation makes hyprpwmenu accessible and efficient for power users who prefer keyboard shortcuts over mouse interaction.
 
