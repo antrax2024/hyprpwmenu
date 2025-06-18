@@ -18,7 +18,7 @@ Constants:
 import os
 
 #: Current version of the HyprPwMenu application
-APP_VERSION = "0.2.5"
+APP_VERSION = "0.2.6"
 
 #: Application name used for configuration directories and identification
 APP_NAME = "hyprpwmenu"
