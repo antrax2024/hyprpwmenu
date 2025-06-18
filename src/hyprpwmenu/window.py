@@ -1,6 +1,6 @@
 from ctypes import CDLL
 from hyprpwmenu.constants import APP_NAME, DEFAULT_STYLE_FILE
-from hyprpwmenu.util import printLog
+from hyprpwmenu.util import printLog, executeCommand
 from hyprpwmenu.config import AppConfig
 from typing import List
 
@@ -109,6 +109,7 @@ class Window:
     def onMouseClick(self, button: Gtk.Button) -> None:
         """Handler for mouse click event"""
         printLog(f"Mouse clicked button: {button.get_name()}")
+        executeCommand(self.appConfig.buttons[self.currentFocusIndex].command)
 
     def on_activate(self, app) -> None:
         # Create the main window
