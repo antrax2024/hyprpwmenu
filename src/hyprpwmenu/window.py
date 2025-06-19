@@ -375,8 +375,13 @@ class Window:
             - Connects click event handler
             - Sets tooltip text
         """
-        # Create image from PNG file
-        image = Gtk.Image.new_from_file(os.path.expanduser(icon_path))
+        # Try to create image from PNG file, fallback if not found
+        try:
+            image = Gtk.Image.new_from_file(os.path.expanduser(icon_path))
+        except Exception as e:
+            printLog(f"Error loading icon '{icon_path}': {e}")
+            # Fallback: use a default GTK icon or a label
+            image = Gtk.Image.new_from_icon_name("image-missing")
 
         # Create the button
         button = Gtk.Button.new()
