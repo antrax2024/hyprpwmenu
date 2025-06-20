@@ -1,5 +1,5 @@
 window {
-  /* background-color: #000000; */
+  background-color: rgba(0, 0, 0, 0.8);
   border: 2px solid #40a02b;
   border-radius: 10px;
   min-width: 720px;
@@ -7,26 +7,23 @@ window {
 }
 
 button {
-  /* background-color: #000000; */
-  /* background-image: none; */
   border: none;
   outline: none;
   box-shadow: none;
   text-shadow: none;
-  /* margin-right: 10px; */
-  margin-left: 10px;
+  margin-right: 20px;
+  margin-left: 20px;
   min-width: 120px;
   min-height: 120px;
   padding: 18px;
   border-radius: 10px;
+  background-image: none;
 }
 
 button#buttonPowerOff:hover,
 button#buttonPowerOff:active,
 button#buttonPowerOff:focus,
 button#buttonPowerOff:checked {
-  /* background-color: #000000; */
-  /* background-image: none; */
   border: 2px solid #e64553;
   box-shadow: none;
   text-shadow: none;
@@ -36,8 +33,6 @@ button#buttonRestart:hover,
 button#buttonRestart:active,
 button#buttonRestart:focus,
 button#buttonRestart:checked {
-  /* background-color: #000000; */
-  /* background-image: none; */
   border: 2px solid #04a5e5;
   box-shadow: none;
   text-shadow: none;
@@ -47,16 +42,10 @@ button#buttonLogout:hover,
 button#buttonLogout:active,
 button#buttonLogout:focus,
 button#buttonLogout:checked {
-  /* background-color: #000000; */
-  /* background-image: none; */
   border: 2px solid #df8e1d;
   box-shadow: none;
   text-shadow: none;
 }
-
-/* button image {
-  background-color: #000000;
-} */
 
 label#hint_label {
   font-family: "Hack Nerd Font Mono", monospace;
